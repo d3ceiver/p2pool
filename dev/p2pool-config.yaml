@@ -19,4 +19,4 @@ spec:
       affinity:
             topologyKey: "kubernetes.io/hostname"
       containers:
-      - image: rcmelendez/xmrig:6.16.2
+      - image: sethsimmons/p2pool

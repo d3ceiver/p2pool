@@ -2,14 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: xmrig
-  name: xmrig
-  namespace: xmrig 
+    app: p2pool
+  name: p2pool
+  namespace: p2pool 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrig
+      app: p2pool
   strategy: {}
   template:
     metadata:

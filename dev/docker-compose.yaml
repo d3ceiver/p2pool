@@ -11,9 +11,9 @@ services:
       - 18084:18084
       - 18089:18089
     command: >-
-      --rpc-restricted-bind-ip=0.0.0.0 --rpc-restricted-bind-port=18089
+      --rpc-restricted-bind-ip=192.168.0.162 --rpc-restricted-bind-port=18089
       --public-node --no-igd --enable-dns-blocklist --prune-blockchain
-      --zmq-pub=tcp://0.0.0.0:18084 --in-peers=50 --out-peers=50      
+      --zmq-pub=tcp://192.168.0.162:18084 --in-peers=50 --out-peers=50      
 
   p2pool:
     image: ghcr.io/sethforprivacy/p2pool:latest
@@ -28,8 +28,8 @@ services:
       - 3333:3333
       - 37889:37889
     command: >-
-      --wallet "468ydghFfthE3UTc53eF5MP9UyrMcUiAHP5kizVYJsej5XGaXBoAAEzUHCcUF7t3E3RrYAX8Rs1ujhBdcvMpZSbH8qkb55R"
-      --stratum "0.0.0.0:3333" --p2p "0.0.0.0:37889" --zmq-port "18084"
+      --wallet "46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn "
+      --stratum "192.168.0.162:3333" --p2p "192.168.0.162:37889" --zmq-port "18084"
       --loglevel "0" --addpeers "65.21.227.114:37889,node.sethforprivacy.com:37889"
       --host "monerod" --rpc-port "18089"      
 

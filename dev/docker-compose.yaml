@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: alpine
-  namespace: default
+  namespace: p2pool
 spec:
   containers:
   - image: alpine:3.2

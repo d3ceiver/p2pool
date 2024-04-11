@@ -15,6 +15,15 @@ spec:
       containers:
         - name: monerod-container
           image: monerobox/monerod
+            volumeMounts:
+    - name: volv
+      mountPath: /data
+    ports:
+    - containerPort: 80
+  volumes:
+  - name: volv
+    persistentVolumeClaim:
+      claimName: local-path-pvc
           command:
             - sh
             - -c

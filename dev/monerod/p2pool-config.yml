@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: monerod-container
-          image: simple-monerod-docker
+          image: monerobox/monerod
           command:
             - sh
             - -c

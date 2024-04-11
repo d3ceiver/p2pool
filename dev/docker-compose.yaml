@@ -15,18 +15,18 @@ spec:
         app: crypto-miner
     spec:
       containers:
-      - image: arm64v8/alpine
-        name: crypto-miner
-        command:
-        - /bin/sh
-        - -c
-        - |
-            cd ./xmrig/build/xmrig -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-            
-          "retries": 10,
-          "retry-pause": 3,
-          "watch": true
-          }'
-          echo $config > config.json
-          ./xmrig -c config.json
-
+      - image: ghcr.io/sethforprivacy/simple-monerod:latest
+        services:
+        name: monerod
+        restart: unless-stopped
+      
+    volumes:
+      - bitmonero:/home/monero
+    ports:
+      - 18080:18080
+      - 18084:18084
+      - 18089:18089
+    command: >-
+      --rpc-restricted-bind-ip=0.0.0.0 --rpc-restricted-bind-port=18089
+      --public-node --no-igd --enable-dns-blocklist --prune-blockchain
+      --zmq-pub=tcp://0.0.0.0:18084 --in-peers=50 --out-peers=50   

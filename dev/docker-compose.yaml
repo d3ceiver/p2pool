@@ -1,15 +1,8 @@
-apiVersion: apps/v3.8
-kind: Deployment 
-metadata:
-  labels:
-    app: p2pool-server
-  name: monero-suite
-  namespace: p2pool
-
-
-containers:
+version: "3.8"
+name: monero-suite
+services:
+  monerod:
     image: sethsimmons/simple-monerod:latest
-    name: monerod
     restart: unless-stopped
     container_name: monerod
     volumes:
@@ -70,9 +63,6 @@ containers:
 volumes:
   bitmonero: {}
   p2pool-data: {}
-
-
-
 
 
 

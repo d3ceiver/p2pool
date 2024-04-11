@@ -47,45 +47,5 @@ services:
 
 
 
-  monero:
-    image: monero:latest
-    build:
-      context: monero
-      args:
-        - MONERO_GIT_TAG=latest
-    container_name: p2pool-monero
-    networks:
-      - p2pool
-    ports:
-      - 18080:18080/tcp
 
-    volumes:
-      - monero:/home/monero/.bitmonero:rw
-      - /dev/null:/home/monero/.bitmonero/bitmonero.log:rw
-      - /dev/hugepages:/dev/hugepages:rw
-    restart: unless-stopped
-    command: >-
-      --zmq-pub tcp://192.168.0.188:18083
-      --disable-dns-checkpoints
-      --enable-dns-blocklist
-      --out-peers 16
-      --in-peers 32
-      --add-priority-node=nodes.hashvault.pro:18080
-      --add-priority-node=p2pmd.xmrvsbeast.com:18080
-      --non-interactive
-      --p2p-bind-ip=0.0.0.0
-      --p2p-bind-port=18080
-      --rpc-bind-ip=192.168.0.188
-      --rpc-bind-port=18081
-      --restricted-rpc
-      --confirm-external-bind
-      --log-level=0
-
-      --prune-blockchain
-
-
-
-
-
-      --fast-block-sync=1
 

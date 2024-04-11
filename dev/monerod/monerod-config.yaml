@@ -1,32 +1,24 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: monerod-pod
+  name: monero-pod
   namespace: p2pool
 spec:
   containers:
-    - name: monerod-container
+    - name: monero-container
       image: busybox
+      imagePullPolicy: Always
       command:
         - sh
         - -c
         - |
-          cd /data/monero
-          ./monerod --rpc-bind-ip 192.168.0.188 \
-            --confirm-external-bind \
-            --zmq-pub tcp://192.168.0.188:18083 \
-            --out-peers 32 \
-            --in-peers 64 \
-            --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
-            --add-priority-node=nodes.hashvault.pro:18080 \
-            --disable-dns-checkpoints \
-            --enable-dns-blocklist \
-            --allow-local-ip \
-            --proxy-allow-dns-leaks
+          cp /data/monero/monerod /root/monerod
+          cp -r /data/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
+          /root/monerod
       volumeMounts:
-        - name: volv
+        - name: monero-data
           mountPath: /data
   volumes:
-    - name: volv
+    - name: monero-data
       persistentVolumeClaim:
-        claimName: local-path-pvc
+        claimName: monero-pvc

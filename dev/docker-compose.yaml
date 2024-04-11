@@ -21,14 +21,7 @@ spec:
       containers:
       - image: sethsimmons/p2pool
         name: p2pool
-        command: 
-        resources:
-          limits:
-            memory: "1Gi"
-            cpu: "1"
-          requests:
-            memory: "500Mi"
-            cpu: "1"      
+       
       
 
 

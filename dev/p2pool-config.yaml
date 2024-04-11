@@ -17,6 +17,6 @@ spec:
         app: xmrig
     spec:
       affinity:
-            topologyKey: "kubernetes.io/hostname"
+       topologyKey: "kubernetes.io/hostname"
       containers:
       - image: sethsimmons/p2pool

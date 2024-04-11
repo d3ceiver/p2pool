@@ -1,71 +1,65 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: p2pool-server
-  namespace: p2pool
-spec:
-  project: default
-
-  source:
-    repoURL: https://github.com/d3ceiver/p2pool.git
-    targetRevision: HEAD
-    path: dev
-  destination: 
-    server: https://kubernetes.default.svc
-    namespace: p2pool
-
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-
-    automated:
-      selfHeal: true
-      prune: true
----
-version: '3.4'
-networks:
-  p2pool:
-    driver: bridge
-volumes:
-  p2pool: 
-    name: p2pool
-
-  monero:
-    name: monero
-
+version: '3.5'
 services:
-  p2pool:
-    image: p2pool:latest
-    build: ../
-    container_name: p2pool-p2pool
-    networks:
-      - p2pool
-    privileged: true
-    ports:
-
-      - 37888:37888/tcp
-
-
-    volumes:
-      - p2pool:/home/p2pool/.p2pool:rw
-      - /dev/null:/home/p2pool/.p2pool/p2pool.log:rw
-      - /dev/hugepages:/dev/hugepages:rw
-
-    depends_on:
-      - monero
-
+  monerod:
+    image: ghcr.io/sethforprivacy/simple-monerod:latest
     restart: unless-stopped
+    container_name: monerod
+    volumes:
+      - bitmonero:/home/monero
+    ports:
+      - 18080:18080
+      - 18084:18084
+      - 18089:18089
     command: >-
+      --rpc-restricted-bind-ip=0.0.0.0 --rpc-restricted-bind-port=18089
+      --public-node --no-igd --enable-dns-blocklist --prune-blockchain
+      --zmq-pub=tcp://0.0.0.0:18084 --in-peers=50 --out-peers=50      
 
-      --host monero
+  p2pool:
+    image: ghcr.io/sethforprivacy/p2pool:latest
+    restart: unless-stopped
+    container_name: p2pool
+    tty: true
+    stdin_open: true
+    volumes:
+      - p2pool-data:/home/p2pool
+      - /dev/hugepages:/dev/hugepages:rw
+    ports:
+      - 3333:3333
+      - 37889:37889
+    command: >-
+      --wallet "468ydghFfthE3UTc53eF5MP9UyrMcUiAHP5kizVYJsej5XGaXBoAAEzUHCcUF7t3E3RrYAX8Rs1ujhBdcvMpZSbH8qkb55R"
+      --stratum "0.0.0.0:3333" --p2p "0.0.0.0:37889" --zmq-port "18084"
+      --loglevel "0" --addpeers "65.21.227.114:37889,node.sethforprivacy.com:37889"
+      --host "monerod" --rpc-port "18089"      
 
-      --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-      --loglevel 3
+  tor:
+    image: goldy/tor-hidden-service:latest
+    container_name: tor
+    restart: unless-stopped
+    links:
+      - monerod
+      - p2pool
+    environment:
+      MONEROD_TOR_SERVICE_HOSTS: 18089:monerod:18089
+      MONEROD_TOR_SERVICE_VERSION: '3'
+      P2POOL_TOR_SERVICE_HOSTS: 3333:p2pool:3333
+      P2POOL_TOR_SERVICE_VERSION: '3'
+    volumes:
+      - tor-keys:/var/lib/tor/hidden_service/
 
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
+volumes:
+    bitmonero:
+    tor-keys:
+    p2pool-data:
 
-      --local-api
-      --data-api /home/p2pool/.p2pool
 
 
 

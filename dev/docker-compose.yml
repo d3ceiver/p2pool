@@ -53,28 +53,6 @@ services:
 
 
 
-
-
-
-
-  statistics:
-    image: statistics:latest
-    build:
-      context: statistics
-    container_name: p2pool-statistics
-    networks:
-      - p2pool
-    ports:
-      - 3380:80/tcp
-    volumes:
-      - p2pool:/data:ro
-    depends_on:
-      - p2pool
-    restart: unless-stopped
-
-
-
-
   monero:
     image: monero:latest
     build:
@@ -117,30 +95,3 @@ services:
 
       --fast-block-sync=1
 
-
-
-
-
-
-  xmrig:
-    image: xmrig:latest
-    build: xmrig
-    container_name: p2pool-xmrig
-    networks:
-      - p2pool
-    privileged: true
-    volumes:
-      - /dev:/dev:ro
-      - /lib/modules:/lib/modules:ro
-      - /dev/hugepages:/dev/hugepages:rw
-    depends_on:
-      - p2pool
-    restart: unless-stopped
-    command: >-
-      --randomx-1gb-pages
-      -o node.hacknoob.win:3333
-
-      -u p2pool
-
-      --cpu-max-threads-hint=100
-      --cpu-priority=2

@@ -16,7 +16,6 @@ spec:
     spec:
       containers:
       - image: ghcr.io/sethforprivacy/simple-monerod:latest
-        services:
         name: monerod
         restart: unless-stopped
       

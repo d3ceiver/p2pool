@@ -22,13 +22,36 @@ spec:
       selfHeal: true
       prune: true
    
-  spec:
-    replicas: 1
-    affinity:
-          topologyKey: "kubernetes.io/hostname"
-    containers:
-    - image: pataquets/p2pool:latest
-      name: p2pool
+apiVersion: "3.8"
+name: monero-suite
+services:
+  monerod:
+    image: sethsimmons/simple-monerod:latest
+    restart: unless-stopped
+    container_name: monerod
+    volumes:
+      - bitmonero:/home/monero/.bitmonero
+    ports:
+      - 18080:18080
+      - 18089:18089
+    command:
+      - --rpc-restricted-bind-ip=0.0.0.0
+      - --rpc-restricted-bind-port=18089
+      - --rpc-bind-ip=0.0.0.0
+      - --rpc-bind-port=18081
+      - --confirm-external-bind
+      - --enable-dns-blocklist
+      - --check-updates=disabled
+      - --max-log-files=3
+      - --max-log-file-size=1048576
+      - --no-igd
+      - --out-peers=64
+      - --limit-rate-down=1048576
+      - --prune-blockchain
+      - --public-node
+      - --no-zmq
+volumes:
+  bitmonero: {}
 
 
 

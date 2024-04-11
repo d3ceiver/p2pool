@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: p2pool
-  name: p2pool
+  name: p2pool-server
   namespace: p2pool 
 spec:
   replicas: 1
@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-        app: p2pool
+        app: p2pool-s
     spec:
       affinity:
             topologyKey: "kubernetes.io/hostname"

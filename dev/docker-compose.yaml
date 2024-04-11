@@ -10,11 +10,7 @@ spec:
   selector:
     matchLabels:
       app: p2pool
-  strategy: {}
-  template:
-    metadata:
-      labels:
-        app: p2pool-s
+ 
     spec:
       affinity:
             topologyKey: "kubernetes.io/hostname"

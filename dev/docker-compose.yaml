@@ -1,3 +1,10 @@
+kind: Application
+metadata:
+  name: p2poolserver
+  namespace: p2pool
+spec:
+  project: default
+
 ---
 version: '3.4'
 networks:

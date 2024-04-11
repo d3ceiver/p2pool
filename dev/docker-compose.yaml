@@ -5,13 +5,8 @@ metadata:
     app: p2pool
   name: p2poolserver
   namespace: p2pool 
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: p2pool
- 
     spec:
+      replicas: 1
       affinity:
             topologyKey: "kubernetes.io/hostname"
       containers:

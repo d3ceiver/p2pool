@@ -23,13 +23,4 @@ spec:
               cp /path/to/file/monero/monerod /root/monerod
               cp -r /path/to/file/.bitmonero/* /root/.bitmonero/
               /root/monerod
-          volumeMounts:
-          - name: volv
-            mountPath: /data
-          ports:
-          - containerPort: 80
-   volumes:
-   - name: volv
-     persistentVolumeClaim:
-      claimName: local-path-pvc
-          
+         

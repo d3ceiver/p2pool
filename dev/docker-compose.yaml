@@ -22,7 +22,7 @@ spec:
       selfHeal: true
       prune: true
    
-apiVersion: "3.8"
+version: "3.8"
 name: monero-suite
 services:
   monerod:

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: p2pool
-  name: p2pool-server
+  name: p2poolserver
   namespace: p2pool 
 spec:
   replicas: 1

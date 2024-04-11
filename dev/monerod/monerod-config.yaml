@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
         - name: monerod-container
-          image: monerobox/monerod
-           command:
-           - sh
-           - -c
-           - |
-             mkdir -p /root/.bitmonero/
-             cp /path/to/file/monero/monerod /root/monerod
-             cp -r /path/to/file/.bitmonero/* /root/.bitmonero/
+          image: your-monero-image
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /root/.bitmonero/
+              cp /path/to/file/monero/monerod /root/monerod
+              cp -r /path/to/file/.bitmonero/* /root/.bitmonero/
               /root/monerod
           volumeMounts:
           - name: volv

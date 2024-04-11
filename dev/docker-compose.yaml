@@ -1,5 +1,5 @@
 ---
-apiVersion: '3.4'
+apiVersion: v3.4
 
 networks:
   p2pool:

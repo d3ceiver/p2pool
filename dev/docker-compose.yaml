@@ -1,66 +1,42 @@
-version: '3.5'
-services:
-  monerod:
-    image: ghcr.io/sethforprivacy/simple-monerod:latest
-    restart: unless-stopped
-    container_name: monerod
-    volumes:
-      - bitmonero:/home/monero
-    ports:
-      - 18080:18080
-      - 18084:18084
-      - 18089:18089
-    command: >-
-      --rpc-restricted-bind-ip=192.168.0.162 --rpc-restricted-bind-port=18089
-      --public-node --no-igd --enable-dns-blocklist --prune-blockchain
-      --zmq-pub=tcp://192.168.0.162:18084 --in-peers=50 --out-peers=50      
-
-  p2pool:
-    image: ghcr.io/sethforprivacy/p2pool:latest
-    restart: unless-stopped
-    container_name: p2pool
-    tty: true
-    stdin_open: true
-    volumes:
-      - p2pool-data:/home/p2pool
-      - /dev/hugepages:/dev/hugepages:rw
-    ports:
-      - 3333:3333
-      - 37889:37889
-    command: >-
-      --wallet "46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn "
-      --stratum "192.168.0.162:3333" --p2p "192.168.0.162:37889" --zmq-port "18084"
-      --loglevel "0" --addpeers "65.21.227.114:37889,node.sethforprivacy.com:37889"
-      --host "monerod" --rpc-port "18089"      
-
-  tor:
-    image: goldy/tor-hidden-service:latest
-    container_name: tor
-    restart: unless-stopped
-    links:
-      - monerod
-      - p2pool
-    environment:
-      MONEROD_TOR_SERVICE_HOSTS: 18089:monerod:18089
-      MONEROD_TOR_SERVICE_VERSION: '3'
-      P2POOL_TOR_SERVICE_HOSTS: 3333:p2pool:3333
-      P2POOL_TOR_SERVICE_VERSION: '3'
-    volumes:
-      - tor-keys:/var/lib/tor/hidden_service/
-
-  watchtower:
-    image: containrrr/watchtower:latest
-    container_name: watchtower
-    restart: unless-stopped
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-
-volumes:
-    bitmonero:
-    tor-keys:
-    p2pool-data:
-
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: p2pool
+  name: xmrig
+  namespace: xmrig 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: xmrig
+    spec:
+      affinity:
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - image: rcmelendez/xmrig:6.16.2
+        name: xmrig
+        command: ["xmrig"]
+        args: ["-c", "/xmrig/etc/config.json"]
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+          requests:
+            memory: "500Mi"
+            cpu: "1"      
+        volumeMounts:
+        - name: config-volume
+          mountPath: /xmrig/etc
+      volumes:
+      - name: config-volume
+        configMap:
+          name: xmrig-config
 
 
 

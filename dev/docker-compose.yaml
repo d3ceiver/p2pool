@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     container_name: monerod
     volumes:
-      - bitmonero:/home/monero/.bitmonero
+      - bitmonero:/home/.bitmonero
     ports:
       - 18080:18080
       - 18089:18089

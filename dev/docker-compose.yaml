@@ -1,11 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: p2poolserver
+  name: p2pool-server
   namespace: p2pool
 spec:
   project: default
 
+  source:
+    repoURL: https://github.com/d3ceiver/p2pool.git
+    targetRevision: HEAD
+    path: dev
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: p2pool
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
 ---
 version: '3.4'
 networks:

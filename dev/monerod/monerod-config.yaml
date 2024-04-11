@@ -6,8 +6,7 @@ metadata:
 spec:
   containers:
     - name: monerod-container
-      image: monerobox/monerod
-      imagePullPolicy: IfNotPresent
+      image: busybox
       command:
         - sh
         - -c

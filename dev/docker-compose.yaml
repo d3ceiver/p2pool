@@ -17,7 +17,7 @@ spec:
       containers:
       - image: ghcr.io/sethforprivacy/simple-monerod:latest
         name: monerod
-        restart: unless-stopped
+        
       
     volumes:
       - bitmonero:/home/monero

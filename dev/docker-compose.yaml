@@ -15,7 +15,7 @@ spec:
       affinity:
             topologyKey: "kubernetes.io/hostname"
       containers:
-      - image: sethsimmons/p2pool
+      - image: pataquets/p2pool:latest
         name: p2pool
        
       

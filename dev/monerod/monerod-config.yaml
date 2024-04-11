@@ -33,3 +33,7 @@ spec:
     - name: monero-data
       persistentVolumeClaim:
         claimName: monero-pvc
+  tolerations:
+    - key: "node.kubernetes.io/disk-pressure"
+      operator: "Exists"
+      effect: "NoSchedule"

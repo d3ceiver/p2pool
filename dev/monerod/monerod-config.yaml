@@ -6,15 +6,24 @@ metadata:
 spec:
   containers:
     - name: monerod-container
-      image: monerobox/monerod
+      image: your-monero-image
       imagePullPolicy: IfNotPresent
       command:
         - sh
         - -c
         - |
-          cp /data/monero/monerod /root/monerod
-          cp -r /data/.bitmonero/* /root/.bitmonero/
-          /root/monerod
+          cd /data/monero
+          ./monerod --rpc-bind-ip 192.168.0.188 \
+            --confirm-external-bind \
+            --zmq-pub tcp://192.168.0.188:18083 \
+            --out-peers 32 \
+            --in-peers 64 \
+            --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+            --add-priority-node=nodes.hashvault.pro:18080 \
+            --disable-dns-checkpoints \
+            --enable-dns-blocklist \
+            --allow-local-ip \
+            --proxy-allow-dns-leaks
       volumeMounts:
         - name: volv
           mountPath: /data

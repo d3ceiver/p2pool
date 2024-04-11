@@ -3,26 +3,25 @@ kind: Deployment
 metadata:
   labels:
     app: p2pool
-  name: xmrig
-  namespace: xmrig 
+  name: p2pool
+  namespace: p2pool 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrig
+      app: p2pool
   strategy: {}
   template:
     metadata:
       labels:
-        app: xmrig
+        app: p2pool
     spec:
       affinity:
             topologyKey: "kubernetes.io/hostname"
       containers:
-      - image: rcmelendez/xmrig:6.16.2
-        name: xmrig
-        command: ["xmrig"]
-        args: ["-c", "/xmrig/etc/config.json"]
+      - image: sethsimmons/p2pool
+        name: p2pool
+        command: 
         resources:
           limits:
             memory: "1Gi"

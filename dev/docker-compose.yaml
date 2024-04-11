@@ -1,19 +1,158 @@
----
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: default
-  namespace: metallb-system
-spec:
-  addresses:
-  - 192.168.0.162/32
-  autoAssign: true
----
-apiVersion: metallb.io/v1beta1
-kind: L2Advertisement
-metadata:
-  name: default
-  namespace: metallb-system
-spec:
-  ipAddressPools:
-  - default
+app-id: org.getmonero.Monero
+runtime: org.kde.Platform
+runtime-version: 5.15-23.08
+sdk: org.kde.Sdk
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --device=all
+  - --filesystem=~/Monero:create
+  - --persist=.bitmonero
+
+cleanup:
+  - /include
+  - /etc
+  - /share/man
+  - /lib/pkgconfig
+  - /lib/cmake
+  - '*.a'
+  - '*.la'
+
+command: monero-wallet-gui
+modules:
+  - name: monero-gui
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DWITH_DESKTOP_ENTRY=OFF
+      - -DWITH_UPDATER=OFF
+    build-options:
+      arch:
+        aarch64:
+          config-opts:
+            - -DARCH=armv8-a
+            - -DBUILD_TAG=linux-armv8
+        x86_64:
+          config-opts:
+            - -DARCH=default
+    sources:
+      - type: archive
+        url: https://downloads.getmonero.org/gui/monero-gui-source-v0.18.3.3.tar.bz2
+        sha256: aa3a7367d43a3bb7877677c49d5c129dc7a4cd89afc048cb50790e0cbe7efd51
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/monero-project/monero-gui/releases/latest
+          version-query: .tag_name
+          url-query: '"https://downloads.getmonero.org/gui/monero-gui-source-" + $version
+            + ".tar.bz2"'
+      - type: file
+        path: extra/org.getmonero.Monero.desktop
+      - type: file
+        path: extra/org.getmonero.Monero.metainfo.xml
+    post-install:
+      - install -Dpm644 org.getmonero.Monero.desktop $FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop
+      - install -Dpm644 org.getmonero.Monero.metainfo.xml $FLATPAK_DEST/share/metainfo/$FLATPAK_ID.metainfo.xml
+      - for x in 16 24 32 48 64 96 128 256; do install -Dpm644 images/appicons/${x}x${x}.png
+        $FLATPAK_DEST/share/icons/hicolor/${x}x${x}/apps/$FLATPAK_ID.png; done
+    modules:
+      - shared-modules/libusb/libusb.json
+
+      - name: boost
+        buildsystem: simple
+        build-commands:
+          - ./bootstrap.sh --prefix=$FLATPAK_DEST --with-libraries=chrono,date_time,filesystem,locale,program_options,regex,serialization,system,thread
+          - ./b2 headers
+          - ./b2 -j$FLATPAK_BUILDER_N_JOBS install variant=release --layout=system
+        sources:
+          - type: archive
+            url: https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz
+            sha256: a5800f405508f5df8114558ca9855d2640a2de8f0445f051fa1c7c3383045724
+
+      - name: protobuf
+        sources:
+          - type: archive
+            url: https://github.com/protocolbuffers/protobuf/releases/download/v21.3/protobuf-cpp-3.21.3.tar.gz
+            sha256: c98a4f17ed57e9e4dafc4a52e76ee012f9a6a13750488b20b4c370a3eb1561fc
+
+      - name: libunbound
+        config-opts:
+          - --with-libunbound-only
+        sources:
+          - type: archive
+            url: https://nlnetlabs.nl/downloads/unbound/unbound-1.19.3.tar.gz
+            sha256: 3ae322be7dc2f831603e4b0391435533ad5861c2322e34a76006a9fb65eb56b9
+            x-checker-data:
+              type: html
+              url: https://nlnetlabs.nl/downloads/unbound/
+              pattern: (unbound-([\d\.]+)\.tar\.gz)
+
+      - name: libsodium
+        sources:
+          - type: archive
+            url: https://github.com/jedisct1/libsodium/releases/download/1.0.19-RELEASE/libsodium-1.0.19.tar.gz
+            sha256: 018d79fe0a045cca07331d37bd0cb57b2e838c51bc48fd837a1472e50068bbea
+            x-checker-data:
+              type: json
+              url: https://api.github.com/repos/jedisct1/libsodium/releases/latest
+              version-query: .name
+              url-query: |
+                .assets | map(select(.name=="libsodium-\($version).tar.gz")) | first | .browser_download_url
+
+      - name: hidapi
+        buildsystem: cmake-ninja
+        config-opts:
+          - -DCMAKE_BUILD_TYPE=Release
+        sources:
+          - type: archive
+            url: https://github.com/libusb/hidapi/archive/hidapi-0.14.0.tar.gz
+            sha256: a5714234abe6e1f53647dd8cba7d69f65f71c558b7896ed218864ffcf405bcbd
+
+      - name: openpgm
+        subdir: openpgm/pgm
+        sources:
+          - type: archive
+            url: https://github.com/steve-o/openpgm/archive/release-5-3-128.tar.gz
+            sha256: 8d707ef8dda45f4a7bc91016d7f2fed6a418637185d76c7ab30b306499c6d393
+          - type: patch
+            path: openpgm-fix-build.patch
+
+      - name: libzmq
+        config-opts:
+          - --with-pgm
+          - --with-libsodium
+          - --disable-Werror
+        sources:
+          - type: archive
+            url: https://github.com/zeromq/libzmq/releases/download/v4.3.5/zeromq-4.3.5.tar.gz
+            sha256: 6653ef5910f17954861fe72332e68b03ca6e4d9c7160eb3a8de5a5a913bfab43
+
+  - name: p2pool
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DWITH_LTO=OFF
+    sources:
+      - type: git
+        url: https://github.com/SChernykh/p2pool
+        tag: v3.10
+        commit: 3797f017e94047a41e5f622e1a299c6f71c37df0
+        x-checker-data:
+          type: git
+          tag-pattern: ^v([\d.]+)$
+    post-install:
+      - install -Dm755 p2pool $FLATPAK_DEST/bin/p2pool
+    modules:
+      - name: libgss
+        sources:
+          - type: archive
+            url: https://ftp.gnu.org/gnu/gss/gss-1.0.3.tar.gz
+            sha256: ff919ddc731531d65e27d7ababdc361aae05ada5f1a6dd60703d153307dcdeeb
+
+      - name: libuv
+        buildsystem: cmake-ninja
+        sources:
+          - type: archive
+            url: https://github.com/libuv/libuv/archive/v1.47.0.tar.gz
+            sha256: d50af7e6d72526db137e66fad812421c8a1cae09d146b0ec2bb9a22c5f23ba93

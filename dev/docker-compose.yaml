@@ -1,20 +1,14 @@
 ---
 version: '3.4'
-
 networks:
   p2pool:
     driver: bridge
-
 volumes:
   p2pool: 
-
     name: p2pool
-
-
 
   monero:
     name: monero
-
 
 services:
   p2pool:
@@ -71,7 +65,7 @@ services:
       - /dev/hugepages:/dev/hugepages:rw
     restart: unless-stopped
     command: >-
-      --zmq-pub tcp://74.56.241.2:18083
+      --zmq-pub tcp://192.168.0.188:18083
       --disable-dns-checkpoints
       --enable-dns-blocklist
       --out-peers 16
@@ -81,7 +75,7 @@ services:
       --non-interactive
       --p2p-bind-ip=0.0.0.0
       --p2p-bind-port=18080
-      --rpc-bind-ip=0.0.0.0
+      --rpc-bind-ip=192.168.0.188
       --rpc-bind-port=18081
       --restricted-rpc
       --confirm-external-bind

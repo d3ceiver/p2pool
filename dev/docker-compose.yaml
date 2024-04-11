@@ -29,13 +29,7 @@ spec:
           requests:
             memory: "500Mi"
             cpu: "1"      
-        volumeMounts:
-        - name: config-volume
-          mountPath: /xmrig/etc
-      volumes:
-      - name: config-volume
-        configMap:
-          name: xmrig-config
+      
 
 
 

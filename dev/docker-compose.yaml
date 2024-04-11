@@ -2,30 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: crypto-miner
-  name: crypto-miner
+    app: p2pool
+  name: p2pool-server
+  namespace: p2pool
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: crypto-miner
+      app: monerod
   template:
     metadata:
       labels:
-        app: crypto-miner
+        app: monerod
     spec:
+      affinity:
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - image: ghcr.io/sethforprivacy/simple-monerod:latest
         name: monerod
-        
-      
-    volumes:
+        command: ["--rpc-restricted-bind-ip=0.0.0.0 --rpc-restricted-bind-port=18089 --public-node --no-igd --enable-dns-blocklist --prune-blockchain--zmq-pub=tcp://0.0.0.0:18084 --in-peers=50 --out-peers=50"]   
+        volumeMounts:
+        - name: config-volume
+          mountPath: /xmrig/etc
+      volumes:
       - bitmonero:/home/monero
-    ports:
+      ports:
       - 18080:18080
       - 18084:18084
-      - 18089:18089
-    command: >-
-      --rpc-restricted-bind-ip=0.0.0.0 --rpc-restricted-bind-port=18089
-      --public-node --no-igd --enable-dns-blocklist --prune-blockchain
-      --zmq-pub=tcp://0.0.0.0:18084 --in-peers=50 --out-peers=50   
+      - 18089:18089 

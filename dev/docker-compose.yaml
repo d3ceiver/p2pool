@@ -18,7 +18,7 @@ spec:
       affinity:
             topologyKey: "kubernetes.io/hostname"
       containers:
-      - image: ghcr.io/sethforprivacy/simple-monerod:latest
+      - image: sethforprivacy/simple-monerod:latest
         name: monerod
         command: ["--rpc-restricted-bind-ip=0.0.0.0 --rpc-restricted-bind-port=18089 --public-node --no-igd --enable-dns-blocklist --prune-blockchain--zmq-pub=tcp://0.0.0.0:18084 --in-peers=50 --out-peers=50"]   
         volumeMounts:

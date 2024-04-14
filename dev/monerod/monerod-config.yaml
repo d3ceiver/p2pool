@@ -11,11 +11,11 @@ spec:
         - sh
         - -c
         - |
-          mkdir -p /worker3/.bitmonero/lmdb/
-          cp /monero/monerod /worker3/monero/monerod
-          cp -r /.bitmonero/lmdb/* /worker3/.bitmonero/lmdb/
-          chmod +x /worker3/monero/monerod  # Ensure the monerod executable is executable
-          /root/monerod --rpc-bind-ip 192.168.0.188 \
+          mkdir -p /root/.bitmonero/lmdb/
+          cp /home/worker3/monero/monerod /root/monero/monerod
+          cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
+          chmod +x /root/monero/monerod  # Ensure the monerod executable is executable
+          /root/monero/monerod --rpc-bind-ip 192.168.0.188 \
             --confirm-external-bind \
             --zmq-pub tcp://192.168.0.188:18083 \
             --out-peers 32 \
@@ -29,10 +29,22 @@ spec:
       volumeMounts:
         - name: monero-data
           mountPath: /data
+        - name: monero-lmdb
+          mountPath: /root/.bitmonero/lmdb
+        - name: monero-monerod
+          mountPath: /root/monero/monerod
   volumes:
     - name: monero-data
       persistentVolumeClaim:
         claimName: slave3-volume  # Updated claimName to match your PVC
+    - name: monero-lmdb
+      hostPath:
+        path: /home/worker3/.bitmonero/lmdb
+        type: Directory
+    - name: monero-monerod
+      hostPath:
+        path: /home/worker3/monero/monerod
+        type: File
   tolerations:
     - key: "node.kubernetes.io/disk-pressure"
       operator: "Exists"

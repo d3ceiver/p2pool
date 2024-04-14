@@ -11,10 +11,10 @@ spec:
         - sh
         - -c
         - |
-          mkdir -p /root/.bitmonero/lmdb/
-          cp /data/monerod /root/monerod
-          cp -r /data/lmdb/* /root/.bitmonero/lmdb/
-          chmod +x /root/monerod  # Ensure the monerod executable is executable
+          mkdir -p /worker3/.bitmonero/lmdb/
+          cp /monero/monerod /worker3/monero/monerod
+          cp -r /.bitmonero/lmdb/* /worker3/.bitmonero/lmdb/
+          chmod +x /worker3/monero/monerod  # Ensure the monerod executable is executable
           /root/monerod --rpc-bind-ip 192.168.0.188 \
             --confirm-external-bind \
             --zmq-pub tcp://192.168.0.188:18083 \

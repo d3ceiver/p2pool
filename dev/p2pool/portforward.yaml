@@ -11,4 +11,4 @@ spec:
     - protocol: TCP
       port: 18080  # External port to access the service
       targetPort: 18083  # Port on the pod where traffic will be forwarded
-      nodePort: 18080  # Optional: specify a specific nodePort or let Kubernetes assign one
+      nodePort: 18081  # Optional: specify a specific nodePort or let Kubernetes assign one

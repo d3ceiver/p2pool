@@ -5,6 +5,8 @@ metadata:
   namespace: p2pool
 spec:
   type: LoadBalancer
+  externalIPs:
+    - 192.168.0.18
   ports:
     - name: monero-port-18080
       port: 18080

@@ -16,9 +16,9 @@ spec:
           cp /home/worker3/monero/monerod /root/monero/monerod
           cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
           chmod +x /root/monero/monerod
-          /root/monero/monerod --rpc-bind-ip 192.168.0.162 \
+          /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
             --confirm-external-bind \
-            --zmq-pub tcp://192.168.0.162:18083 \
+            --zmq-pub tcp://192.168.0.18:18083 \
             --out-peers 32 \
             --in-peers 64 \
             --add-priority-node=p2pmd.xmrvsbeast.com:18080 \

@@ -4,6 +4,7 @@ metadata:
   name: monero-service
   namespace: p2pool
 spec:
+  type: LoadBalancer
   ports:
     - name: monero-port
       port: 18080

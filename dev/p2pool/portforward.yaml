@@ -9,4 +9,4 @@ spec:
       port: 18080
       targetPort: 18080
   selector:
-    app: monero-app
+    app: monero-pod

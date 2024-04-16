@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: p2pool
+  namespace: p2pool
+spec:
+  hostNetwork: true  # Use the host network
+  containers:
+    - name: monero-container
+      image: busybox
+      command:
+        - sh
+        - -c
+        - |
+          mkdir -p /root/p2pool/p2pool
+          chmod +x /root/p2pool/p2pool
+          /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
+      volumeMounts:
+        - name: p2pool
+          mountPath: /root/p2pool/p2pool  # Changed the mount path to p2pool
+  volumes:
+    - name: p2pool
+      hostPath:
+        path: /home/worker3/p2pool/p2pool
+        type: File

@@ -1,36 +1,27 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: p2pool-pod
+  name: monero-pod
   namespace: p2pool
 spec:
   hostNetwork: true  # Use the host network
   containers:
-    - name: p2pool-container
-      image: SChernykh/p2pool
+    - name: monero-container
+      image: busybox
       command:
-        - User
-        - --host
-        - 192.168.0.18
-        - --wallet
-        - 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-        - --mini
+        - sh
+        - -c
+        - |
+          mkdir -p /root/p2pool/p2pool
+          cp /home/worker3/monero/monerod /root/p2pool/p2pool
+          chmod +x /root/p2pool/p2pool
+          /root/p2pool/p2pool User --host 192.168.0.18 \
+            --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
       volumeMounts:
-        - name: monero-data
-          mountPath: /data
-        - name: monero-lmdb
-          mountPath: /root/.bitmonero/lmdb
         - name: monero-monerod
-          mountPath: /root/.monero/monerod  # Adjusted mount path
+          mountPath: /root/p2pool/p2pool  # Changed the mount path to p2pool
   volumes:
-    - name: monero-data
-      persistentVolumeClaim:
-        claimName: slave3-volume
-    - name: monero-lmdb
-      hostPath:
-        path: /home/worker3/p2pool/p2pool  # Adjusted directory path
-        type: Directory
     - name: monero-monerod
       hostPath:
-        path: /home/worker3/p2pool/p2pool  # Adjusted directory path
+        path: /home/worker3/monero/monerod
         type: File

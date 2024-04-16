@@ -4,6 +4,7 @@ metadata:
   name: monero-pod
   namespace: p2pool
 spec:
+  hostNetwork: true  # Use the host network
   containers:
     - name: monero-container
       image: busybox
@@ -14,7 +15,7 @@ spec:
           mkdir -p /root/.bitmonero/lmdb/
           cp /home/worker3/monero/monerod /root/monero/monerod
           cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
-          chmod +x /root/monero/monerod  # Ensure the monerod executable is executable
+          chmod +x /root/monero/monerod
           /root/monero/monerod --rpc-bind-ip 192.168.0.162 \
             --confirm-external-bind \
             --zmq-pub tcp://192.168.0.162:18083 \
@@ -37,7 +38,7 @@ spec:
   volumes:
     - name: monero-data
       persistentVolumeClaim:
-        claimName: slave3-volume  # Updated claimName to match your PVC
+        claimName: slave3-volume
     - name: monero-lmdb
       hostPath:
         path: /home/worker3/.bitmonero/lmdb
@@ -46,7 +47,3 @@ spec:
       hostPath:
         path: /home/worker3/monero/monerod
         type: File
-  tolerations:
-    - key: "node.kubernetes.io/disk-pressure"
-      operator: "Exists"
-      effect: "NoSchedule"

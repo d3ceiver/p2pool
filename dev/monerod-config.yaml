@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: monero-pod
+  namespace: p2pool
+spec:
+  hostNetwork: true  # Use the host network
+  containers:
+    - name: monero-container
+      image: busybox
+      command:
+        - sh
+        - -c
+        - |
+          mkdir -p /root/.bitmonero/lmdb/
+          cp /home/worker3/monero/monerod /root/monero/monerod
+          cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
+          chmod +x /root/monero/monerod
+          /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
+            --confirm-external-bind \
+            --zmq-pub tcp://192.168.0.18:18083 \
+            --out-peers 32 \
+            --in-peers 64 \
+            --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+            --add-priority-node=nodes.hashvault.pro:18080 \
+            --disable-dns-checkpoints \
+            --non-interactive \
+            --enable-dns-blocklist \
+            --allow-local-ip \
+            --proxy-allow-dns-leaks
+      volumeMounts:
+        - name: monero-data
+          mountPath: /data
+        - name: monero-lmdb
+          mountPath: /root/.bitmonero/lmdb
+        - name: monero-monerod
+          mountPath: /root/monero/monerod
+  volumes:
+    - name: monero-data
+      persistentVolumeClaim:
+        claimName: slave3-volume
+    - name: monero-lmdb
+      hostPath:
+        path: /home/worker3/.bitmonero/lmdb
+        type: Directory
+    - name: monero-monerod
+      hostPath:
+        path: /home/worker3/monero/monerod
+        type: File

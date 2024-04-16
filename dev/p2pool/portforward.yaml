@@ -8,6 +8,6 @@ spec:
   ports:
     - name: monero-port
       port: 18080
-      targetPort: 18080
+      targetPort: 18081
   selector:
     pod: monero-pod

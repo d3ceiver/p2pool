@@ -13,15 +13,15 @@ spec:
         - -c
         - |
           mkdir -p /root/p2pool/p2pool
-          cp /home/worker3/monero/monerod /root/p2pool/p2pool
+          cp /home/worker3/p2pool/p2pool /root/p2pool/p2pool
           chmod +x /root/p2pool/p2pool
           /root/p2pool/p2pool User --host 192.168.0.18 \
             --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
       volumeMounts:
-        - name: monero-monerod
+        - name: p2pool
           mountPath: /root/p2pool/p2pool  # Changed the mount path to p2pool
   volumes:
-    - name: monero-monerod
+    - name: p2pool
       hostPath:
-        path: /home/worker3/monero/monerod
+        path: /home/worker3/p2pool/p2pool
         type: File

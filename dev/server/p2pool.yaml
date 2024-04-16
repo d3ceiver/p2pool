@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: p2pool-container
-          image: SChernykh/p2pool
+          image: sethsimmons/p2pool:v1.1
           ports:
             - containerPort: 9332  # Adjust the port as per your p2pool configuration
           command:

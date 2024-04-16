@@ -4,7 +4,7 @@ metadata:
   labels:
     app: xmrig
   name: xmrig
-  namespace: p2pool
+  namespace: xmrig 
 spec:
   replicas: 1
   selector:
@@ -25,11 +25,11 @@ spec:
         args: ["-c", "/xmrig/etc/config.json"]
         resources:
           limits:
-            memory: "14Gi"
-            cpu: "13"
+            memory: "12Gi"  # Set the limit to 5GiB
+            cpu: "12"       # Set the limit to 4 CPUs
           requests:
-            memory: "8Gi"
-            cpu: "9"
+            memory: "8Gi"  # Request 3GiB of memory
+            cpu: "9"       # Request 2 CPUs
         volumeMounts:
         - name: config-volume
           mountPath: /xmrig/etc
@@ -37,3 +37,4 @@ spec:
       - name: config-volume
         configMap:
           name: xmrig-config
+

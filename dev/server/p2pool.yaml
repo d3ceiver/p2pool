@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: monero-pod
+  name: p2pool
   namespace: p2pool
 spec:
   hostNetwork: true  # Use the host network

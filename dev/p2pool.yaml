@@ -11,10 +11,7 @@ spec:
     matchLabels:
       app: p2pool
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
+    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
   template:
     metadata:
       labels:
@@ -40,4 +37,4 @@ spec:
             type: File
   # Restart the pod every 15 minutes
   automountServiceAccountToken: false
-  terminationGracePeriodSeconds: 900  # 15 minutes in seconds
+  terminationGracePeriodSeconds: 60  # Reduced to 60 seconds for faster termination

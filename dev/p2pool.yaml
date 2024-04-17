@@ -19,14 +19,17 @@ spec:
     spec:
       containers:
         - name: p2pool-container
-          image: busybox  # Use your actual p2pool image here
-          command:
-            - sh
-            - -c
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
             - |
-              mkdir -p /root/p2pool/p2pool
-              chmod +x /root/p2pool/p2pool
-              /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
+              while true; do
+                mkdir -p /root/p2pool/p2pool
+                chmod +x /root/p2pool/p2pool
+                /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
+                sleep 180  # Sleep for 3 minutes before restarting
+              done
           volumeMounts:
             - name: p2pool
               mountPath: /root/p2pool/p2pool
@@ -35,6 +38,4 @@ spec:
           hostPath:
             path: /home/worker3/p2pool/p2pool
             type: File
-  # Restart the pod every 15 minutes
   automountServiceAccountToken: false
-  terminationGracePeriodSeconds: 60  # Reduced to 60 seconds for faster termination

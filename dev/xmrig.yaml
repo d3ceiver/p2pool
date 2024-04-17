@@ -30,11 +30,11 @@ spec:
           args: ["-c", "/xmrig/etc/config.json"]
           resources:
             limits:
-              cpu: "13"
-              memory: "14Gi"  # Adjust memory as per your cluster's total available RAM
+              cpu: "4"
+              memory: "1Gi"  # Adjust memory as per your cluster's total available RAM
             requests:
-              cpu: "13"
-              memory: "14Gi"
+              cpu: "2"
+              memory: "500Mi"
           volumeMounts:
             - name: config-volume
               mountPath: /xmrig/etc

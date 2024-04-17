@@ -42,21 +42,3 @@ spec:
         - name: config-volume
           configMap:
             name: xmrig-config
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: xmrig-config
-  namespace: xmrig
-data:
-  config.json: |
-    {
-      "wallet": "46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn",
-      "pool": "hacknoob.win:3333",
-      "coin": "rx/0",
-      "threads": 13,
-      "background": false,
-      "print-time": 60,
-      "cpu-affinity": null
-      // Add other xmrig configurations as needed
-    }

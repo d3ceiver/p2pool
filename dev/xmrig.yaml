@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: xmrig
-  name: xmrig
+  name: xmrig-deployment
   namespace: xmrig 
 spec:
   replicas: 1

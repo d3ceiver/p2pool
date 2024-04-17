@@ -1,25 +1,43 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: p2pool
+  labels:
+    app: p2pool
+  name: p2pool-deployment
   namespace: p2pool
 spec:
-  hostNetwork: true  # Use the host network
-  containers:
-    - name: monero-container
-      image: busybox
-      command:
-        - sh
-        - -c
-        - |
-          mkdir -p /root/p2pool/p2pool
-          chmod +x /root/p2pool/p2pool
-          /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
-      volumeMounts:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: p2pool
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: p2pool
+    spec:
+      containers:
+        - name: p2pool-container
+          image: busybox  # Use your actual p2pool image here
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /root/p2pool/p2pool
+              chmod +x /root/p2pool/p2pool
+              /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
+          volumeMounts:
+            - name: p2pool
+              mountPath: /root/p2pool/p2pool
+      volumes:
         - name: p2pool
-          mountPath: /root/p2pool/p2pool  # Changed the mount path to p2pool
-  volumes:
-    - name: p2pool
-      hostPath:
-        path: /home/worker3/p2pool/p2pool
-        type: File
+          hostPath:
+            path: /home/worker3/p2pool/p2pool
+            type: File
+  # Restart the pod every 15 minutes
+  automountServiceAccountToken: false
+  terminationGracePeriodSeconds: 900  # 15 minutes in seconds

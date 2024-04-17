@@ -2,38 +2,43 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: xmrig
-  name: xmrig
-  namespace: xmrig 
+    app: p2pool
+  name: p2pool-deployment
+  namespace: p2pool
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrig
-  strategy: {}
+      app: p2pool
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       labels:
-        app: xmrig
+        app: p2pool
     spec:
-      affinity:
-            topologyKey: "kubernetes.io/hostname"
       containers:
-      - image: rcmelendez/xmrig:6.16.2
-        name: xmrig
-        command: ["xmrig"]
-        args: ["-c", "/xmrig/etc/config.json"]
-        resources:
-          limits:
-            memory: "1Gi"
-            cpu: "1"
-          requests:
-            memory: "500Mi"
-            cpu: "1"      
-        volumeMounts:
-        - name: config-volume
-          mountPath: /xmrig/etc
+        - name: p2pool-container
+          image: your-p2pool-image:tag
+          command: ["p2pool"]
+          args: ["-c", "/p2pool/etc/config.json"]
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+            requests:
+              memory: "500Mi"
+              cpu: "1"      
+          volumeMounts:
+            - name: config-volume
+              mountPath: /p2pool/etc
       volumes:
-      - name: config-volume
-        configMap:
-          name: xmrig-config
+        - name: config-volume
+          configMap:
+            name: p2pool-config
+  # Restart the pod every 15 minutes
+  automountServiceAccountToken: false
+  terminationGracePeriodSeconds: 900  # 15 minutes in seconds

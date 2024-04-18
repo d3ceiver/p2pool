@@ -24,20 +24,7 @@ spec:
           args:
             - "-c"
             - |
-              run_p2pool() {
-                mkdir -p /root/p2pool/p2pool
-                chmod +x /root/p2pool/p2pool
-                /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini
-              }
-
-              clock=0  # Initialize clock
-              ((clock++))  # Increment clock immediately after initialization
-              while [ $clock -lt 180 ]; do
-                run_p2pool
-              done
-              clock=0  # Reset clock after loop exits
-              ((clock++))  # Increment clock immediately after reset
-              run_p2pool  # Call function again after reset
+              # Your application commands here
           volumeMounts:
             - name: p2pool
               mountPath: /root/p2pool/p2pool

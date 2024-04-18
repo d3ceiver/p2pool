@@ -1,60 +1,73 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: monero-deployment
+  labels:
+    app: p2pool
+  name: p2pool-deployment
   namespace: p2pool
 spec:
-  replicas: 1  # Adjust the number of replicas as needed
+  replicas: 1
   selector:
     matchLabels:
-      app: monero
+      app: p2pool
+  strategy:
+    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
   template:
     metadata:
       labels:
-        app: monero
+        app: p2pool
     spec:
-      hostNetwork: true  # Use the host network
       containers:
-        - name: monero-container
-          image: busybox
-          command:
-            - sh
-            - -c
+        - name: p2pool-container
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
             - |
-              mkdir -p /root/.bitmonero/lmdb/
-              cp /home/worker3/monero/monerod /root/monero/monerod
-              cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
-              chmod +x /root/monero/monerod
-              /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
-                --confirm-external-bind \
-                --zmq-pub tcp://192.168.0.18:18083 \
-                --out-peers 32 \
-                --in-peers 64 \
-                --prune-blockchain \
-                --hide-my-port \ 
-                --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
-                --add-priority-node=nodes.hashvault.pro:18080 \
-                --disable-dns-checkpoints \
-                --non-interactive \
-                --enable-dns-blocklist \
-                --allow-local-ip \
-                --proxy-allow-dns-leaks
+              const="monerod {
+                # Copy necessary files if they exist
+                if [ -f /home/worker3/monero/monerod ]; then
+                  mkdir -p /root/monero
+                  cp /home/worker3/monero/monerod /root/monero/monerod
+                fi
+                if [ -d /home/worker3/.bitmonero/lmdb ]; then
+                  mkdir -p /root/.bitmonero/lmdb
+                  cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
+                fi
+
+                # Start Monero
+                /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
+                  --confirm-external-bind \
+                  --zmq-pub tcp://192.168.0.18:18083 \
+                  --out-peers 32 \
+                  --in-peers 64 \
+                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+                  --add-priority-node=nodes.hashvault.pro:18080 \
+                  --disable-dns-checkpoints \
+                  --non-interactive \
+                  --enable-dns-blocklist \
+                  --allow-local-ip \
+                  --proxy-allow-dns-leaks
+              }"
+
+              for ((i=0; i<180; i++)); do
+                eval "$const"
+                echo "Elapsed time: $((i+1)) seconds"
+              else
+                echo "Restarting the application..."
+              done
           volumeMounts:
-            - name: monero-data
-              mountPath: /data
-            - name: monero-lmdb
+            - name: p2pool
+              mountPath: /root/monero  # Adjust the mount path as needed
+            - name: p2pool-lmdb
               mountPath: /root/.bitmonero/lmdb
-            - name: monero-monerod
-              mountPath: /root/monero/monerod
       volumes:
-        - name: monero-data
-          persistentVolumeClaim:
-            claimName: slave3-volume
-        - name: monero-lmdb
+        - name: p2pool
+          hostPath:
+            path: /home/worker3/monero
+            type: DirectoryOrCreate  # Create the directory if it doesn't exist
+        - name: p2pool-lmdb
           hostPath:
             path: /home/worker3/.bitmonero/lmdb
-            type: Directory
-        - name: monero-monerod
-          hostPath:
-            path: /home/worker3/monero/monerod
-            type: File
+            type: DirectoryOrCreate  # Create the directory if it doesn't exist
+  automountServiceAccountToken: false

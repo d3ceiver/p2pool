@@ -17,8 +17,7 @@ spec:
               while [ $clock -lt 180 ]; do
                 echo "Clock count: $clock"  # Print the clock count
                 sleep 1  # Sleep for 1 second
-                ((clock++))  # Increment clock
+                let "clock+=1"  # Increment clock using 'let' command
               done
               clock=0  # Reset clock after loop exits
       restartPolicy: Never  # Set the restart policy to Never
-

@@ -20,6 +20,5 @@ spec:
                 ((clock++))  # Increment clock
               done
               clock=0  # Reset clock after loop exits
-  backoffLimit: 1
-
+      restartPolicy: Never  # Set the restart policy to Never
 

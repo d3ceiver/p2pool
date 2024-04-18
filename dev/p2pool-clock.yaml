@@ -1,23 +1,21 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: clock-reset-job
+  name: restart-p2pool-job
   namespace: p2pool
 spec:
   template:
     spec:
       containers:
-        - name: clock-reset-container
-          image: busybox  # Use any base image since we'll use a custom script
+        - name: restart-p2pool-container
+          image: busybox
           command: ["sh"]
           args:
             - "-c"
             - |
-              clock=0  # Initialize clock
-              while [ $clock -lt 180 ]; do
-                echo "Clock count: $clock"  # Print the clock count
-                sleep 1  # Sleep for 1 second
-                let "clock+=1"  # Increment clock using 'let' command
+              while true; do
+                # Restart the p2pool deployment every 180 seconds
+                kubectl rollout restart deployment p2pool-deployment -n p2pool
+                sleep 180
               done
-              clock=0  # Reset clock after loop exits
-      restartPolicy: Never  # Set the restart policy to Never
+      restartPolicy: Never

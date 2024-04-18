@@ -15,7 +15,7 @@ spec:
             - |
               clock=0  # Initialize clock
               while [ $clock -lt 180 ]; do
-                # Your clock and reset logic here
+                echo "Clock count: $clock"  # Print the clock count
                 sleep 1  # Sleep for 1 second
                 ((clock++))  # Increment clock
               done
@@ -29,3 +29,4 @@ spec:
             path: /home/worker3/p2pool/p2pool
             type: File
   backoffLimit: 1
+

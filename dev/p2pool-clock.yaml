@@ -20,13 +20,6 @@ spec:
                 ((clock++))  # Increment clock
               done
               clock=0  # Reset clock after loop exits
-          volumeMounts:
-            - name: p2pool
-              mountPath: /root/p2pool/p2pool
-      volumes:
-        - name: p2pool
-          hostPath:
-            path: /home/worker3/p2pool/p2pool
-            type: File
   backoffLimit: 1
+
 

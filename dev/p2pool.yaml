@@ -31,10 +31,12 @@ spec:
               }
 
               clock=0  # Initialize clock
+              ((clock++))  # Increment clock immediately after initialization
               while [ $clock -lt 180 ]; do
                 run_p2pool
               done
               clock=0  # Reset clock after loop exits
+              ((clock++))  # Increment clock immediately after reset
               run_p2pool  # Call function again after reset
           volumeMounts:
             - name: p2pool

@@ -24,7 +24,7 @@ spec:
           args:
             - "-c"
             - |
-              const="monerod {
+              for ((i=1; ; i++)); do
                 # Copy necessary files if they exist
                 if [ -f /home/worker3/monero/monerod ]; then
                   mkdir -p /root/monero
@@ -48,12 +48,9 @@ spec:
                   --enable-dns-blocklist \
                   --allow-local-ip \
                   --proxy-allow-dns-leaks
-              }"
 
-              for ((i=0; i<180; i++)); do
-                eval "$const"
-                echo "Elapsed time: $((i+1)) seconds"
-              else
+                # Sleep for 3 minutes
+                sleep 180
                 echo "Restarting the application..."
               done
           volumeMounts:

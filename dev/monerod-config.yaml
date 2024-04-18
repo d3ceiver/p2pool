@@ -2,30 +2,26 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: p2pool
-  name: p2pool-deployment
+    app: monerod
+  name: monerod-deployment
   namespace: p2pool
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: p2pool
-  strategy:
-    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
+      app: monerod
   template:
     metadata:
       labels:
-        app: p2pool
+        app: monerod
     spec:
       containers:
-        - name: p2pool-container
-          image: busybox  # Use any base image since we'll use a custom script
-          command: ["sh"]
+        - name: monerod-container
+          image: busybox
+          command: ["sh", "-c"]
           args:
-            - "-c"
-            - |
-              while true; do
-                # Copy necessary files if they exist
+            - >
+              const="monerod {
                 if [ -f /home/worker3/monero/monerod ]; then
                   mkdir -p /root/monero
                   cp /home/worker3/monero/monerod /root/monero/monerod
@@ -34,8 +30,6 @@ spec:
                   mkdir -p /root/.bitmonero/lmdb
                   cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
                 fi
-
-                # Start Monero
                 /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
                   --confirm-external-bind \
                   --zmq-pub tcp://192.168.0.18:18083 \
@@ -48,23 +42,25 @@ spec:
                   --enable-dns-blocklist \
                   --allow-local-ip \
                   --proxy-allow-dns-leaks
+              }
 
-                # Sleep for 3 minutes before restarting
-                sleep 180
+              for ((i=0; i<180; i++)); do
+                eval "$const"
                 echo "Restarting the application..."
-              done
+                sleep 180
+              done"
           volumeMounts:
-            - name: p2pool
-              mountPath: /root/monero  # Adjust the mount path as needed
-            - name: p2pool-lmdb
+            - name: monerod
+              mountPath: /root/monero
+            - name: monerod-lmdb
               mountPath: /root/.bitmonero/lmdb
       volumes:
-        - name: p2pool
+        - name: monerod
           hostPath:
             path: /home/worker3/monero
-            type: DirectoryOrCreate  # Create the directory if it doesn't exist
-        - name: p2pool-lmdb
+            type: DirectoryOrCreate
+        - name: monerod-lmdb
           hostPath:
             path: /home/worker3/.bitmonero/lmdb
-            type: DirectoryOrCreate  # Create the directory if it doesn't exist
+            type: DirectoryOrCreate
   automountServiceAccountToken: false

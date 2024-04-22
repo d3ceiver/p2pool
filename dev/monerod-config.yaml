@@ -38,6 +38,13 @@ spec:
                 --enable-dns-blocklist \
                 --allow-local-ip \
                 --proxy-allow-dns-leaks
+          resources:
+            limits:
+              cpu: "3"
+              memory: "5Gi"
+            requests:
+              cpu: "1"
+              memory: "500Mi"
           volumeMounts:
             - name: monero-data
               mountPath: /data

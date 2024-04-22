@@ -26,6 +26,7 @@ spec:
               cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
               chmod +x /root/monero/monerod
               /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
+                --blockchain-prune \
                 --confirm-external-bind \
                 --zmq-pub tcp://192.168.0.18:18083 \
                 --out-peers 32 \

@@ -6,7 +6,7 @@ metadata:
   name: monero-deployment
   namespace: p2pool
 spec:
-  replicas: 1  # Adjust the number of replicas as needed
+  replicas: 1
   selector:
     matchLabels:
       app: monero
@@ -15,7 +15,7 @@ spec:
       labels:
         app: monero
     spec:
-      hostNetwork: true  # Use the host network
+      hostNetwork: true
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -55,4 +55,10 @@ spec:
               mountPath: /root/.bitmonero/lmdb
             - name: monero-monerod
               mountPath: /root/monero/monerod
-     
+      volumes:
+        - name: monero-lmdb
+          persistentVolumeClaim:
+            claimName: monerod-pvc
+        - name: monero-monerod
+          persistentVolumeClaim:
+            claimName: monerod-pvc

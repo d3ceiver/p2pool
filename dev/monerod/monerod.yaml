@@ -29,7 +29,6 @@ spec:
       containers:
         - name: monero-container
           image: busybox
-          command: ["/bin/sh", "-c"]
           args:
             - mkdir -p root/home/worker3/monero && chmod -R 777 root/home/worker3/monero && /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \

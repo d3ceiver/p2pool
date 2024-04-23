@@ -32,9 +32,9 @@ spec:
           args:
             - mkdir -p /root/.bitmonero/lmdb /root/monero/monerod
           volumeMounts:
-            - name: monero-lmdb
+            - name: monero-storage
               mountPath: /root/.bitmonero/lmdb
-            - name: monero-monerod
+            - name: monero-storage
               mountPath: /root/monero/monerod
       containers:
         - name: monero-container
@@ -62,8 +62,11 @@ spec:
               cpu: "2"
               memory: "500Mi"
           volumeMounts:
-            - name: monero-lmdb
+            - name: monero-storage
               mountPath: /root/.bitmonero/lmdb
-            - name: monero-monerod
+            - name: monero-storage
               mountPath: /root/monero/monerod
 
+      volumes:
+        - name: monero-storage
+          emptyDir: {}

@@ -64,10 +64,6 @@ spec:
             - name: monero-monerod
               mountPath: /root/monero/monerod
       volumes:
-        - name: monero-data
-          persistentVolumeClaim:
-            claimName: slave3-volume
-        - name: monero-lmdb
           hostPath:
             path: /home/worker3/.bitmonero/lmdb
             type: Directory

@@ -55,10 +55,4 @@ spec:
               mountPath: /root/.bitmonero/lmdb
             - name: monero-monerod
               mountPath: /root/monero/monerod
-      volumes:
-        - name: monero-lmdb
-          persistentVolumeClaim:
-            claimName: monerod-pvc
-        - name: monero-monerod
-          persistentVolumeClaim:
-            claimName: monerod-pvc
+     

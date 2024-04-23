@@ -6,7 +6,7 @@ metadata:
   name: monero-deployment
   namespace: p2pool
 spec:
-  replicas: 1  # Adjust the number of replicas as needed
+  replicas: 1
   selector:
     matchLabels:
       app: monero
@@ -15,15 +15,6 @@ spec:
       labels:
         app: monero
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - master
       containers:
         - name: monero-container
           image: busybox
@@ -48,13 +39,6 @@ spec:
                 --enable-dns-blocklist \
                 --allow-local-ip \
                 --proxy-allow-dns-leaks
-          resources:
-            limits:
-              cpu: "2"
-              memory: "4Gi"
-            requests:
-              cpu: "2"
-              memory: "500Mi"
           volumeMounts:
             - name: monero-data
               mountPath: /mnt/data
@@ -67,11 +51,9 @@ spec:
           persistentVolumeClaim:
             claimName: slave3-volume
         - name: monero-lmdb
-          hostPath:
-            path: /home/worker3/.bitmonero/lmdb
-            type: Directory
+          persistentVolumeClaim:
+            claimName: slave3-volume
         - name: monero-monerod
-          hostPath:
-            path: /home/worker3/monero/monerod
-            type: File
+          persistentVolumeClaim:
+            claimName: slave3-volume
 

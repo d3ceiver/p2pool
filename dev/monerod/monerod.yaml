@@ -61,11 +61,14 @@ spec:
             requests:
               cpu: "2"
               memory: "500Mi"
+          volumeMounts:
+            - name: monero-lmdb
+              mountPath: /root/.bitmonero/lmdb
+            - name: monero-monerod
+              mountPath: /root/monero/monerod
       volumes:
         - name: monero-lmdb
-          persistentVolumeClaim:
-            claimName: monero-lmdb-pvc
+          emptyDir: {}
         - name: monero-monerod
-          persistentVolumeClaim:
-            claimName: monero-monerod-pvc
+          emptyDir: {}
 

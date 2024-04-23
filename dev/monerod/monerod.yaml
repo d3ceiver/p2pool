@@ -58,9 +58,9 @@ spec:
       volumes:
         - name: monero-lmdb
           hostPath:
-            path: /home/worker3/.bitmonero/lmdb
+            path: /root/.bitmonero/lmdb
             type: Directory
         - name: monero-monerod
           hostPath:
-            path: /home/worker3/monero/monerod
+            path: /root/monero/monerod
             type: Directory

@@ -1,12 +1,12 @@
- apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: slave3-volume
-  namespace: p2pool
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 4Gi
-  storageClassName: monero-pv-new
+version: '3.8'
+services:
+  xmrig:
+    image: rcmelendez/xmrig
+    container_name: xmrig
+    #environment:
+    #  - TZ=America/New_York
+    volumes:
+      - ./config.json:/xmrig/etc/config.json:ro
+      - ./log:/xmrig/log
+    command: ["xmrig", "--config=/xmrig/etc/config.json"]
+    restart: always

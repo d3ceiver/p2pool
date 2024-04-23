@@ -1,3 +1,4 @@
+User
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -10,5 +11,5 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: monero-pv-new
   hostPath:
-    path: /mnt/data  # Updated path to the correct location
+    path: /home/worker3/
     type: Directory

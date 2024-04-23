@@ -15,8 +15,8 @@ spec:
       labels:
         app: monero
     spec:
-      hostNetwork: true  # Enable host networking
-      dnsPolicy: ClusterFirstWithHostNet  # Use host network for DNS resolution
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -25,13 +25,13 @@ spec:
                   - key: kubernetes.io/hostname
                     operator: In
                     values:
-                      - slave3  # Node affinity to 'slave3'
+                      - slave3
       containers:
         - name: monero-container
-          image: busybox  # Use your desired Monero image here
+          image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - chmod -R 777 /home/worker3/monero && /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
+            - mkdir -p /home/worker3/monero && chmod -R 777 /home/worker3/monero && /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \
               --confirm-external-bind \
               --zmq-pub tcp://192.168.0.18:18083 \

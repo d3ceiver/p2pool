@@ -27,4 +27,4 @@ metadata:
 provisioner: rancher.io/local-path
 reclaimPolicy: Delete
 parameters:
-  allowVolumeExpansion: "true"  # Adjust as needed
+  allowVolumeExpansion: "true"  

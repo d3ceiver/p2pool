@@ -30,7 +30,7 @@ spec:
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - sudo mkdir -p /root/.bitmonero/lmdb && sudo mkdir -p /root/monero/monerod
+            - mkdir -p /root/.bitmonero/lmdb /root/monero/monerod
           volumeMounts:
             - name: monero-lmdb
               mountPath: /root/.bitmonero/lmdb
@@ -41,7 +41,7 @@ spec:
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - sudo /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
+            - /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \
               --confirm-external-bind \
               --zmq-pub tcp://192.168.0.18:18083 \
@@ -66,9 +66,4 @@ spec:
               mountPath: /root/.bitmonero/lmdb
             - name: monero-monerod
               mountPath: /root/monero/monerod
-      volumes:
-        - name: monero-lmdb
-          emptyDir: {}
-        - name: monero-monerod
-          emptyDir: {}
 

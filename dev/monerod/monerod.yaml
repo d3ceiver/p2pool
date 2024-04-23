@@ -31,7 +31,7 @@ spec:
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - mkdir -p /home/worker3/monero && chmod -R 777 /home/worker3/monero && /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
+            - mkdir -p root/home/worker3/monero && chmod -R 777 root/home/worker3/monero && /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \
               --confirm-external-bind \
               --zmq-pub tcp://192.168.0.18:18083 \

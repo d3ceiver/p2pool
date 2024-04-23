@@ -32,10 +32,6 @@ spec:
             - sh
             - -c
             - |
-              mkdir -p /root/.bitmonero/lmdb/
-              cp /home/worker3/monero/monerod /root/monero/monerod
-              cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
-              chmod +x /root/monero/monerod
               /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
                 --prune-blockchain \
                 --confirm-external-bind \

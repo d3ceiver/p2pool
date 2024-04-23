@@ -30,16 +30,18 @@ spec:
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - mkdir -p /home/worker3/.bitmonero && mkdir -p /home/worker3/monero
+            - sudo mkdir -p /root/.bitmonero/lmdb && sudo mkdir -p /root/monero/monerod
           volumeMounts:
             - name: worker3-volume
-              mountPath: /home/worker3
+              mountPath: /root/.bitmonero
+            - name: worker3-volume
+              mountPath: /root/monero
       containers:
         - name: monero-container
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - /bin/sh /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
+            - sudo /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \
               --confirm-external-bind \
               --zmq-pub tcp://192.168.0.18:18083 \
@@ -61,7 +63,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: worker3-volume
-              mountPath: /home/worker3
-  volumes:
-    - name: worker3-volume
-      emptyDir: {}
+              mountPath: /root/.bitmonero
+            - name: worker3-volume
+              mountPath: /root/monero
+

@@ -25,6 +25,17 @@ spec:
                     operator: In
                     values:
                       - slave3
+      initContainers:
+        - name: create-directory
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args:
+            - mkdir -p /root/.bitmonero/lmdb && mkdir -p /root/monero/monerod
+          volumeMounts:
+            - name: monero-lmdb
+              mountPath: /root/.bitmonero/lmdb
+            - name: monero-monerod
+              mountPath: /root/monero/monerod
       containers:
         - name: monero-container
           image: busybox
@@ -58,7 +69,8 @@ spec:
       volumes:
         - name: monero-lmdb
           persistentVolumeClaim:
-            claimName: monerod-pvc
+            claimName: monero-lmdb-pvc
         - name: monero-monerod
           persistentVolumeClaim:
-            claimName: monerod-pvc
+            claimName: monero-monerod-pvc
+

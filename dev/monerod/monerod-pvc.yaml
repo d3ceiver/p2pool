@@ -10,3 +10,12 @@ spec:
     requests:
       storage: 4Gi
   storageClassName: monerod-storageclass
+  # Add node affinity to select 'slave3' node
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - slave3

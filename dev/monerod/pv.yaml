@@ -10,4 +10,4 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: monero-pv-new
   hostPath:
-    path: /path/to/your/host/directory
+    path: /home/worker3/

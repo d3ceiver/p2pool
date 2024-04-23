@@ -1,6 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: monero
   name: monero-deployment
   namespace: p2pool
 spec:
@@ -14,6 +16,15 @@ spec:
         app: monero
     spec:
       hostNetwork: true  # Use the host network
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - master
       containers:
         - name: monero-container
           image: busybox

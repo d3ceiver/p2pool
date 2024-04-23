@@ -50,7 +50,6 @@ spec:
             requests:
               cpu: "2"
               memory: "500Mi"
-       
       volumes:
         - name: monero-lmdb
           persistentVolumeClaim:
@@ -58,3 +57,4 @@ spec:
         - name: monero-monerod
           persistentVolumeClaim:
             claimName: monero-pvc-monerod
+

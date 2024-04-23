@@ -2,46 +2,47 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: xmrig
-  name: xmrig-deployment
-  namespace: xmrig
+    app: p2pool
+  name: p2pool-deployment
+  namespace: p2pool
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrig
-  strategy: {}
+      app: p2pool
+  strategy:
+    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
   template:
     metadata:
       labels:
-        app: xmrig
+        app: p2pool
     spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: NotIn
-                    values:
-                      - slave3
       containers:
-        - image: rcmelendez/xmrig:6.16.2
-          name: xmrig
-          command: ["xmrig"]
-          args: ["-c", "/xmrig/etc/config.json"]
+        - name: p2pool-container
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
+            - |
+              while true; do
+                mkdir -p /root/p2pool/p2pool
+                chmod +x /root/p2pool/p2pool
+                /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini \
+                --no-randomx
+              done
           resources:
             limits:
-              memory: "1Gi"
-              cpu: "1"
+              cpu: "2"
+              memory: "5Gi"
             requests:
-              memory: "500Mi"
-              cpu: "1"      
+              cpu: "2"
+              memory: "5Gi"
           volumeMounts:
-            - name: config-volume
-              mountPath: /xmrig/etc
+            - name: p2pool
+              mountPath: /root/p2pool/p2pool
       volumes:
-        - name: config-volume
-          configMap:
-            name: xmrig-config
+        - name: p2pool
+          hostPath:
+            path: /home/worker3/p2pool/p2pool
+            type: File
+  automountServiceAccountToken: false

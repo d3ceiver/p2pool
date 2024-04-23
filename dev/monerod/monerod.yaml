@@ -15,33 +15,18 @@ spec:
       labels:
         app: monero
     spec:
-      hostNetwork: true
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - slave3
       initContainers:
-        - name: create-directory
+        - name: create-directories
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - sudo mkdir -p /root/.bitmonero/lmdb && sudo mkdir -p /root/monero/monerod
-          volumeMounts:
-            - name: worker3-volume
-              mountPath: /root/.bitmonero
-            - name: worker3-volume
-              mountPath: /root/monero
+            - mkdir -p /root/.bitmonero/lmdb /root/monero/monerod && chmod -R 777 /root
       containers:
         - name: monero-container
           image: busybox
           command: ["/bin/sh", "-c"]
           args:
-            - sudo /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
+            - /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \
               --confirm-external-bind \
               --zmq-pub tcp://192.168.0.18:18083 \
@@ -61,9 +46,5 @@ spec:
             requests:
               cpu: "2"
               memory: "500Mi"
-          volumeMounts:
-            - name: worker3-volume
-              mountPath: /root/.bitmonero
-            - name: worker3-volume
-              mountPath: /root/monero
+
 

@@ -15,18 +15,23 @@ spec:
       labels:
         app: monero
     spec:
-      initContainers:
-        - name: create-directories
-          image: busybox
-          command: ["/bin/sh", "-c"]
-          args:
-            - mkdir -p /root/.bitmonero/lmdb /root/monero/monerod && chmod -R 777 /root
+      hostNetwork: true  # Enable host networking
+      dnsPolicy: ClusterFirstWithHostNet  # Use host network for DNS resolution
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - slave3  # Node affinity to 'slave3'
       containers:
         - name: monero-container
-          image: busybox
+          image: busybox  # Use your desired Monero image here
           command: ["/bin/sh", "-c"]
           args:
-            - /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
+            - chmod -R 777 /home/worker3/monero && /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \
               --confirm-external-bind \
               --zmq-pub tcp://192.168.0.18:18083 \
@@ -46,5 +51,3 @@ spec:
             requests:
               cpu: "2"
               memory: "500Mi"
-
-

@@ -57,8 +57,6 @@ spec:
               cpu: "2"
               memory: "500Mi"
           volumeMounts:
-            - name: monero-data
-              mountPath: /data
             - name: monero-lmdb
               mountPath: /root/.bitmonero/lmdb
             - name: monero-monerod

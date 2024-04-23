@@ -1,4 +1,5 @@
-apiVersion: apps/v1
+User
+  apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -6,7 +7,7 @@ metadata:
   name: monero-deployment
   namespace: p2pool
 spec:
-  replicas: 1
+  replicas: 1  # Adjust the number of replicas as needed
   selector:
     matchLabels:
       app: monero
@@ -15,6 +16,16 @@ spec:
       labels:
         app: monero
     spec:
+      hostNetwork: true  # Use the host network
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - slave3
       containers:
         - name: monero-container
           image: busybox
@@ -23,10 +34,10 @@ spec:
             - -c
             - |
               mkdir -p /root/.bitmonero/lmdb/
-              cp /mnt/data/monerod /root/.bitmonero/monerod  # Adjusted path here
-              cp -r /mnt/data/lmdb/* /root/.bitmonero/lmdb/  # Adjusted path here
-              chmod +x /root/.bitmonero/monerod  # Adjusted path here
-              /root/.bitmonero/monerod --rpc-bind-ip 192.168.0.18 \
+              cp /home/worker3/monero/monerod /root/monero/monerod
+              cp -r /home/worker3/.bitmonero/lmdb/* /root/.bitmonero/lmdb/
+              chmod +x /root/monero/monerod
+              /root/monero/monerod --rpc-bind-ip 192.168.0.18 \
                 --prune-blockchain \
                 --confirm-external-bind \
                 --zmq-pub tcp://192.168.0.18:18083 \
@@ -39,20 +50,29 @@ spec:
                 --enable-dns-blocklist \
                 --allow-local-ip \
                 --proxy-allow-dns-leaks
+          resources:
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+            requests:
+              cpu: "2"
+              memory: "500Mi"
           volumeMounts:
             - name: monero-data
-              mountPath: /mnt/data
+              mountPath: /data
             - name: monero-lmdb
               mountPath: /root/.bitmonero/lmdb
             - name: monero-monerod
-              mountPath: /root/.bitmonero/monerod
+              mountPath: /root/monero/monerod
       volumes:
         - name: monero-data
           persistentVolumeClaim:
             claimName: slave3-volume
         - name: monero-lmdb
-          persistentVolumeClaim:
-            claimName: slave3-volume
+          hostPath:
+            path: /home/worker3/.bitmonero/lmdb
+            type: Directory
         - name: monero-monerod
-          persistentVolumeClaim:
-            claimName: slave3-volume
+          hostPath:
+            path: /home/worker3/monero/monerod
+            type: File 

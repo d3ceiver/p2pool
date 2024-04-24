@@ -47,9 +47,11 @@ spec:
             limits:
               cpu: "2"
               memory: "4Gi"
-            requests:
-              cpu: "2"
-              memory: "500Mi"
+          volumeMounts:
+            - name: monero-lmdb
+              mountPath: /root/.bitmonero/lmdb
+            - name: monero-monerod
+              mountPath: /home/worker3/monero
       volumes:
         - name: monero-lmdb
           persistentVolumeClaim:
@@ -57,4 +59,5 @@ spec:
         - name: monero-monerod
           persistentVolumeClaim:
             claimName: monero-pvc-monerod
+
 

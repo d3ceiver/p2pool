@@ -65,3 +65,4 @@ spec:
         - name: monero-monerod
           persistentVolumeClaim:
             claimName: slave3-volume  # Use the PVC named slave3-volume
+

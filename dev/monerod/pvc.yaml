@@ -1,23 +1,16 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  labels:
-    app: monero
-  name: monero-deployment
+  name: monerod-pvc
   namespace: p2pool
 spec:
-  replicas: 1
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: monero-pv-new
+  volumeMode: Filesystem
   selector:
     matchLabels:
-      app: monero
-  template:
-    metadata:
-      labels:
-        app: monero
-      containers:
-        - name: monero-container
-          # container spec...
-      volumes:
-        - name: monero-volume
-          persistentVolumeClaim:
-            claimName: monero-pvc
+      node: slave3

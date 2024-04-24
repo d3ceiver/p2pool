@@ -61,7 +61,7 @@ spec:
       volumes:
         - name: monero-lmdb
           persistentVolumeClaim:
-            claimName: monero-pvc-lmdb
+            claimName: slave3-volume  # Use the PVC named slave3-volume
         - name: monero-monerod
           persistentVolumeClaim:
-            claimName: monero-pvc-monerod
+            claimName: slave3-volume  # Use the PVC named slave3-volume

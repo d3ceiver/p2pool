@@ -15,8 +15,6 @@ spec:
       labels:
         app: monero
     spec:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -26,6 +24,8 @@ spec:
                     operator: In
                     values:
                       - slave3
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: monero-container
           image: busybox

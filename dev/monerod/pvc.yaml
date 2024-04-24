@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: monerod-pvc
+  name: slave3-volume
   namespace: p2pool
 spec:
   accessModes:
@@ -10,7 +10,3 @@ spec:
     requests:
       storage: 4Gi
   storageClassName: monero-pv-new
-  volumeMode: Filesystem
-  selector:
-    matchLabels:
-      node: slave3

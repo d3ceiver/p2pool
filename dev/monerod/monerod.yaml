@@ -29,6 +29,7 @@ spec:
       containers:
         - name: monero-container
           image: busybox
+          command: ["/bin/sh", "-c"]
           args:
             - mkdir -p /root/.bitmonero/lmdb && chmod -R 777 /root/.bitmonero/lmdb && /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 \
               --prune-blockchain \
@@ -59,5 +60,4 @@ spec:
         - name: monero-monerod
           persistentVolumeClaim:
             claimName: monero-pvc-monerod
-
 

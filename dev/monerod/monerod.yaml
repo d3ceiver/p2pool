@@ -61,8 +61,18 @@ spec:
       volumes:
         - name: monero-lmdb
           persistentVolumeClaim:
-            claimName: slave3-volume  # Use the PVC named slave3-volume
+            claimName: slave3-volume
+            resources:
+              requests:
+                storage: 4Gi
+              limits:
+                storage: 8Gi  # Set the maximum storage limit
         - name: monero-monerod
           persistentVolumeClaim:
-            claimName: slave3-volume  # Use the PVC named slave3-volume
+            claimName: slave3-volume
+            resources:
+              requests:
+                storage: 4Gi
+              limits:
+                storage: 8Gi  # Set the maximum storage limit
 

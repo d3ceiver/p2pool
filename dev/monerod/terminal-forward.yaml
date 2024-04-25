@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: 74.56.241.2
+    - host: teminal.hacknoob.win
       http:
         paths:
           - path: /

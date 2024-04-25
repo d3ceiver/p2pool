@@ -50,10 +50,10 @@ spec:
               memory: "5Gi"
           volumeMounts:
             - name: monero-volume
-              mountPath: /home/worker3/monero
+              mountPath: /monero
       volumes:
         - name: monero-volume
           hostPath:
-            path: /home/worker3/monero
+            path: /monero
             type: DirectoryOrCreate
   automountServiceAccountToken: false

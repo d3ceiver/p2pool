@@ -11,14 +11,14 @@ spec:
     matchLabels:
       app: monerod
   strategy:
-    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
+    type: Recreate
   template:
     metadata:
       labels:
         app: monerod
     spec:
-      nodeSelector:  # Added nodeSelector for node affinity
-        kubernetes.io/hostname: slave3  # Specify the node 'slave3'
+      nodeSelector:
+        kubernetes.io/hostname: slave3
       containers:
         - name: monerod-container
           image: busybox  # Use any base image since we'll use a custom script
@@ -27,8 +27,20 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/worker3/monerod --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini \
-                --no-randomx
+                mkdir -p /home/worker3/monero
+                chmod +x /home/worker3/monero/monerod
+                /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 --prune-blockchain \
+                  --confirm-external-bind \
+                  --zmq-pub tcp://192.168.0.18:18083 \
+                  --out-peers 32 \
+                  --in-peers 64 \
+                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+                  --add-priority-node=nodes.hashvault.pro:18080 \
+                  --disable-dns-checkpoints \
+                  --non-interactive \
+                  --enable-dns-blocklist \
+                  --allow-local-ip \
+                  --proxy-allow-dns-leaks
               done
           resources:
             limits:
@@ -38,4 +50,3 @@ spec:
               cpu: "2"
               memory: "5Gi"
   automountServiceAccountToken: false
-

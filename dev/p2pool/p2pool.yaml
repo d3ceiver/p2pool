@@ -11,7 +11,7 @@ spec:
     matchLabels:
       app: p2pool
   strategy:
-    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
+    type: Recreate
   template:
     metadata:
       labels:
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: p2pool-container
-          image: busybox  # Use any base image since we'll use a custom script
+          image: busybox
           command: ["sh"]
           args:
             - "-c"
@@ -27,22 +27,32 @@ spec:
               while true; do
                 mkdir -p /root/p2pool/p2pool
                 chmod +x /root/p2pool/p2pool
-                /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini \
-                --no-randomx
+                /root/p2pool/p2pool --host 192.168.0.18 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx
+                sleep 10  # Add a sleep interval to reduce CPU usage
               done
           resources:
             limits:
-              cpu: "4"
-              memory: "10Gi"
+              cpu: "1"  # Adjust CPU limit as needed
+              memory: "2Gi"  # Adjust memory limit as needed
             requests:
-              cpu: "3"
-              memory: "5Gi"
+              cpu: "0.5"  # Adjust CPU request as needed
+              memory: "1Gi"  # Adjust memory request as needed
           volumeMounts:
             - name: p2pool
               mountPath: /root/p2pool/p2pool
+          readinessProbe:
+            exec:
+              command:
+                - "ls"
+                - "/root/p2pool/p2pool"  # Change the command as needed to check readiness
+            initialDelaySeconds: 30  # Adjust as needed
+            periodSeconds: 10  # Adjust as needed
+            timeoutSeconds: 5  # Adjust as needed
+            successThreshold: 1
+            failureThreshold: 3
       volumes:
         - name: p2pool
           hostPath:
             path: /home/worker3/p2pool/p2pool
-            type: File
-  automountServiceAccountToken: false
+            type: Directory
+  automountServiceAccountToken: true

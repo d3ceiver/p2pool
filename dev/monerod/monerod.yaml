@@ -5,15 +5,6 @@ metadata:
     app: monero
   name: monero-deployment
   namespace: p2pool
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: monero
-  template:
-    metadata:
-      labels:
-        app: monero
     spec:
       affinity:
         nodeAffinity:

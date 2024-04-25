@@ -17,6 +17,7 @@ spec:
       labels:
         app: monerod
     spec:
+      hostNetwork: true  # Use the host network for the container
       nodeSelector:
         kubernetes.io/hostname: slave3
       containers:

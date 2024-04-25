@@ -49,4 +49,12 @@ spec:
             requests:
               cpu: "2"
               memory: "5Gi"
+          volumeMounts:
+            - name: monero-volume
+              mountPath: /home/worker3/monero
+      volumes:
+        - name: monero-volume
+          hostPath:
+            path: /home/worker3/monero
+            type: DirectoryOrCreate
   automountServiceAccountToken: false

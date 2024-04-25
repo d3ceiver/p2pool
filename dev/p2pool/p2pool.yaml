@@ -32,10 +32,10 @@ spec:
               done
           resources:
             limits:
-              cpu: "2"
-              memory: "5Gi"
+              cpu: "4"
+              memory: "10Gi"
             requests:
-              cpu: "2"
+              cpu: "3"
               memory: "5Gi"
           volumeMounts:
             - name: p2pool

@@ -41,18 +41,10 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: ["/bin/ash", "-c", "/home/worker3/monero/monerod --data-dir /home/worker3/.bitmonero --rpc-bind-ip 192.168.0.18 --prune-blockchain \
-                  --confirm-external-bind \
-                  --zmq-pub tcp://192.168.0.18:18083 \
-                  --out-peers 32 \
-                  --in-peers 64 \
-                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
-                  --add-priority-node=nodes.hashvault.pro:18080 \
-                  --disable-dns-checkpoints \
-                  --non-interactive \
-                  --enable-dns-blocklist \
-                  --allow-local-ip \
-                  --proxy-allow-dns-leaks"]
+                command:
+                  - "/bin/ash"
+                  - "-c"
+                  - "/home/worker3/monero/monerod --data-dir /home/worker3/.bitmonero --rpc-bind-ip 192.168.0.18 --prune-blockchain --confirm-external-bind --zmq-pub tcp://192.168.0.18:18083 --out-peers 32 --in-peers 64 --add-priority-node=p2pmd.xmrvsbeast.com:18080 --add-priority-node=nodes.hashvault.pro:18080 --disable-dns-checkpoints --non-interactive --enable-dns-blocklist --allow-local-ip --proxy-allow-dns-leaks"
       volumes:
         - name: bitmonero-volume
           hostPath:
@@ -63,4 +55,3 @@ spec:
             path: /home/worker3/monero
             type: DirectoryOrCreate
   automountServiceAccountToken: false
-

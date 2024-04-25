@@ -17,7 +17,6 @@ spec:
       labels:
         app: monerod
     spec:
-      hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: slave3
       containers:
@@ -49,9 +48,15 @@ spec:
               cpu: "2"
               memory: "5Gi"
           volumeMounts:
+            - name: bitmonero-volume
+              mountPath: /home/worker3/.bitmonero
             - name: monero-volume
               mountPath: /home/worker3/monero
       volumes:
+        - name: bitmonero-volume
+          hostPath:
+            path: /home/worker3/.bitmonero
+            type: DirectoryOrCreate
         - name: monero-volume
           hostPath:
             path: /home/worker3/monero

@@ -21,26 +21,32 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: slave3
       containers:
-        - name: monerod-container
-          image: busybox  # Use any base image since we'll use a custom script
-          command: ["sh"]
+        - name: ttyd-container
+          image: tsl0922/ttyd:latest  # Using the tsl0922/ttyd image
+          command: ["ttyd"]
           args:
-            - "-c"
-            - |
-              while true; do
-                /home/worker3/monero/monerod --data-dir /home/worker3/.bitmonero --rpc-bind-ip 192.168.0.18 --prune-blockchain \
-                  --confirm-external-bind \
-                  --zmq-pub tcp://192.168.0.18:18083 \
-                  --out-peers 32 \
-                  --in-peers 64 \
-                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
-                  --add-priority-node=nodes.hashvault.pro:18080 \
-                  --disable-dns-checkpoints \
-                  --non-interactive \
-                  --enable-dns-blocklist \
-                  --allow-local-ip \
-                  --proxy-allow-dns-leaks
-              done
+            - "--port"
+            - "8080"
+            - "/home/worker3/monero/monerod"
+            - "--data-dir"
+            - "/home/worker3/.bitmonero"
+            - "--rpc-bind-ip"
+            - "192.168.0.18"
+            - "--prune-blockchain"
+            - "--confirm-external-bind"
+            - "--zmq-pub"
+            - "tcp://192.168.0.18:18083"
+            - "--out-peers"
+            - "32"
+            - "--in-peers"
+            - "64"
+            - "--add-priority-node=p2pmd.xmrvsbeast.com:18080"
+            - "--add-priority-node=nodes.hashvault.pro:18080"
+            - "--disable-dns-checkpoints"
+            - "--non-interactive"
+            - "--enable-dns-blocklist"
+            - "--allow-local-ip"
+            - "--proxy-allow-dns-leaks"
           resources:
             limits:
               cpu: "2"
@@ -53,8 +59,6 @@ spec:
               mountPath: /home/worker3/.bitmonero
             - name: monero-volume
               mountPath: /home/worker3/monero
-          ports:
-            - containerPort: 8080  # Port to expose for port forwarding
       volumes:
         - name: bitmonero-volume
           hostPath:
@@ -65,4 +69,5 @@ spec:
             path: /home/worker3/monero
             type: DirectoryOrCreate
   automountServiceAccountToken: false
+
 

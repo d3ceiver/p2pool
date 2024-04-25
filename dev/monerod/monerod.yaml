@@ -23,6 +23,8 @@ spec:
       containers:
         - name: monerod-container
           image: tsl0922/ttyd:latest  # Use any base image since we'll use a custom script
+          ports:
+            - containerPort: 7681 
           command: ["sh"]
           args:
             - "-c"

@@ -5,64 +5,56 @@ metadata:
     app: monero
   name: monero-deployment
   namespace: p2pool
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - slave3
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
-      containers:
-        - name: monero-container
-          image: busybox
-          command: ["sh"]
-          args:
-            - "-c"
-            - |
-              while true; do
-                /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 --prune-blockchain \
-                  --confirm-external-bind \
-                  --zmq-pub tcp://192.168.0.18:18083 \
-                  --out-peers 32 \
-                  --in-peers 64 \
-                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
-                  --add-priority-node=nodes.hashvault.pro:18080 \
-                  --disable-dns-checkpoints \
-                  --non-interactive \
-                  --enable-dns-blocklist \
-                  --allow-local-ip \
-                  --proxy-allow-dns-leaks
-                sleep 5  # Add a sleep to avoid constant restarts
-              done
-          resources:
-            limits:
-              cpu: "1"
-              memory: "2Gi"
-          volumeMounts:
-            - name: monero-lmdb
-              mountPath: /root/.bitmonero/lmdb
-            - name: monero-monerod
-              mountPath: /home/worker3/monero
-      volumes:
-        - name: monero-lmdb
-          persistentVolumeClaim:
-            claimName: slave3-volume
-            resources:
-              requests:
-                storage: 4Gi
-              limits:
-                storage: 8Gi  # Set the maximum storage limit
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - slave3
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  containers:
+    - name: monero-container
+      image: busybox
+      command: ["sh"]
+      args:
+        - "-c"
+        - |
+          while true; do
+            mkdir -p /home/worker3/monero
+            chmod +x /home/worker3/monero/monerod
+            /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 --prune-blockchain \
+              --confirm-external-bind \
+              --zmq-pub tcp://192.168.0.18:18083 \
+              --out-peers 32 \
+              --in-peers 64 \
+              --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+              --add-priority-node=nodes.hashvault.pro:18080 \
+              --disable-dns-checkpoints \
+              --non-interactive \
+              --enable-dns-blocklist \
+              --allow-local-ip \
+              --proxy-allow-dns-leaks
+            sleep 5  # Add a sleep to avoid constant restarts
+          done
+      resources:
+        limits:
+          cpu: "1"
+          memory: "2Gi"
+      volumeMounts:
         - name: monero-monerod
-          persistentVolumeClaim:
-            claimName: slave3-volume
-            resources:
-              requests:
-                storage: 4Gi
-              limits:
-                storage: 8Gi  # Set the maximum storage limit
+          mountPath: /home/worker3/monero
+  volumes:
+    - name: monero-monerod
+      persistentVolumeClaim:
+        claimName: slave3-volume
+        resources:
+          requests:
+            storage: 4Gi
+          limits:
+            storage: 8Gi  # Set the maximum storage limit
 

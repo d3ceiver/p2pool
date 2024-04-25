@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: p2pool-container
-          image: alpine:latest  # Using Alpine Linux as a lightweight base image
+          image: busybox:latest  # Using Alpine Linux as a lightweight base image
           command: ["sh"]
           args:
             - "-c"

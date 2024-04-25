@@ -17,6 +17,7 @@ spec:
       labels:
         app: monerod
     spec:
+      hostNetwork: true  # Use the host network for the container
       nodeSelector:
         kubernetes.io/hostname: slave3
       containers:
@@ -27,8 +28,6 @@ spec:
             - "-c"
             - |
               while true; do
-                mkdir -p /home/worker3/monero
-                chmod +x /home/worker3/monero/monerod
                 /home/worker3/monero/monerod --rpc-bind-ip 192.168.0.18 --prune-blockchain \
                   --confirm-external-bind \
                   --zmq-pub tcp://192.168.0.18:18083 \
@@ -51,10 +50,10 @@ spec:
               memory: "5Gi"
           volumeMounts:
             - name: monero-volume
-              mountPath: /monero
+              mountPath: /home/worker3/monero
       volumes:
         - name: monero-volume
           hostPath:
-            path: /monero
+            path: /home/worker3/monero
             type: DirectoryOrCreate
   automountServiceAccountToken: false

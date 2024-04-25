@@ -53,6 +53,8 @@ spec:
               mountPath: /home/worker3/.bitmonero
             - name: monero-volume
               mountPath: /home/worker3/monero
+          ports:
+            - containerPort: 8080  # Port to expose for port forwarding
       volumes:
         - name: bitmonero-volume
           hostPath:
@@ -63,3 +65,4 @@ spec:
             path: /home/worker3/monero
             type: DirectoryOrCreate
   automountServiceAccountToken: false
+

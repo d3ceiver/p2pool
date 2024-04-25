@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: teminal.hacknoob.win
+    - host: terminal.hacknoob.win
       http:
         paths:
           - path: /

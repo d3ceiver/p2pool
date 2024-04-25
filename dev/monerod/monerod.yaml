@@ -45,7 +45,7 @@ spec:
       volumes:
         - name: monerod
           hostPath:
-            path: /home/worker3/monero
+            path: monero
             type: DirectoryOrCreate  # Use DirectoryOrCreate for creating directory if not exists
   automountServiceAccountToken: false
 

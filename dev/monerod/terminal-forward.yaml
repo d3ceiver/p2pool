@@ -1,1 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monerod-ingress
+  namespace: p2pool
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: 74.56.241.2
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: monerod-service
+                port:
+                  number: 18083  # The port where your Monero daemon is running
 

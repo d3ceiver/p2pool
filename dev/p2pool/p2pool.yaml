@@ -6,7 +6,6 @@ metadata:
   name: p2pool-deployment
   namespace: p2pool
 spec:
-  hostNetwork: true
   replicas: 1
   selector:
     matchLabels:
@@ -25,17 +24,18 @@ spec:
                     operator: In
                     values:
                       - slave2
+      hostNetwork: true  # Add this line to use the host's network
       containers:
         - name: p2pool-container
           image: busybox
-          command: ["sh", "-c", "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"]
+          command: ["sh", "-c", "/root/p2pool/p2pool --host <host_ip> --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"]
           resources:
             limits:
-              cpu: "4"
-              memory: "5Gi"
-            requests:
               cpu: "2"
-              memory: "2Gi"
+              memory: "2Gi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
           volumeMounts:
             - name: p2pool-data
               mountPath: /root/p2pool
@@ -45,4 +45,3 @@ spec:
             path: /home/worker2/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false
-  

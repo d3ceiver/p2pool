@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xmrig-pvc-worker1
+  namespace: xmrig
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: monero-pv-new  # Match the StorageClass specified in your PV template
+  resources:
+    requests:
+      storage: 5Gi  # Match the storage size of the PV
+  volumeName: xmrig-pv-worker1  # Match the name of the corresponding PV
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - slave1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xmrig-pvc-worker2
+  namespace: xmrig
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: monero-pv-new  # Match the StorageClass specified in your PV template
+  resources:
+    requests:
+      storage: 5Gi  # Match the storage size of the PV
+  volumeName: xmrig-pv-worker2  # Match the name of the corresponding PV
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - slave2
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xmrig-pvc-worker3
+  namespace: xmrig
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: monero-pv-new  # Match the StorageClass specified in your PV template
+  resources:
+    requests:
+      storage: 5Gi  # Match the storage size of the PV
+  volumeName: xmrig-pv-worker3  # Match the name of the corresponding PV
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - slave3

@@ -21,7 +21,7 @@ spec:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: kubernetes.io/hostname
-                    operator: NotIn
+                    operator: NotIn  # Use NotIn without spaces for the operator
                     values:
                       - master
       hostNetwork: true  # Add this line to use the host's network
@@ -38,7 +38,7 @@ spec:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data
+            - name: xmrig-data  # Corrected volume name
               mountPath: /root/xmrig
       volumes:
         - name: xmrig-data

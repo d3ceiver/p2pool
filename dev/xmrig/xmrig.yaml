@@ -6,7 +6,7 @@ metadata:
   name: xmrig-statefulset
   namespace: xmrig
 spec:
-  replicas: 3  # Set the number of replicas to 3
+  replicas: 3
   selector:
     matchLabels:
       app: xmrig
@@ -25,22 +25,22 @@ spec:
                     operator: NotIn
                     values:
                       - master
-      hostNetwork: true  # Add this line to use the host's network if necessary
-      automountServiceAccountToken: false  # Disable automatic mounting of Service Account token if not needed
+      hostNetwork: true
+      automountServiceAccountToken: false
       containers:
         - name: xmrig-container
           image: busybox
-          command: ["sh", "-c", "sudo ./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          command: ["sh", "-c", "./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
           resources:
             limits:
               cpu: "2"
-              memory: "2Gi"  # Adjust as per your application's requirements
+              memory: "2Gi"
             requests:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data
-              mountPath: /root/xmrig/build  # Mount host's directory containing xmrig
+              mountPath: /root/xmrig/build
   volumeClaimTemplates:
     - metadata:
         name: xmrig-data
@@ -49,6 +49,6 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 5Gi  # Adjust as per your storage requirements
-        storageClassName: xmrig-pv-new  # Specify your desired StorageClass
+            storage: 5Gi
+        storageClassName: xmrig-pv-new
 

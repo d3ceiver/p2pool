@@ -6,6 +6,7 @@ metadata:
   name: p2pool-deployment
   namespace: p2pool
 spec:
+  hostNetwork: true
   replicas: 1
   selector:
     matchLabels:
@@ -33,8 +34,8 @@ spec:
               cpu: "4"
               memory: "5Gi"
             requests:
-              cpu: "500m"
-              memory: "500Mi"
+              cpu: "2"
+              memory: "2Gi"
           volumeMounts:
             - name: p2pool-data
               mountPath: /root/p2pool
@@ -44,4 +45,4 @@ spec:
             path: /home/worker2/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false
-  hostNetwork: true
+  

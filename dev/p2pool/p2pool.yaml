@@ -11,17 +11,15 @@ spec:
     matchLabels:
       app: p2pool
   strategy:
-    type: Recreate
+    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
   template:
     metadata:
       labels:
         app: p2pool
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: slave2
       containers:
         - name: p2pool-container
-          image: alpine:latest
+          image: busybox  # Use any base image since we'll use a custom script
           command: ["sh"]
           args:
             - "-c"
@@ -35,7 +33,7 @@ spec:
           resources:
             limits:
               cpu: "4"
-              memory: "4Gi"
+              memory: "6Gi"
             requests:
               cpu: "2"
               memory: "2Gi"
@@ -45,6 +43,6 @@ spec:
       volumes:
         - name: p2pool
           hostPath:
-            path: /home/worker2/p2pool/p2pool  # Corrected path
-            type: DirectoryOrCreate  # Ensure the directory exists or create if not
+            path: /home/worker2/p2pool/p2pool
+            type: File
   automountServiceAccountToken: false

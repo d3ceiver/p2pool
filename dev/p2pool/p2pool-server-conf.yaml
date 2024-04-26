@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: p2pool-container
+      app: p2pool-deployment
   policyTypes:
     - Ingress
   ingress:

@@ -29,8 +29,8 @@ spec:
       automountServiceAccountToken: false  # Disable automatic mounting of Service Account token if not needed
       containers:
         - name: xmrig-container
-          image: busybox # Replace <your_xmrig_image> with the correct image name
-          command: ["sh", "-c", "root/xmrig/build/xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          image: <your_xmrig_image>  # Replace <your_xmrig_image> with the correct image name
+          command: ["sh", "-c", "chmod +x /root/xmrig/build/xmrig && /root/xmrig/build/xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
           resources:
             limits:
               cpu: "2"
@@ -40,7 +40,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data
-              mountPath: /xmrig  # Mount host's directory containing xmrig
+              mountPath: /root/xmrig/build  # Mount host's directory containing xmrig
   volumeClaimTemplates:
     - metadata:
         name: xmrig-data
@@ -51,3 +51,4 @@ spec:
           requests:
             storage: 5Gi  # Adjust as per your storage requirements
         storageClassName: monero-pv-new  # Specify your desired StorageClass
+

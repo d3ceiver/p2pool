@@ -50,34 +50,4 @@ spec:
             type: DirectoryOrCreate
   automountServiceAccountToken: false
   hostNetwork: true
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: p2pool-service
-  namespace: p2pool
-spec:
-  type: NodePort
-  selector:
-    app: p2pool
-  ports:
-    - name: monero
-      protocol: TCP
-      port: 18080
-      targetPort: 18080
-      nodePort: 30001  # Choose a nodePort in the range 30000-32767
-    - name: port37889
-      protocol: TCP
-      port: 37889
-      targetPort: 37889
-      nodePort: 30002  # Choose another nodePort
-    - name: port37888
-      protocol: TCP
-      port: 37888
-      targetPort: 37888
-      nodePort: 30003  # Choose another nodePort
-    - name: port3333
-      protocol: TCP
-      port: 3333
-      targetPort: 3333
-      nodePort: 30004  # Choose another nodePort
+

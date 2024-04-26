@@ -6,26 +6,35 @@ metadata:
   name: xmrig-deployment
   namespace: xmrig
 spec:
-  replicas: 1
+  replicas: 4  # Adjust the number of replicas as needed
   selector:
     matchLabels:
       app: xmrig
-  strategy: {}
   template:
     metadata:
       labels:
         app: xmrig
     spec:
       affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: NotIn
+                  - key: app
+                    operator: In
                     values:
-                      - slave3
+                      - xmrig
+              topologyKey: kubernetes.io/hostname
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - xmrig
+              topologyKey: kubernetes.io/hostname
+              weight: 100
       containers:
         - image: rcmelendez/xmrig:6.16.2
           name: xmrig
@@ -37,7 +46,7 @@ spec:
               cpu: "1"
             requests:
               memory: "500Mi"
-              cpu: "1"      
+              cpu: "1"
           volumeMounts:
             - name: config-volume
               mountPath: /xmrig/etc

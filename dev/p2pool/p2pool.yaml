@@ -39,25 +39,13 @@ spec:
             requests:
               cpu: "500m"
               memory: "500Mi"
-          readinessProbe:
-            exec:
-              command:
-                - "ls"
-                - "/root/p2pool/p2pool"
-            initialDelaySeconds: 10
-            periodSeconds: 5
-          livenessProbe:
-            exec:
-              command:
-                - "ls"
-                - "/root/p2pool/p2pool"
-            initialDelaySeconds: 30
-            periodSeconds: 10
           volumeMounts:
             - name: p2pool-data
-              mountPath: /root/p2pool/p2pool
+              mountPath: /root/p2pool  # Adjust the mount path if needed
       volumes:
         - name: p2pool-data
-          emptyDir: {}  # Use an emptyDir volume for simplicity; replace with PersistentVolume and PersistentVolumeClaim if needed
+          hostPath:
+            path: /home/worker2/p2pool  # Update the hostPath if needed
+            type: DirectoryOrCreate  # Use DirectoryOrCreate if the directory might not exist
   automountServiceAccountToken: false
   hostNetwork: true

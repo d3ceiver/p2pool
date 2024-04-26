@@ -29,7 +29,7 @@ spec:
       containers:
         - name: xmrig-container
           image: busybox
-          command: ["sh", "-c", "./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          command: ["sh", "-c", "./xmrig/build/xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
           resources:
             limits:
               cpu: "2"
@@ -38,10 +38,22 @@ spec:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data
-              mountPath: /xmrig  # Mount host's directory containing xmrig
+            - name: xmrig-data1
+              mountPath: /xmrig1  # Mount host's directory containing xmrig 1
+            - name: xmrig-data2
+              mountPath: /xmrig2  # Mount host's directory containing xmrig 2
+            - name: xmrig-data3
+              mountPath: /xmrig3  # Mount host's directory containing xmrig 3
       volumes:
-        - name: xmrig-data
+        - name: xmrig-data1
           hostPath:
-            path: ./xmrig/build  # Path to xmrig on the host 
+            path: /home/worker1/xmrig/build  # Absolute path to xmrig 1 on the host
+            type: DirectoryOrCreate
+        - name: xmrig-data2
+          hostPath:
+            path: /home/worker2/xmrig/build  # Absolute path to xmrig 2 on the host
+            type: DirectoryOrCreate
+        - name: xmrig-data3
+          hostPath:
+            path: /home/worker3/xmrig/build  # Absolute path to xmrig 3 on the host
             type: DirectoryOrCreate

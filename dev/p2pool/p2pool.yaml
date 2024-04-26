@@ -43,7 +43,7 @@ spec:
       volumes:
         - name: p2pool
           hostPath:
-            path: /home/worker3/p2pool/p2pool
+            path: /home/worker2/p2pool/p2pool
             type: DirectoryOrCreate  # Ensure the directory exists or create if not
   automountServiceAccountToken: false
 

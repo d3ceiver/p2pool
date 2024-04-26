@@ -4,37 +4,39 @@ metadata:
   name: xmrig-pv-worker1
 spec:
   capacity:
-    storage: 5Gi  # Adjust the storage size as per your requirements
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PVC template
+  storageClassName: xmrig-pv-new
   hostPath:
-    path: /home/worker1/xmrig/build # Absolute path to the storage directory on worker1
+    path: /home/worker1/xmrig/build/xmrig
 
 ---
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: xmrig-pv-worker2
 spec:
   capacity:
-    storage: 5Gi  # Adjust the storage size as per your requirements
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PVC template
+  storageClassName: xmrig-pv-new
   hostPath:
-    path: /home/worker2/xmrig/build # Absolute path to the storage directory on worker2
+    path: /home/worker2/xmrig/build/xmrig
 
 ---
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: xmrig-pv-worker3
 spec:
   capacity:
-    storage: 5Gi  # Adjust the storage size as per your requirements
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PVC template
+  storageClassName: xmrig-pv-new
   hostPath:
-    path: /home/worker3/xmrig/build # Absolute path to the storage directory on worker3
+    path: /home/worker3/xmrig/build/xmrig

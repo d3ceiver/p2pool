@@ -7,7 +7,7 @@ spec:
     storage: 5Gi  # Adjust the storage size as per your requirements
   accessModes:
     - ReadWriteOnce
-  storageClassName: monero-pv-new  # Match the StorageClass specified in your PVC template
+  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PVC template
   hostPath:
     path: /home/worker1 # Absolute path to the storage directory on worker1
 
@@ -21,7 +21,7 @@ spec:
     storage: 5Gi  # Adjust the storage size as per your requirements
   accessModes:
     - ReadWriteOnce
-  storageClassName: monero-pv-new  # Match the StorageClass specified in your PVC template
+  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PVC template
   hostPath:
     path: /home/worker2 # Absolute path to the storage directory on worker2
 
@@ -35,6 +35,6 @@ spec:
     storage: 5Gi  # Adjust the storage size as per your requirements
   accessModes:
     - ReadWriteOnce
-  storageClassName: monero-pv-new  # Match the StorageClass specified in your PVC template
+  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PVC template
   hostPath:
     path: /home/worker3 # Absolute path to the storage directory on worker3

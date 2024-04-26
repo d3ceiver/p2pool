@@ -21,10 +21,11 @@ spec:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: kubernetes.io/hostname
-                    operator: Not In
+                    operator: NotIn
                     values:
                       - master
       hostNetwork: true  # Add this line to use the host's network
+      automountServiceAccountToken: false  # Disable automatic mounting of Service Account token
       containers:
         - name: xmrig-container
           image: busybox
@@ -44,4 +45,3 @@ spec:
           hostPath:
             path: /xmrig
             type: DirectoryOrCreate
-  automountServiceAccountToken: false

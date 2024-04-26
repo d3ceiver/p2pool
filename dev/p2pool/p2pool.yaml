@@ -8,16 +8,6 @@ metadata:
 spec:
   hostNetwork: true 
   replicas: 1
-  selector:
-    matchLabels:
-      app: p2pool
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: p2pool
-    spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -35,8 +25,8 @@ spec:
             - "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"
           resources:
             limits:
-              cpu: "1"
-              memory: "1Gi"
+              cpu: "4"
+              memory: "5Gi"
             requests:
               cpu: "500m"
               memory: "500Mi"

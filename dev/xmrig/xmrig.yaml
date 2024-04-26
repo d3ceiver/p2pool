@@ -41,7 +41,7 @@ spec:
             - name: xmrig-data
               mountPath: /root/xmrig
       volumes:
-        - name: p2pool-data
+        - name: xmrig-data
           hostPath:
             path: /xmrig
             type: DirectoryOrCreate

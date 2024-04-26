@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: monero-pv-new  # Match the StorageClass specified in your PV template
+  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PV template
   resources:
     requests:
       storage: 5Gi  # Match the storage size of the PV
@@ -28,7 +28,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: monero-pv-new  # Match the StorageClass specified in your PV template
+  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PV template
   resources:
     requests:
       storage: 5Gi  # Match the storage size of the PV
@@ -50,7 +50,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: monero-pv-new  # Match the StorageClass specified in your PV template
+  storageClassName: xmrig-pv-new  # Match the StorageClass specified in your PV template
   resources:
     requests:
       storage: 5Gi  # Match the storage size of the PV

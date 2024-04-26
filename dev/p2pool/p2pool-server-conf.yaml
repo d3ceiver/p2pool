@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: monero-pod  # Adjust the label selector to match your pod
+      app: p2pool-container
   policyTypes:
     - Ingress
   ingress:

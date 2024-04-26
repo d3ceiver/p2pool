@@ -40,7 +40,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data
-              mountPath: /xmrig/build
+              mountPath: root/xmrig/build
   volumeClaimTemplates:
     - metadata:
         name: xmrig-data

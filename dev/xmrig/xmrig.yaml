@@ -6,7 +6,7 @@ metadata:
   name: xmrig-deployment
   namespace: xmrig
 spec:
-  replicas: 1
+  replicas: 3  # Set the number of replicas to 3
   selector:
     matchLabels:
       app: xmrig
@@ -29,7 +29,7 @@ spec:
       containers:
         - name: xmrig-container
           image: busybox
-          command: ["sh", "-c", "/root/xmrig/build/xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          command: ["sh", "-c", "./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
           resources:
             limits:
               cpu: "2"
@@ -38,12 +38,104 @@ spec:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data2
-              mountPath: /root/xmrig/build/xmrig  # Mount host's directory containing xmrig 2
+            - name: xmrig-data
+              mountPath: /xmrig  # Mount host's directory containing xmrig
       volumes:
-        - name: xmrig-data2
+        - name: xmrig-data
           hostPath:
-            path: /home/worker2/xmrig/build  # Absolute path to xmrig 2 on the host
+            path: /home/worker3/xmrig/build  # Absolute path to xmrig on the host (replace worker3 with the appropriate username for each host)
             type: DirectoryOrCreate
-        
-      
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: xmrig
+  name: xmrig-deployment
+  namespace: xmrig
+spec:
+  replicas: 3  # Set the number of replicas to 3
+  selector:
+    matchLabels:
+      app: xmrig
+  template:
+    metadata:
+      labels:
+        app: xmrig
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - master
+      hostNetwork: true  # Add this line to use the host's network
+      automountServiceAccountToken: false  # Disable automatic mounting of Service Account token
+      containers:
+        - name: xmrig-container
+          image: busybox
+          command: ["sh", "-c", "./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+          volumeMounts:
+            - name: xmrig-data
+              mountPath: /xmrig  # Mount host's directory containing xmrig
+      volumes:
+        - name: xmrig-data
+          hostPath:
+            path: /home/worker3/xmrig/build  # Absolute path to xmrig on the host (replace worker3 with the appropriate username for each host)
+            type: DirectoryOrCreate
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: xmrig
+  name: xmrig-deployment
+  namespace: xmrig
+spec:
+  replicas: 3  # Set the number of replicas to 3
+  selector:
+    matchLabels:
+      app: xmrig
+  template:
+    metadata:
+      labels:
+        app: xmrig
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - master
+      hostNetwork: true  # Add this line to use the host's network
+      automountServiceAccountToken: false  # Disable automatic mounting of Service Account token
+      containers:
+        - name: xmrig-container
+          image: busybox
+          command: ["sh", "-c", "./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+          volumeMounts:
+            - name: xmrig-data
+              mountPath: /xmrig  # Mount host's directory containing xmrig
+      volumes:
+        - name: xmrig-data
+          hostPath:
+            path: /home/worker3/xmrig/build  # Absolute path to xmrig on the host (replace worker3 with the appropriate username for each host)
+            type: DirectoryOrCreate

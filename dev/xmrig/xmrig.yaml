@@ -50,5 +50,5 @@ spec:
         resources:
           requests:
             storage: 5Gi  # Adjust as per your storage requirements
-        storageClassName: monero-pv-new  # Specify your desired StorageClass
+        storageClassName: xmrig-pv-new  # Specify your desired StorageClass
 

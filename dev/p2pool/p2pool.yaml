@@ -11,7 +11,7 @@ spec:
     matchLabels:
       app: p2pool
   strategy:
-    type: Recreate  # Changed to Recreate strategy for immediate deletion and recreation
+    type: Recreate
   template:
     metadata:
       labels:
@@ -28,30 +28,36 @@ spec:
                       - slave2
       containers:
         - name: p2pool-container
-          image: busybox  # Use any base image since we'll use a custom script
-          command: ["sh"]
+          image: busybox
+          command: ["sh", "-c"]
           args:
-            - "-c"
-            - |
-              while true; do
-                chmod +x /root/p2pool/p2pool
-                /root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini \
-                --no-randomx
-              done
+            - "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"
           resources:
             limits:
-              cpu: "4"
-              memory: "6Gi"
+              cpu: "1"
+              memory: "1Gi"
             requests:
-              cpu: "2"
-              memory: "2Gi"
+              cpu: "500m"
+              memory: "500Mi"
+          readinessProbe:
+            exec:
+              command:
+                - "ls"
+                - "/root/p2pool/p2pool"
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - "ls"
+                - "/root/p2pool/p2pool"
+            initialDelaySeconds: 30
+            periodSeconds: 10
           volumeMounts:
-            - name: p2pool
+            - name: p2pool-data
               mountPath: /root/p2pool/p2pool
       volumes:
-        - name: p2pool
-          hostPath:
-            path: /home/worker2/p2pool/p2pool
-            type: File
+        - name: p2pool-data
+          emptyDir: {}  # Use an emptyDir volume for simplicity; replace with PersistentVolume and PersistentVolumeClaim if needed
   automountServiceAccountToken: false
-  hostNetwork: true 
+  hostNetwork: true

@@ -10,3 +10,9 @@ spec:
     - protocol: TCP
       port: 18081
       targetPort: 18081
+    - protocol: TCP
+      port: 37889
+      targetPort: 37889
+    - protocol: TCP
+      port: 37888
+      targetPort: 37888

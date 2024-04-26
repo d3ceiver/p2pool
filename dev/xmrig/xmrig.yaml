@@ -16,6 +16,14 @@ spec:
         app: xmrig
     spec:
       affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - master
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
@@ -35,12 +43,6 @@ spec:
                       - xmrig
               topologyKey: kubernetes.io/hostname
               weight: 100
-      nodeSelector:
-        kubernetes.io/hostname: 
-          values: 
-            - slave1
-            - slave2
-            - slave3
       containers:
         - image: rcmelendez/xmrig:6.16.2
           name: xmrig
@@ -60,4 +62,3 @@ spec:
         - name: config-volume
           configMap:
             name: xmrig-config
-

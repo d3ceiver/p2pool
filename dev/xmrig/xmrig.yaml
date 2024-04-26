@@ -1,1 +1,47 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: xmrig
+  name: xmrig-deployment
+  namespace: xmrig
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig
+  template:
+    metadata:
+      labels:
+        app: xmrig
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: Not In
+                    values:
+                      - master
+      hostNetwork: true  # Add this line to use the host's network
+      containers:
+        - name: xmrig-container
+          image: busybox
+          command: ["sh", "-c", "/root/xmrig/build/xmrig -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+          volumeMounts:
+            - name: xmrig-data
+              mountPath: /root/xmrig
+      volumes:
+        - name: p2pool-data
+          hostPath:
+            path: /xmrig
+            type: DirectoryOrCreate
+  automountServiceAccountToken: false

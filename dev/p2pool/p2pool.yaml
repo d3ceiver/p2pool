@@ -34,11 +34,11 @@ spec:
               done
           resources:
             limits:
+              cpu: "4"
+              memory: "4Gi"
+            requests:
               cpu: "2"
               memory: "2Gi"
-            requests:
-              cpu: "1"
-              memory: "1Gi"
           volumeMounts:
             - name: p2pool
               mountPath: /root/p2pool/p2pool

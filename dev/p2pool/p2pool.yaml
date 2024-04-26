@@ -6,6 +6,7 @@ metadata:
   name: p2pool-deployment
   namespace: p2pool
 spec:
+  hostNetwork: true 
   replicas: 1
   selector:
     matchLabels:
@@ -48,4 +49,4 @@ spec:
             path: /home/worker2/p2pool  # Update the hostPath if needed
             type: DirectoryOrCreate  # Use DirectoryOrCreate if the directory might not exist
   automountServiceAccountToken: false
-  hostNetwork: true
+  

@@ -17,9 +17,11 @@ spec:
       labels:
         app: p2pool
     spec:
+      nodeSelector:  # Specify node affinity here
+        kubernetes.io/hostname: slave2  # Label of the target node
       containers:
         - name: p2pool-container
-          image: busybox:latest  # Using Alpine Linux as a lightweight base image
+          image: busybox
           command: ["sh"]
           args:
             - "-c"
@@ -32,11 +34,11 @@ spec:
               done
           resources:
             limits:
-              cpu: "2"  # Reduced CPU limit
-              memory: "2Gi"  # Reduced memory limit
+              cpu: "2"
+              memory: "2Gi"
             requests:
-              cpu: "1"  # Reduced CPU request
-              memory: "1Gi"  # Reduced memory request
+              cpu: "1"
+              memory: "1Gi"
           volumeMounts:
             - name: p2pool
               mountPath: /root/p2pool/p2pool
@@ -44,6 +46,5 @@ spec:
         - name: p2pool
           hostPath:
             path: /home/worker2/p2pool/p2pool
-            type: DirectoryOrCreate  # Ensure the directory exists or create if not
+            type: DirectoryOrCreate
   automountServiceAccountToken: false
-

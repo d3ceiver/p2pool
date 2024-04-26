@@ -22,7 +22,7 @@ spec:
         kubernetes.io/hostname: slave3
       containers:
         - name: monerod-container
-          image: tsl0922/ttyd:latest  # Use any base image since we'll use a custom script
+          image: busybox  # Use any base image since we'll use a custom script
           command: ["sh"]
           args:
             - "-c"

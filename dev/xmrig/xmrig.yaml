@@ -38,23 +38,12 @@ spec:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data1
-              mountPath: /root/xmrig/build/xmrig  # Mount host's directory containing xmrig 1
             - name: xmrig-data2
               mountPath: /root/xmrig/build/xmrig  # Mount host's directory containing xmrig 2
-            - name: xmrig-data3
-              mountPath: /root/xmrig/build/xmrig  # Mount host's directory containing xmrig 3
       volumes:
-        - name: xmrig-data1
-          hostPath:
-            path: /home/worker1/xmrig/build  # Absolute path to xmrig 1 on the host
-            type: DirectoryOrCreate
         - name: xmrig-data2
           hostPath:
             path: /home/worker2/xmrig/build  # Absolute path to xmrig 2 on the host
             type: DirectoryOrCreate
-        - name: xmrig-data3
-          hostPath:
-            path: /home/worker3/xmrig/build  # Absolute path to xmrig 3 on the host
-            type: DirectoryOrCreate
-
+        
+      

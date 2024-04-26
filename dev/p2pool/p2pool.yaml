@@ -17,11 +17,11 @@ spec:
       labels:
         app: p2pool
     spec:
-      nodeSelector:  # Specify node affinity here
-        kubernetes.io/hostname: slave2  # Label of the target node
+      nodeSelector:
+        kubernetes.io/hostname: slave2
       containers:
         - name: p2pool-container
-          image: busybox
+          image: alpine:latest
           command: ["sh"]
           args:
             - "-c"
@@ -45,6 +45,6 @@ spec:
       volumes:
         - name: p2pool
           hostPath:
-            path: /home/worker2/p2pool/p2pool
-            type: DirectoryOrCreate
+            path: /home/worker2/p2pool/p2pool  # Corrected path
+            type: DirectoryOrCreate  # Ensure the directory exists or create if not
   automountServiceAccountToken: false

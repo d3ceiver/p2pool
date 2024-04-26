@@ -24,11 +24,6 @@ spec:
                     operator: NotIn
                     values:
                       - master
-                  - key: app
-                    operator: In
-                    values:
-                      - xmrig
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:

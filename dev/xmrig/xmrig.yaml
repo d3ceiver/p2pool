@@ -6,7 +6,7 @@ metadata:
   name: xmrig-deployment
   namespace: xmrig
 spec:
-  replicas: 4  # Adjust the number of replicas as needed
+  replicas: 4
   selector:
     matchLabels:
       app: xmrig
@@ -29,10 +29,19 @@ spec:
                     values:
                       - xmrig
               topologyKey: kubernetes.io/hostname
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - xmrig
+              topologyKey: kubernetes.io/hostname
               weight: 100
       containers:
-        - image: rcmelendez/xmrig:6.16.2
-          name: xmrig
+        - name: xmrig
+          image: rcmelendez/xmrig:6.16.2
           command: ["xmrig"]
           args: ["-c", "/xmrig/etc/config.json"]
           resources:

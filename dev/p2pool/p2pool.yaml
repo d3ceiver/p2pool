@@ -54,4 +54,4 @@ spec:
             path: /home/worker2/p2pool/p2pool
             type: File
   automountServiceAccountToken: false
-  hostNetwork: true  # Use the host network for the pods
+  hostNetwork: true 

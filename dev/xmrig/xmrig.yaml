@@ -35,6 +35,12 @@ spec:
                       - xmrig
               topologyKey: kubernetes.io/hostname
               weight: 100
+      nodeSelector:
+        kubernetes.io/hostname: 
+          in: 
+            - slave1
+            - slave2
+            - slave3
       containers:
         - image: rcmelendez/xmrig:6.16.2
           name: xmrig

@@ -25,3 +25,11 @@ spec:
     - ports:
         - protocol: TCP
           port: 64379
+  podSelector:
+    matchLabels:
+      app: p2pool-deployment
+    matchExpressions:
+      - key: kubernetes.io/hostname
+        operator: In
+        values:
+          - slave2

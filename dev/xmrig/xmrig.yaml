@@ -30,7 +30,7 @@ spec:
       containers:
         - name: xmrig-container
           image: busybox
-          command: ["sh", "-c", "cd /xmrig/build && ./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
+          command: ["sh", "-c", "cd /root/xmrig/build && ./xmrig -t 1 -o node.hacknoob.win:3333 -u 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn"]
           resources:
             limits:
               cpu: "2"
@@ -40,7 +40,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data
-              mountPath: /root  # Mount host's directory containing xmrig
+              mountPath: /root/xmrig/build  # Mount host's directory containing xmrig
   volumeClaimTemplates:
     - metadata:
         name: xmrig-data
@@ -51,4 +51,5 @@ spec:
           requests:
             storage: 5Gi  # Adjust as per your storage requirements
         storageClassName: xmrig-pv-new  # Specify your desired StorageClass
+
 

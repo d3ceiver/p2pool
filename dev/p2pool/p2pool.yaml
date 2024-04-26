@@ -35,11 +35,6 @@ spec:
             requests:
               cpu: "500m"
               memory: "500Mi"
-          ports:
-            - containerPort: 18080
-            - containerPort: 37889
-            - containerPort: 37888
-            - containerPort: 3333
           volumeMounts:
             - name: p2pool-data
               mountPath: /root/p2pool
@@ -50,4 +45,3 @@ spec:
             type: DirectoryOrCreate
   automountServiceAccountToken: false
   hostNetwork: true
-

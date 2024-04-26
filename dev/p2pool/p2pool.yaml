@@ -6,8 +6,15 @@ metadata:
   name: p2pool-deployment
   namespace: p2pool
 spec:
-  hostNetwork: true 
   replicas: 1
+  selector:
+    matchLabels:
+      app: p2pool
+  template:
+    metadata:
+      labels:
+        app: p2pool
+    spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -20,23 +27,21 @@ spec:
       containers:
         - name: p2pool-container
           image: busybox
-          command: ["sh", "-c"]
-          args:
-            - "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"
+          command: ["sh", "-c", "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"]
           resources:
             limits:
-              cpu: "4"
-              memory: "5Gi"
+              cpu: "1"
+              memory: "1Gi"
             requests:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
             - name: p2pool-data
-              mountPath: /root/p2pool  # Adjust the mount path if needed
+              mountPath: /root/p2pool
       volumes:
         - name: p2pool-data
           hostPath:
-            path: /home/worker2/p2pool  # Update the hostPath if needed
-            type: DirectoryOrCreate  # Use DirectoryOrCreate if the directory might not exist
+            path: /home/worker2/p2pool
+            type: DirectoryOrCreate
   automountServiceAccountToken: false
-  
+  hostNetwork: true

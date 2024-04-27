@@ -41,14 +41,4 @@ spec:
           volumeMounts:
             - name: xmrig-data
               mountPath: /root/xmrig/build
-  volumeClaimTemplates:
-    - metadata:
-        name: xmrig-data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 5Gi
-        storageClassName: xmrig-pv-new
 

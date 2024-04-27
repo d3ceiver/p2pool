@@ -9,7 +9,7 @@ spec:
     - ReadWriteOnce
   storageClassName: xmrig-pv-new
   hostPath:
-    path: root/home/worker1/xmrig/build/xmrig
+    path: root/home/worker1/xmrig/build
 
 ---
 
@@ -24,7 +24,7 @@ spec:
     - ReadWriteOnce
   storageClassName: xmrig-pv-new
   hostPath:
-    path: root/home/worker2/xmrig/build/xmrig
+    path: root/home/worker2/xmrig/build
 
 ---
 
@@ -39,4 +39,4 @@ spec:
     - ReadWriteOnce
   storageClassName: xmrig-pv-new
   hostPath:
-    path: root/home/worker3/xmrig/build/xmrig
+    path: root/home/worker3/xmrig/build

@@ -35,7 +35,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data1
-              mountPath: /root/xmrig/build
+              mountPath: /home/worker1/xmrig/build
       volumes:
         - name: xmrig-data1
           hostPath:
@@ -82,7 +82,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data2
-              mountPath: /root/xmrig/build
+              mountPath: /home/worker2/xmrig/build
       volumes:
         - name: xmrig-data2
           hostPath:
@@ -129,7 +129,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data3
-              mountPath: /root/xmrig/build
+              mountPath: /home/worker3/xmrig/build
       volumes:
         - name: xmrig-data3
           hostPath:
@@ -176,7 +176,7 @@ spec:
               memory: "500Mi"
           volumeMounts:
             - name: xmrig-data4
-              mountPath: /root/xmrig/build
+              mountPath: /home/worker4/xmrig/build
       volumes:
         - name: xmrig-data4
           hostPath:

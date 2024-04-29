@@ -4,7 +4,7 @@ metadata:
   labels:
     app: xmrig1
   name: xmrig-deployment1
-  namespace: xmrig1
+  namespace: xmrig
 spec:
   replicas: 1
   selector:
@@ -51,7 +51,7 @@ metadata:
   labels:
     app: xmrig2
   name: xmrig-deployment2
-  namespace: xmrig2
+  namespace: xmrig
 spec:
   replicas: 1
   selector:
@@ -98,7 +98,7 @@ metadata:
   labels:
     app: xmrig3
   name: xmrig-deployment3
-  namespace: xmrig3
+  namespace: xmrig
 spec:
   replicas: 1
   selector:
@@ -145,7 +145,7 @@ metadata:
   labels:
     app: xmrig4
   name: xmrig-deployment4
-  namespace: xmrig4
+  namespace: xmrig
 spec:
   replicas: 1
   selector:

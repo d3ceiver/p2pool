@@ -1,25 +1,194 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+----
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: argocd-app-role
-  namespace: xmrig
-rules:
-- apiGroups: [""]
-  resources: ["pods", "services", "configmaps", "deployments"]  # Add other resources as needed
-  verbs: ["get", "list", "watch", "create", "update", "delete"]
-
----
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+  labels:
+    app: xmrig1
+  name: xmrig-deployment1
+  namespace: xmrig1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig1
+  template:
+    metadata:
+      labels:
+        app: xmrig1
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - slave1
+      hostNetwork: true  # Add this line to use the host's network
+      containers:
+        - name: xmrig-container1
+          image: busybox
+          command: ["sh", "-c", "/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          resources:
+            limits:
+              cpu: "1"
+              memory: "500Mi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "1"
+              memory: "500Mi"
+          volumeMounts:
+            - name: xmrig-data
+              mountPath: /root/xmrig/build
+      volumes:
+        - name: p2pool-data
+          hostPath:
+            path: /home/worker1/xmrig/build
+            type: DirectoryOrCreate
+  automountServiceAccountToken: false
+  ----
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: argocd-app-role-binding
-  namespace: xmrig
-subjects:
-- kind: ServiceAccount
-  name: argocd-application-controller  # Argo CD service account name
-  namespace: argocd  # Assuming Argo CD is in the 'argocd' namespace
-roleRef:
-  kind: Role
-  name: argocd-app-role
-  apiGroup: rbac.authorization.k8s.io
+  labels:
+    app: xmrig2
+  name: xmrig-deployment2
+  namespace: xmrig2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig2
+  template:
+    metadata:
+      labels:
+        app: xmrig2
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - slave2
+      hostNetwork: true  # Add this line to use the host's network
+      containers:
+        - name: xmrig-container2
+          image: busybox
+          command: ["sh", "-c", "/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          resources:
+            limits:
+              cpu: "1"
+              memory: "500Mi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "1"
+              memory: "500Mi"
+          volumeMounts:
+            - name: xmrig-data
+              mountPath: /root/xmrig/build
+      volumes:
+        - name: p2pool-data
+          hostPath:
+            path: /home/worker2/xmrig/build
+            type: DirectoryOrCreate
+  automountServiceAccountToken: false
+  ----
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: xmrig3
+  name: xmrig-deployment3
+  namespace: xmrig3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig3
+  template:
+    metadata:
+      labels:
+        app: xmrig3
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - slave3
+      hostNetwork: true  # Add this line to use the host's network
+      containers:
+        - name: xmrig-container3
+          image: busybox
+          command: ["sh", "-c", "/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          resources:
+            limits:
+              cpu: "1"
+              memory: "500Mi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "1"
+              memory: "500Mi"
+          volumeMounts:
+            - name: xmrig-data
+              mountPath: /root/xmrig/build
+      volumes:
+        - name: p2pool-data
+          hostPath:
+            path: /home/worker3/xmrig/build
+            type: DirectoryOrCreate
+  automountServiceAccountToken: false
+  ----
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: xmrig4
+  name: xmrig-deployment4
+  namespace: xmrig4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig4
+  template:
+    metadata:
+      labels:
+        app: xmrig4
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - slave4
+      hostNetwork: true  # Add this line to use the host's network
+      containers:
+        - name: xmrig-container
+          image: busybox
+          command: ["sh", "-c", "/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          resources:
+            limits:
+              cpu: "1"
+              memory: "500Mi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "1"
+              memory: "500Mi"
+          volumeMounts:
+            - name: xmrig-data
+              mountPath: /root/xmrig/build
+      volumes:
+        - name: p2pool-data
+          hostPath:
+            path: /home/worker4/xmrig/build
+            type: DirectoryOrCreate
+  automountServiceAccountToken: false
+
+  

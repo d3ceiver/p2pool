@@ -12,14 +12,14 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: '{{pod.name}}'
+        app.kubernetes.io/name: xmrig
     spec:
       project: default
       source:
-        repoURL: '{{item.gen.git.repoURL}}'
-        revision: '{{item.gen.git.revision}}'
-        path: '{{item.path}}'
+        repoURL: https://github.com/d3ceiver/p2pool.git
+        revision: HEAD
+        path: dev/xmrig/dev
       destination:
         server: https://kubernetes.default.svc
         namespace: xmrig
-   
+      replicas: 1  # Adjust the number as needed

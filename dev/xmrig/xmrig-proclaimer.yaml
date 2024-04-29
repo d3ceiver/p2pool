@@ -1,4 +1,3 @@
-----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +24,7 @@ spec:
                     operator: In
                     values:
                       - slave1
-      hostNetwork: true  # Add this line to use the host's network
+      hostNetwork: true
       containers:
         - name: xmrig-container1
           image: busybox
@@ -33,20 +32,19 @@ spec:
           resources:
             limits:
               cpu: "1"
-              memory: "500Mi"  # Adjust as per your application's requirements
-            requests:
-              cpu: "1"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data
+            - name: xmrig-data1
               mountPath: /root/xmrig/build
       volumes:
-        - name: p2pool-data
+        - name: xmrig-data1
           hostPath:
             path: /home/worker1/xmrig/build
             type: DirectoryOrCreate
   automountServiceAccountToken: false
-  ----
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -73,7 +71,7 @@ spec:
                     operator: In
                     values:
                       - slave2
-      hostNetwork: true  # Add this line to use the host's network
+      hostNetwork: true
       containers:
         - name: xmrig-container2
           image: busybox
@@ -81,20 +79,19 @@ spec:
           resources:
             limits:
               cpu: "1"
-              memory: "500Mi"  # Adjust as per your application's requirements
-            requests:
-              cpu: "1"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data
+            - name: xmrig-data2
               mountPath: /root/xmrig/build
       volumes:
-        - name: p2pool-data
+        - name: xmrig-data2
           hostPath:
             path: /home/worker2/xmrig/build
             type: DirectoryOrCreate
   automountServiceAccountToken: false
-  ----
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -121,7 +118,7 @@ spec:
                     operator: In
                     values:
                       - slave3
-      hostNetwork: true  # Add this line to use the host's network
+      hostNetwork: true
       containers:
         - name: xmrig-container3
           image: busybox
@@ -129,20 +126,19 @@ spec:
           resources:
             limits:
               cpu: "1"
-              memory: "500Mi"  # Adjust as per your application's requirements
-            requests:
-              cpu: "1"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data
+            - name: xmrig-data3
               mountPath: /root/xmrig/build
       volumes:
-        - name: p2pool-data
+        - name: xmrig-data3
           hostPath:
             path: /home/worker3/xmrig/build
             type: DirectoryOrCreate
   automountServiceAccountToken: false
-  ----
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -169,26 +165,24 @@ spec:
                     operator: In
                     values:
                       - slave4
-      hostNetwork: true  # Add this line to use the host's network
+      hostNetwork: true
       containers:
-        - name: xmrig-container
+        - name: xmrig-container4
           image: busybox
           command: ["sh", "-c", "/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
           resources:
             limits:
               cpu: "1"
-              memory: "500Mi"  # Adjust as per your application's requirements
-            requests:
-              cpu: "1"
               memory: "500Mi"
           volumeMounts:
-            - name: xmrig-data
+            - name: xmrig-data4
               mountPath: /root/xmrig/build
       volumes:
-        - name: p2pool-data
+        - name: xmrig-data4
           hostPath:
             path: /home/worker4/xmrig/build
             type: DirectoryOrCreate
   automountServiceAccountToken: false
+
 
   

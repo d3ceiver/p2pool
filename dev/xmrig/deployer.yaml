@@ -1,14 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
-  name: my-repo-appset
+  name: my-github-app
 spec:
-  generators:
-    - git:
-        repoURL: https://github.com/d3ceiver/p2pool.git
-        revision: HEAD
-        paths:
-          - dev/xmrig/dev
-        server: https://kubernetes.default.svc
-        namespace: argocd
-      replicas: 3  # Adjust the number of replicas as needed
+  project: default
+  source:
+    repoURL: https://github.com/d3ceiver/p2pool.git
+    targetRevision: HEAD
+    path: dev/xmrig/dev
+    chart: null
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  replicas: 1  # Adjust the number of replicas as needed

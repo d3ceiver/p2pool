@@ -29,7 +29,7 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/worker1/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
+                /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
               done
           resources:
             limits:
@@ -39,12 +39,12 @@ spec:
               cpu: "2"
               memory: "5Gi"
           volumeMounts:
-            - name: bitmonero-volume
-              mountPath: /home/worker1/xmrig/build
+            - name: worker1-data
+              mountPath: /xmrig/build
       volumes:
-        - name: bitmonero-volume
+        - name: worker1-data
           hostPath:
-            path: /home/worker1/xmrig/build
+            path: /xmrig/build
             type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
@@ -77,7 +77,7 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/worker2/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
+                /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
               done
           resources:
             limits:
@@ -87,12 +87,12 @@ spec:
               cpu: "2"
               memory: "5Gi"
           volumeMounts:
-            - name: bitmonero-volume
-              mountPath: /home/worker2/xmrig/build
+            - name: worker2-data
+              mountPath: /xmrig/build
       volumes:
-        - name: bitmonero-volume
+        - name: worker2-data
           hostPath:
-            path: /home/worker2/xmrig/build
+            path: /xmrig/build
             type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
@@ -125,7 +125,7 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/worker3/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
+                /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
               done
           resources:
             limits:
@@ -135,12 +135,12 @@ spec:
               cpu: "2"
               memory: "5Gi"
           volumeMounts:
-            - name: bitmonero-volume
-              mountPath: /home/worker3/xmrig/build
+            - name: worker3-data
+              mountPath: /xmrig/build
       volumes:
-        - name: bitmonero-volume
+        - name: worker3-data
           hostPath:
-            path: /home/worker3/xmrig/build
+            path: /xmrig/build
             type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
@@ -173,7 +173,7 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/worker4/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
+                /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
               done
           resources:
             limits:
@@ -183,12 +183,12 @@ spec:
               cpu: "2"
               memory: "5Gi"
           volumeMounts:
-            - name: bitmonero-volume
-              mountPath: /home/worker4/xmrig/build
+            - name: worker4-data
+              mountPath: /xmrig/build
       volumes:
-        - name: bitmonero-volume
+        - name: worker4-data
           hostPath:
-            path: /home/worker4/xmrig/build
+            path: /xmrig/build
             type: DirectoryOrCreate
 
         

@@ -16,11 +16,10 @@ spec:
     spec:
       project: default
       source:
-        repoURL: '{{git.repoURL}}'
-        revision: '{{git.revision}}'
+        repoURL: '{{item.gen.git.repoURL}}'
+        revision: '{{item.gen.git.revision}}'
         path: '{{item.path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: p2pool
-      # Add the replicas field here
+        namespace: argocd
       replicas: 3  # Adjust the number as needed

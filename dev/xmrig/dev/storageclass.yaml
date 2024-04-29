@@ -1,8 +1,0 @@
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: xmrig-pv-new
-provisioner: rancher.io/local-path  # Adjust the provisioner based on your environment
-volumeBindingMode: Immediate  # Or use WaitForFirstConsumer based on your requirements
-allowVolumeExpansion: true  # If you want to allow volume expansion
-reclaimPolicy: Delete  # Specify the reclaim policy for the volumes

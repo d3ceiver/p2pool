@@ -22,4 +22,4 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: xmrig
-      replicas: 1  # Adjust the number as needed
+   

@@ -16,4 +16,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-  replicas: 1  # Adjust the number of replicas as needed

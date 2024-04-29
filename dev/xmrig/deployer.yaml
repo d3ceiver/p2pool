@@ -21,6 +21,6 @@ spec:
         path: '{{item.path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: argocd
+        namespace: p2pool
       # Add the replicas field here
       replicas: 3  # Adjust the number as needed

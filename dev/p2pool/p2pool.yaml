@@ -42,6 +42,6 @@ spec:
       volumes:
         - name: p2pool-data
           hostPath:
-            path: /home/worker2/p2pool
+            path: /home/worker3/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false

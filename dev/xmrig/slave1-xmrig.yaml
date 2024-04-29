@@ -26,7 +26,7 @@ spec:
           args:
             - "-c"
             - |
-              cp /xmrig/build/xmrig /xmrig/build/xmrig && chmod +x /xmrig/build/xmrig && /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
+              cp /host/path/to/xmrig /xmrig/build/xmrig && chmod +x /xmrig/build/xmrig && /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
           resources:
             limits:
               cpu: "1"
@@ -36,11 +36,9 @@ spec:
               memory: "100Mi"
           volumeMounts:
             - name: host-path
-              mountPath: /xmrig/build/xmrig
+              mountPath: /xmrig/build  # Corrected mount path
       volumes:
         - name: host-path
           hostPath:
-            path: /home/worker1/
+            path: /home/worker1/  # Adjust the worker number for each node accordingly
             type: Directory
-
-  

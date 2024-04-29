@@ -8,7 +8,7 @@ spec:
         repoURL: https://github.com/d3ceiver/p2pool.git
         revision: HEAD
         paths:
-          - dev/xmrig
+          - dev/xmrig/dev
   template:
     metadata:
       labels:

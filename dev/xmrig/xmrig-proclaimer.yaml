@@ -20,7 +20,7 @@ spec:
     spec:
       hostNetwork: true  # Use the host network for the container
       nodeSelector:
-        kubernetes.io/hostname: slave1
+        kubernetes.io/hostname: worker1
       containers:
         - name: xmrig-container1
           image: busybox  # Use any base image since we'll use a custom script
@@ -38,14 +38,6 @@ spec:
             requests:
               cpu: "2"
               memory: "5Gi"
-          volumeMounts:
-            - name: worker1-data
-              mountPath: /xmrig/build
-      volumes:
-        - name: worker1-data
-          hostPath:
-            path: /xmrig/build
-            type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -68,7 +60,7 @@ spec:
     spec:
       hostNetwork: true  # Use the host network for the container
       nodeSelector:
-        kubernetes.io/hostname: slave2
+        kubernetes.io/hostname: worker2
       containers:
         - name: xmrig-container2
           image: busybox  # Use any base image since we'll use a custom script
@@ -86,14 +78,6 @@ spec:
             requests:
               cpu: "2"
               memory: "5Gi"
-          volumeMounts:
-            - name: worker2-data
-              mountPath: /xmrig/build
-      volumes:
-        - name: worker2-data
-          hostPath:
-            path: /xmrig/build
-            type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -116,7 +100,7 @@ spec:
     spec:
       hostNetwork: true  # Use the host network for the container
       nodeSelector:
-        kubernetes.io/hostname: slave3
+        kubernetes.io/hostname: worker3
       containers:
         - name: xmrig-container3
           image: busybox  # Use any base image since we'll use a custom script
@@ -134,14 +118,6 @@ spec:
             requests:
               cpu: "2"
               memory: "5Gi"
-          volumeMounts:
-            - name: worker3-data
-              mountPath: /xmrig/build
-      volumes:
-        - name: worker3-data
-          hostPath:
-            path: /xmrig/build
-            type: DirectoryOrCreate
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -164,7 +140,7 @@ spec:
     spec:
       hostNetwork: true  # Use the host network for the container
       nodeSelector:
-        kubernetes.io/hostname: slave4
+        kubernetes.io/hostname: worker4
       containers:
         - name: xmrig-container4
           image: busybox  # Use any base image since we'll use a custom script
@@ -182,14 +158,5 @@ spec:
             requests:
               cpu: "2"
               memory: "5Gi"
-          volumeMounts:
-            - name: worker4-data
-              mountPath: /xmrig/build
-      volumes:
-        - name: worker4-data
-          hostPath:
-            path: /xmrig/build
-            type: DirectoryOrCreate
 
-        
   

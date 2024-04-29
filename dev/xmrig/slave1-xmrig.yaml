@@ -38,11 +38,11 @@ spec:
               memory: "100Mi"
           volumeMounts:
             - name: worker1-data
-              mountPath: /home/worker1/xmrig/build
+              mountPath: /home/worker1/
       volumes:
         - name: worker1-data
           hostPath:
-            path: /home/worker1/xmrig/build
+            path: /home/worker1/
             type: DirectoryOrCreate
 
 

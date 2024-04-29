@@ -17,7 +17,6 @@ spec:
       labels:
         app: xmrig4
     spec:
-      hostNetwork: true  # Use the host network for the container
       nodeSelector:
         kubernetes.io/hostname: worker4
       containers:

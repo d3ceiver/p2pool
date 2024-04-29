@@ -11,7 +11,7 @@ spec:
     chart: null
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: xmrig
   syncPolicy:
     automated:
       prune: true

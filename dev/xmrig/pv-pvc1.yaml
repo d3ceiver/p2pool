@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /path/to/xmrig1-data  # Update this with the actual path on your node
+    path: xmrig/build/  # Update this with the actual path on your node
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

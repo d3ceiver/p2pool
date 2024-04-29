@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: xmrig2
+  name: xmrig-deployment2
+  namespace: xmrig
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: xmrig2
+    spec:
+      hostNetwork: true  # Use the host network for the container
+      nodeSelector:
+        kubernetes.io/hostname: worker2
+      containers:
+        - name: xmrig-container2
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
+            - |
+              while true; do
+                /xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
+              done
+          resources:
+            limits:
+              cpu: "2"
+              memory: "5Gi"
+            requests:
+              cpu: "2"
+              memory: "5Gi"
+          volumeMounts:
+            - name: worker2-data
+              mountPath: /xmrig/build
+      volumes:
+        - name: worker2-data
+          hostPath:
+            path: /xmrig/build
+            type: DirectoryOrCreate

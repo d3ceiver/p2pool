@@ -23,7 +23,7 @@ spec:
                   - key: kubernetes.io/hostname
                     operator: In
                     values:
-                      - slave2
+                      - slave3
       hostNetwork: true  # Add this line to use the host's network
       containers:
         - name: p2pool-container

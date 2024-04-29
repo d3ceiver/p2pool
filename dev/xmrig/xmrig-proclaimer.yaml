@@ -1,3 +1,4 @@
+----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -10,41 +11,55 @@ spec:
   selector:
     matchLabels:
       app: xmrig1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: xmrig1
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - slave1
-      hostNetwork: true
+      hostNetwork: true  # Use the host network for the container
+      nodeSelector:
+        kubernetes.io/hostname: slave1
       containers:
         - name: xmrig-container1
-          image: busybox
-          command: ["sh", "-c", "./xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
+            - |
+              while true; do
+                /home/worker1/xmrig/build/xmrig --data-dir /home/worker3/.bitmonero --rpc-bind-ip 192.168.0.18 --prune-blockchain \
+                  --confirm-external-bind \
+                  --zmq-pub tcp://192.168.0.18:18083 \
+                  --out-peers 32 \
+                  --in-peers 64 \
+                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+                  --add-priority-node=nodes.hashvault.pro:18080 \
+                  --disable-dns-checkpoints \
+                  --non-interactive \
+                  --enable-dns-blocklist \
+                  --allow-local-ip \
+                  --proxy-allow-dns-leaks
+              done
           resources:
             limits:
-              cpu: "1"
-              memory: "500Mi"
+              cpu: "2"
+              memory: "5Gi"
+            requests:
+              cpu: "2"
+              memory: "5Gi"
           volumeMounts:
-            - name: xmrig-data1
+            - name: bitmonero-volume
               mountPath: /home/worker1/xmrig/build
       volumes:
-        - name: xmrig-data1
+        - name: bitmonero-volume
           hostPath:
             path: /home/worker1/xmrig/build
             type: DirectoryOrCreate
-  automountServiceAccountToken: false
 
----
 
+----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -57,41 +72,55 @@ spec:
   selector:
     matchLabels:
       app: xmrig2
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: xmrig2
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - slave2
-      hostNetwork: true
+      hostNetwork: true  # Use the host network for the container
+      nodeSelector:
+        kubernetes.io/hostname: slave2
       containers:
         - name: xmrig-container2
-          image: busybox
-          command: ["sh", "-c", "./xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
+            - |
+              while true; do
+                /home/worker2/xmrig/build/xmrig --data-dir /home/worker3/.bitmonero --rpc-bind-ip 192.168.0.18 --prune-blockchain \
+                  --confirm-external-bind \
+                  --zmq-pub tcp://192.168.0.18:18083 \
+                  --out-peers 32 \
+                  --in-peers 64 \
+                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+                  --add-priority-node=nodes.hashvault.pro:18080 \
+                  --disable-dns-checkpoints \
+                  --non-interactive \
+                  --enable-dns-blocklist \
+                  --allow-local-ip \
+                  --proxy-allow-dns-leaks
+              done
           resources:
             limits:
-              cpu: "1"
-              memory: "500Mi"
+              cpu: "2"
+              memory: "5Gi"
+            requests:
+              cpu: "2"
+              memory: "5Gi"
           volumeMounts:
-            - name: xmrig-data2
+            - name: bitmonero-volume
               mountPath: /home/worker2/xmrig/build
       volumes:
-        - name: xmrig-data2
+        - name: bitmonero-volume
           hostPath:
             path: /home/worker2/xmrig/build
             type: DirectoryOrCreate
-  automountServiceAccountToken: false
 
----
 
+  ----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -104,41 +133,55 @@ spec:
   selector:
     matchLabels:
       app: xmrig3
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: xmrig3
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - slave3
-      hostNetwork: true
+      hostNetwork: true  # Use the host network for the container
+      nodeSelector:
+        kubernetes.io/hostname: slave3
       containers:
         - name: xmrig-container3
-          image: busybox
-          command: ["sh", "-c", "./xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
+            - |
+              while true; do
+                /home/worker3/xmrig/build/xmrig --data-dir /home/worker3/.bitmonero --rpc-bind-ip 192.168.0.18 --prune-blockchain \
+                  --confirm-external-bind \
+                  --zmq-pub tcp://192.168.0.18:18083 \
+                  --out-peers 32 \
+                  --in-peers 64 \
+                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+                  --add-priority-node=nodes.hashvault.pro:18080 \
+                  --disable-dns-checkpoints \
+                  --non-interactive \
+                  --enable-dns-blocklist \
+                  --allow-local-ip \
+                  --proxy-allow-dns-leaks
+              done
           resources:
             limits:
-              cpu: "1"
-              memory: "500Mi"
+              cpu: "2"
+              memory: "5Gi"
+            requests:
+              cpu: "2"
+              memory: "5Gi"
           volumeMounts:
-            - name: xmrig-data3
+            - name: bitmonero-volume
               mountPath: /home/worker3/xmrig/build
       volumes:
-        - name: xmrig-data3
+        - name: bitmonero-volume
           hostPath:
             path: /home/worker3/xmrig/build
             type: DirectoryOrCreate
-  automountServiceAccountToken: false
 
----
 
+        ----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -151,38 +194,52 @@ spec:
   selector:
     matchLabels:
       app: xmrig4
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: xmrig4
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - slave4
-      hostNetwork: true
+      hostNetwork: true  # Use the host network for the container
+      nodeSelector:
+        kubernetes.io/hostname: slave4
       containers:
         - name: xmrig-container4
-          image: busybox
-          command: ["sh", "-c", "./xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          image: busybox  # Use any base image since we'll use a custom script
+          command: ["sh"]
+          args:
+            - "-c"
+            - |
+              while true; do
+                /home/worker4/xmrig/build/xmrig --data-dir /home/worker3/.bitmonero --rpc-bind-ip 192.168.0.18 --prune-blockchain \
+                  --confirm-external-bind \
+                  --zmq-pub tcp://192.168.0.18:18083 \
+                  --out-peers 32 \
+                  --in-peers 64 \
+                  --add-priority-node=p2pmd.xmrvsbeast.com:18080 \
+                  --add-priority-node=nodes.hashvault.pro:18080 \
+                  --disable-dns-checkpoints \
+                  --non-interactive \
+                  --enable-dns-blocklist \
+                  --allow-local-ip \
+                  --proxy-allow-dns-leaks
+              done
           resources:
             limits:
-              cpu: "1"
-              memory: "500Mi"
+              cpu: "2"
+              memory: "5Gi"
+            requests:
+              cpu: "2"
+              memory: "5Gi"
           volumeMounts:
-            - name: xmrig-data4
+            - name: bitmonero-volume
               mountPath: /home/worker4/xmrig/build
       volumes:
-        - name: xmrig-data4
+        - name: bitmonero-volume
           hostPath:
             path: /home/worker4/xmrig/build
             type: DirectoryOrCreate
-  automountServiceAccountToken: false
-
-
+        
+        
   

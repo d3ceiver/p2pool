@@ -38,9 +38,9 @@ spec:
               memory: "5Gi"
           volumeMounts:
             - name: worker3-data
-              mountPath: /xmrig/build
+              mountPath: /home/worker3/xmrig/build
       volumes:
         - name: worker3-data
           hostPath:
-            path: /xmrig/build
+            path: /home/worker3/xmrig/build
             type: DirectoryOrCreate

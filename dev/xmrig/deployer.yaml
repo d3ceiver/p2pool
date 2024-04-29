@@ -12,13 +12,15 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: xmrig
+        app.kubernetes.io/name: '{{pod.name}}'
     spec:
       project: default
       source:
-        repoURL: https://github.com/d3ceiver/p2pool
-        revision: HEAD
-        path: dev/xmrig/dev
+        repoURL: '{{git.repoURL}}'
+        revision: '{{git.revision}}'
+        path: '{{item.path}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: argocd
+      # Add the replicas field here
+      replicas: 3  # Adjust the number as needed

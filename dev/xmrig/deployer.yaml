@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: my-appset
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/d3ceiver/p2pool.git
+        revision: HEAD
+        paths:
+          - dev/xmrig
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: xmrig
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/d3ceiver/p2pool
+        revision: HEAD
+        path: dev/xmrig/dev
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd

@@ -36,7 +36,7 @@ spec:
               memory: "100Mi"
           volumeMounts:
             - name: host-path
-              mountPath: root/xmrig/build  # Corrected mount path
+              mountPath: root/home/worker4/xmrig/build   # Corrected mount path
       volumes:
         - name: host-path
           hostPath:

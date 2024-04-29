@@ -19,7 +19,7 @@ spec:
     spec:
       hostNetwork: true  # Use the host network for the container
       nodeSelector:
-        kubernetes.io/hostname: slave1
+        kubernetes.io/hostname: worker1
       containers:
         - name: xmrig-container1
           image: busybox  # Use any base image since we'll use a custom script
@@ -45,6 +45,7 @@ spec:
           hostPath:
             path: /xmrig/build
             type: DirectoryOrCreate
+
 
 
   

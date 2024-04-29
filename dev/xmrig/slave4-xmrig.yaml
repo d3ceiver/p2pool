@@ -18,7 +18,7 @@ spec:
         app: xmrig4
     spec:
       nodeSelector:
-        kubernetes.io/hostname: worker4
+        kubernetes.io/hostname: slave4
       containers:
         - name: xmrig-container4
           image: busybox  # Use any base image since we'll use a custom script

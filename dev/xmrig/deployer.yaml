@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-github-app
+  name: my-xmrig-deployer
 spec:
   project: default
   source:

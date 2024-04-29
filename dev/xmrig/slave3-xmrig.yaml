@@ -19,7 +19,7 @@ spec:
     spec:
       hostNetwork: true  # Use the host network for the container
       nodeSelector:
-        kubernetes.io/hostname: slave3
+        kubernetes.io/hostname: worker3
       containers:
         - name: xmrig-container3
           image: busybox  # Use any base image since we'll use a custom script

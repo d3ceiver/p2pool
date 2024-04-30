@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: xmrig-exec-m
+  name: xmrig-exec-1
 spec:
   affinity:
     nodeAffinity:

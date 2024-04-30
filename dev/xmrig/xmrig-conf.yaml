@@ -40,16 +40,16 @@ spec:
               cpu: "500m"
               memory: "500Mi"
           volumeMounts:
-            - name: p2pool-data1
+            - name: x-data1
               mountPath: /root/p2pool
           volumeMounts:
-            - name: p2pool-data2
+            - name: x-data2
               mountPath: /root/p2pool
           volumeMounts:
-            - name: p2pool-data3
+            - name: x-data3
               mountPath: /root/xmrig
           volumeMounts:
-            - name: p2pool-data4
+            - name: x-data4
               mountPath: /root/xmrig
       volumes:
         - name: x-data1

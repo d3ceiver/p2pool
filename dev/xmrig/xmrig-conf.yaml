@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: p2pool
-  name: p2pool-deployment
-  namespace: p2pool
+    app: xmrig
+  name: xmrig-deployment
+  namespace: xmrig
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: p2pool
+      app: xmrig
   template:
     metadata:
       labels:
-        app: p2pool
+        app: xmrig
     spec:
       affinity:
         nodeAffinity:
@@ -29,7 +29,7 @@ spec:
                       - slave4
       hostNetwork: true  # Add this line to use the host's network
       containers:
-        - name: p2pool-container
+        - name: xmrig-container
           image: busybox
           command: ["sh", "-c", "./xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
           resources:

@@ -11,12 +11,12 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-            - slave2
+            - slave3
   containers:
   - name: xmrig-container
     image: busybox
     command:
-    - /home/worker2/xmrig/build/xmrig
+    - /home/worker3/xmrig/build/xmrig
     - -o
     - gulf.moneroocean.stream:80
     - -u

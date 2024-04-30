@@ -30,8 +30,8 @@ spec:
       hostNetwork: true  # Add this line to use the host's network
       containers:
         - name: xmrig-container
-          image: busybox
-          command: ["sh", "-c", "./xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
+          image: busybox  # Replace xmrig_image_tag_here with the actual image tag for xmrig
+          command: ["sh", "-c", "/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
           resources:
             limits:
               cpu: "2"
@@ -42,13 +42,10 @@ spec:
           volumeMounts:
             - name: x-data1
               mountPath: /root/p2pool
-          volumeMounts:
             - name: x-data2
               mountPath: /root/p2pool
-          volumeMounts:
             - name: x-data3
               mountPath: /root/xmrig
-          volumeMounts:
             - name: x-data4
               mountPath: /root/xmrig
       volumes:
@@ -69,3 +66,4 @@ spec:
             path: /home/worker4/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false
+

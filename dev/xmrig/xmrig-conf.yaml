@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: p2pool
+  name: p2pool-deployment
+  namespace: p2pool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: p2pool
+  template:
+    metadata:
+      labels:
+        app: p2pool
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - slave1
+                      - slave2
+                      - slave3
+                      - slave4
+      hostNetwork: true  # Add this line to use the host's network
+      containers:
+        - name: p2pool-container
+          image: busybox
+          command: ["sh", "-c", "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"]
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"  # Adjust as per your application's requirements
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+          volumeMounts:
+            - name: p2pool-data1
+              mountPath: /root/p2pool
+          volumeMounts:
+            - name: p2pool-data2
+              mountPath: /root/p2pool
+          volumeMounts:
+            - name: p2pool-data3
+              mountPath: /root/xmrig
+          volumeMounts:
+            - name: p2pool-data4
+              mountPath: /root/xmrig
+      volumes:
+        - name: x-data1
+          hostPath:
+            path: /home/worker1/p2pool
+            type: Directory
+        - name: x-data2
+          hostPath:
+            path: /home/worker2/p2pool
+            type: DirectoryOrCreate
+        - name: x-data3
+          hostPath:
+            path: /home/worker3/p2pool
+            type: DirectoryOrCreate
+        - name: x-data4
+          hostPath:
+            path: /home/worker4/p2pool
+            type: DirectoryOrCreate
+  automountServiceAccountToken: false

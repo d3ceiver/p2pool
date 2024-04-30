@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: xmrig-exec
+  name: xmrig-exec-4
 spec:
   affinity:
     nodeAffinity:
@@ -13,7 +13,7 @@ spec:
             values:
             - slave4
   containers:
-  - name: xmrig-container
+  - name: xmrig-container-4
     image: busybox
     command:
     - /home/worker4/xmrig/build/xmrig
@@ -24,9 +24,9 @@ spec:
     - -p
     - piD3ceiver
     volumeMounts:
-    - name: xmrig-volume
+    - name: xmrig-volume-4
       mountPath: /
   volumes:
-  - name: xmrig-volume
+  - name: xmrig-volume-4
     hostPath:
       path: /

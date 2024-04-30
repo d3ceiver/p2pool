@@ -1,69 +1,17 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  labels:
-    app: xmrig
-  name: xmrig-deployment
-  namespace: xmrig
+  name: xmrig-exec
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: xmrig
-  template:
-    metadata:
-      labels:
-        app: xmrig
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - slave1
-                      - slave2
-                      - slave3
-                      - slave4
-      hostNetwork: true  # Add this line to use the host's network
-      containers:
-        - name: xmrig-container
-          image: busybox  # Replace xmrig_image_tag_here with the actual image tag for xmrig
-          command: ["sh", "-c", "/xmrig/build/xmrig -o gulf.moneroocean.stream:80 -u 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5 -p piD3ceiver"]
-          resources:
-            limits:
-              cpu: "2"
-              memory: "2Gi"  # Adjust as per your application's requirements
-            requests:
-              cpu: "500m"
-              memory: "500Mi"
-          volumeMounts:
-            - name: x-data1
-              mountPath: /root/p2pool
-            - name: x-data2
-              mountPath: /root/p2pool
-            - name: x-data3
-              mountPath: /root/xmrig
-            - name: x-data4
-              mountPath: /root/xmrig
-      volumes:
-        - name: x-data1
-          hostPath:
-            path: /home/worker1/p2pool
-            type: Directory
-        - name: x-data2
-          hostPath:
-            path: /home/worker2/p2pool
-            type: DirectoryOrCreate
-        - name: x-data3
-          hostPath:
-            path: /home/worker3/p2pool
-            type: DirectoryOrCreate
-        - name: x-data4
-          hostPath:
-            path: /home/worker4/p2pool
-            type: DirectoryOrCreate
-  automountServiceAccountToken: false
-
+  containers:
+  - name: xmrig-container
+    image: busybox
+    command:
+    - /xmrig/build/xmrig
+    args:
+    - -o
+    - gulf.moneroocean.stream:80
+    - -u
+    - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
+    - -p
+    - piD3ceiver

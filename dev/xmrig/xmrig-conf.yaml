@@ -7,7 +7,7 @@ spec:
   - name: xmrig-container
     image: busybox
     command:
-    - ls
+    - ls && cd xmrig && ls
     volumeMounts:
     - name: xmrig-volume
       mountPath: /

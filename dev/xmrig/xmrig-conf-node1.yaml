@@ -12,6 +12,7 @@ spec:
             operator: In
             values:
             - slave1
+  hostNetwork: true  # Add this line to use the host network
   containers:
   - name: xmrig-container-1
     image: busybox

@@ -26,11 +26,11 @@ spec:
     - slave1
     resources:
       requests:
-        cpu: "2"
+        cpu: "1"
         memory: "250Mi"
       limits:
-        cpu: "4"
-        memory: "400Mi"
+        cpu: "2"
+        memory: "300Mi"
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /

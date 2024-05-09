@@ -30,7 +30,7 @@ spec:
         memory: "50Mi"
       limits:
         cpu: "1"
-        memory: "165Mi"
+        memory: "130Mi"
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /

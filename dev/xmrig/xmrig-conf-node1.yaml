@@ -24,7 +24,7 @@ spec:
     - node.hacknoob.win:3333
     - -u
     - slave1
-    - u
+    - -u
     - x+1000
     - --no-dmi
     - --no-color

@@ -25,6 +25,13 @@ spec:
     - -u
     - slave1
     - --no-dmi
+    - --no-color
+    - --cpu-priority=3
+    - --cpu-max-threads-hint=50
+    - --cpu-no-yield
+    - --no-huge-pages
+    - --randomx-mode=light
+    - --randomx-no-numa
     resources:
       requests:
         cpu: "1"

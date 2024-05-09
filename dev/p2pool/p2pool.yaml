@@ -23,7 +23,7 @@ spec:
                   - key: kubernetes.io/hostname
                     operator: In
                     values:
-                      - slave2
+                      - master
       hostNetwork: true  # Add this line to use the host's network
       containers:
         - name: p2pool-container
@@ -42,6 +42,6 @@ spec:
       volumes:
         - name: p2pool-data
           hostPath:
-            path: /home/worker2/p2pool
+            path: /home/master/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false

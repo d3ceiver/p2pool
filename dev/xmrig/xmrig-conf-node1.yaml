@@ -24,6 +24,7 @@ spec:
     - node.hacknoob.win:3333
     - -u
     - slave1
+    - --no-dmi
     resources:
       requests:
         cpu: "1"

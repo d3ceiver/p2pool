@@ -25,7 +25,9 @@ spec:
     - -u
     - slave1
     - -u
-    - x+1000
+    - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
+    - -p
+    - slave1
     - --no-dmi
     - --no-color
     - --cpu-priority=3

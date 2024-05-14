@@ -25,7 +25,7 @@ spec:
     - slave2
     - --cpu-no-yield
     - --randomx-1gb-pages
-    - - --nicehash
+    - --nicehash
     volumeMounts:
     - name: xmrig-volume-2
       mountPath: /

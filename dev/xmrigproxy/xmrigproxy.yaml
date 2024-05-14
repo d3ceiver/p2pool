@@ -12,6 +12,7 @@ spec:
             operator: In
             values:
             - slave3
+  hostNetwork: true          
   containers:
   - name: xmrigproxy-container
     image: busybox

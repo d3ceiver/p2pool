@@ -25,6 +25,7 @@ spec:
     - master
     - --cpu-no-yield
     - --randomx-1gb-pages
+    - --nicehash
     volumeMounts:
     - name: xmrig-volume-m
       mountPath: /

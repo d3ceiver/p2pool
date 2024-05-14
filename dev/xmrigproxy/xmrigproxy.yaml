@@ -16,7 +16,7 @@ spec:
   - name: xmrigproxy-container
     image: busybox
     command:
-    - /home/worker3/xmrigproxy/xmrigproxy
+    - /home/worker3/xmrig-proxy/build/xmrig-proxy
     volumeMounts:
     - name: xmrig-volume-worker3p
       mountPath: /

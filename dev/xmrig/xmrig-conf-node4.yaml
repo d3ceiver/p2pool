@@ -21,6 +21,8 @@ spec:
     - proxy.hacknoob.win:5554
     - -u
     - slave4
+    - -a
+    - rx/0
     - --cpu-no-yield
     - --nicehash
     volumeMounts:

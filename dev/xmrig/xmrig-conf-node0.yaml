@@ -13,7 +13,7 @@ spec:
             values:
             - master
   containers:
-  - name: xmrig-container-2
+  - name: xmrig-container-m
     image: busybox
     command:
     - /home/manager/xmrig/build/xmrig

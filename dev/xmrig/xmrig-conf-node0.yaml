@@ -14,7 +14,7 @@ spec:
             - master
   containers:
   - name: xmrig-container-m
-    image: busybox
+    image: alpine
     command:
     - sudo /home/manager/xmrig/build/xmrig
     - -t

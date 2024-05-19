@@ -30,8 +30,8 @@ spec:
     - --randomx-1gb-pages
     volumeMounts:
     - name: xmrig-volume-m
-      mountPath:/
+      mountPath: /
   volumes:
   - name: xmrig-volume-m
     hostPath:
-      path:/
+      path: /

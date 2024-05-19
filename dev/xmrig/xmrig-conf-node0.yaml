@@ -16,7 +16,7 @@ spec:
   - name: xmrig-container-m
     image: alpine:latest
     command:
-    - sudo /home/manager/xmrig/build/xmrig
+    - /home/manager/xmrig/build/xmrig
     - -t
     - "3"
     - -o

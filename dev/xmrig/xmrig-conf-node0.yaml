@@ -16,7 +16,7 @@ spec:
   - name: xmrig-container-m
     image: busybox
     command:
-    - sudo xmrig
+    - sudo ./xmrig
     - -t
     - "2"
     - -o

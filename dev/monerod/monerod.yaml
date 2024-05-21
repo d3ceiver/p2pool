@@ -37,7 +37,8 @@ spec:
                   --add-priority-node=nodes.hashvault.pro:18080 \
                   --non-interactive \
                   --enable-dns-blocklist \
-                  --no-igd 
+                  --no-igd \
+                  --hide-my-port \
               done
           volumeMounts:
             - name: bitmonero-volume

@@ -44,8 +44,7 @@ spec:
                   --fast-block-sync \
                   --prune-blockchain \
                   --sync-pruned-blocks \
-                  --prep-blocks-threads = 4 \
-                  --bg-mining-miner-target = 0
+                  --prep-blocks-threads 
               done
           volumeMounts:
             - name: bitmonero-volume

@@ -43,8 +43,7 @@ spec:
                   --hide-my-port \
                   --fast-block-sync \
                   --prune-blockchain \
-                  --sync-pruned-blocks \
-                  --prep-blocks-threads 
+                  --sync-pruned-blocks 
               done
           volumeMounts:
             - name: bitmonero-volume

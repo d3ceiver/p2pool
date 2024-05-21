@@ -38,15 +38,7 @@ spec:
                   --non-interactive \
                   --enable-dns-blocklist \
                   --allow-local-ip 
-                  --rpc-login adminminerjudd44:zxlsDrewMining44!.
               done
-          resources:
-            limits:
-              cpu: "2"
-              memory: "5Gi"
-            requests:
-              cpu: "2"
-              memory: "5Gi"
           volumeMounts:
             - name: bitmonero-volume
               mountPath: /home/worker3/.bitmonero

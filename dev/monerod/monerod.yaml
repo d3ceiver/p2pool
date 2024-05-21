@@ -37,7 +37,10 @@ spec:
                   --add-priority-node=nodes.hashvault.pro:18080 \
                   --non-interactive \
                   --enable-dns-blocklist \
-                  --allow-local-ip 
+                  --allow-local-ip \
+                  --no-igd \
+                  --enforce-dns-checkpointing \
+                  --hide-my-port
               done
           volumeMounts:
             - name: bitmonero-volume

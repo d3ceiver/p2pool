@@ -20,7 +20,7 @@ spec:
     - -o
     - proxy.hacknoob.win:5554
     - -u
-    - slave4
+    - slave4+5000
     - -a
     - rx/0
     - --cpu-no-yield

@@ -22,7 +22,7 @@ spec:
     - -o
     - proxy.hacknoob.win:5552
     - -u
-    - slave2
+    - slave2+5000
     - -a
     - rx/0
     - --cpu-no-yield

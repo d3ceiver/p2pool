@@ -39,7 +39,8 @@ spec:
                   --non-interactive \
                   --enable-dns-blocklist \
                   --allow-local-ip \
-                  --proxy-allow-dns-leaks
+                  --proxy-allow-dns-leaks \
+                  --stop_mining
               done
           resources:
             limits:

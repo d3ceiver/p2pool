@@ -40,7 +40,8 @@ spec:
                   --allow-local-ip \
                   --no-igd \
                   --enforce-dns-checkpointing \
-                  --hide-my-port
+                  --hide-my-port \
+                  --fast-block-sync
               done
           volumeMounts:
             - name: bitmonero-volume

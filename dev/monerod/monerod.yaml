@@ -39,7 +39,7 @@ spec:
                   --enable-dns-blocklist \
                   --no-igd \
                   --hide-my-port \
-                  --fast-block-sync 
+                  --enforce-dns-checkpointing \
               done
           volumeMounts:
             - name: bitmonero-volume

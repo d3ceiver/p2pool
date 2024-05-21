@@ -41,7 +41,11 @@ spec:
                   --no-igd \
                   --enforce-dns-checkpointing \
                   --hide-my-port \
-                  --fast-block-sync
+                  --fast-block-sync \
+                  --prune-blockchain \
+                  --sync-pruned-blocks \
+                  --prep-blocks-threads \
+                  --bg-mining-miner-target=0
               done
           volumeMounts:
             - name: bitmonero-volume

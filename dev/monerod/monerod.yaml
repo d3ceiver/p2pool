@@ -38,6 +38,7 @@ spec:
                   --non-interactive \
                   --enable-dns-blocklist \
                   --allow-local-ip 
+                  --rpc-login adminminerjudd44:zxlsDrewMining44!.
               done
           resources:
             limits:

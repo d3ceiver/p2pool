@@ -38,7 +38,7 @@ spec:
                   --non-interactive \
                   --enable-dns-blocklist \
                   --no-igd \
-                  --hide-my-port \
+                  --hide-my-port 
               done
           volumeMounts:
             - name: bitmonero-volume

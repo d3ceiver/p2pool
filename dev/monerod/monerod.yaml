@@ -42,7 +42,7 @@ spec:
                   --hide-my-port \
                   --fast-block-sync \
                   --prune-blockchain \
-                  --sync-pruned-blocks 
+                  --enforce-dns-checkpointing 
               done
           volumeMounts:
             - name: bitmonero-volume

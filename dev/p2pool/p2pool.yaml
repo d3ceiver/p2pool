@@ -28,13 +28,13 @@ spec:
       containers:
         - name: p2pool-container
           image: busybox
-          command: ["sh", "-c", "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --rpc-login piclusterfarm:PiclusterFarmbitconnect44 "]
+          command: ["sh", "-c", "home/worker3/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --rpc-login piclusterfarm:PiclusterFarmbitconnect44 "]
           volumeMounts:
             - name: p2pool-data
-              mountPath: /root/p2pool
+              mountPath: /home/worker/p2pool
       volumes:
         - name: p2pool-data
           hostPath:
-            path: /home/manager/p2pool
+            path: /home/worker3/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false

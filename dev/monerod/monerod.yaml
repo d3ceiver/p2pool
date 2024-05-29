@@ -43,7 +43,7 @@ spec:
                   --enforce-dns-checkpointing \
                   --bg-mining-miner-target 0 \
                   --db-sync-mode=safe \
-                  --max-concurrency=8 \
+                  --max-concurrency=0 \
                   --block-sync-size=1
                   
               done

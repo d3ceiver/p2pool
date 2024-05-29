@@ -8,6 +8,12 @@ spec:
     app: monerod
   ports:
     - protocol: TCP
+      port: 18080
+      targetPort: 18080
+    - protocol: TCP
       port: 18081
       targetPort: 18081
+    - protocol: TCP
+      port: 18083
+      targetPort: 18083
   type: NodePort  # Change to LoadBalancer if you are using a cloud provider that supports it

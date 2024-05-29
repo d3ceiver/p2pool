@@ -43,7 +43,7 @@ spec:
                   --no-igd \
                   --hide-my-port \
                   --enforce-dns-checkpointing \
-                 
+                  --rpc-login piclusterfarm:PiclusterFarmbitconnect44
                   
               done
           volumeMounts:

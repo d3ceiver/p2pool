@@ -39,7 +39,8 @@ spec:
                   --enable-dns-blocklist \
                   --no-igd \
                   --hide-my-port \
-                  --enforce-dns-checkpointing
+                  --enforce-dns-checkpointing \
+                  --bg-mining-miner-target 0 
               done
           volumeMounts:
             - name: bitmonero-volume

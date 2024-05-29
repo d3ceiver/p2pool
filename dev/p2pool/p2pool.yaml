@@ -31,18 +31,12 @@ spec:
                 /home/worker3/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --rpc-login piclusterfarm:PiclusterFarmbitconnect44
               done
           volumeMounts:
-            - name: bitmonero-volume
-              mountPath: /home/worker3/.bitmonero
-            - name: monero-volume
-              mountPath: /home/worker3/monero
+            - name: p2p-volume
+              mountPath: /home/worker3/p2pool
       volumes:
-        - name: bitmonero-volume
+        - name: p2p-volume
           hostPath:
-            path: /home/worker3/.bitmonero
-            type: DirectoryOrCreate
-        - name: monero-volume
-          hostPath:
-            path: /home/worker3/monero
+            path: /home/worker3/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false
 

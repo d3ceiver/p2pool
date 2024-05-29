@@ -23,6 +23,10 @@ spec:
       containers:
         - name: monerod-container
           image: busybox  # Use any base image since we'll use a custom script
+          ports:
+            - containerPort: 18080
+            - containerPort: 18081
+            - containerPort: 18083
           command: ["sh"]
           args:
             - "-c"

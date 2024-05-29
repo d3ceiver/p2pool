@@ -8,6 +8,6 @@ spec:
     app: p2pool
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: 3333
+      targetPort: 3333
   type: NodePort  # Change to LoadBalancer if you are using a cloud provider that supports it

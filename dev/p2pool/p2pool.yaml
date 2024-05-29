@@ -24,7 +24,7 @@ spec:
         - name: p2pool-container
           image: busybox  # Use any base image since we'll use a custom script
           ports:
-            - containerPort: 3333   # Stratum port
+            - containerPort: 8000   
           command: ["sh"]
           args:
             - "-c"

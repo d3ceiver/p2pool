@@ -17,7 +17,7 @@ spec:
   - name: xmrigproxy-container
     image: busybox
     command:
-    - /home/worker3/xmrig-proxy/build/xmrig-proxy
+    - /home/worker3/xmrig-proxy/build/xmrig-proxy --rpc-login piclusterfarm:PiclusterFarmbitconnect44
     volumeMounts:
     - name: xmrig-volume-worker3p
       mountPath: /

@@ -27,14 +27,12 @@ spec:
       hostNetwork: true  # Add this line to use the host's network
       containers:
         - name: p2pool-container
-          image: busybox
-          command: ["sh", "-c", " ./p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --rpc-login piclusterfarm:PiclusterFarmbitconnect44 "]
+          image: busybox 
+          command: ["/home/worker3/p2pool/p2pool", "--host", "74.56.241.2", "--wallet", "46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn", "--mini", "--rpc-login", "piclusterfarm:PiclusterFarmbitconnect44"]
           volumeMounts:
-            - name: p2pool-data
-              mountPath: /home/worker/p2pool
+            - name: xmrig-volume-worker3p2p
+              mountPath: /
       volumes:
-        - name: p2pool-data
+        - name: xmrig-volume-worker3p2p
           hostPath:
-            path: /home/worker3/p2pool
-            type: DirectoryOrCreate
-  automountServiceAccountToken: false
+            path: /

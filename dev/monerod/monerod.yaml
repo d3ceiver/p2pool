@@ -42,7 +42,8 @@ spec:
                   --hide-my-port \
                   --enforce-dns-checkpointing \
                   --bg-mining-miner-target 0 \
-                  --max-concurrency=0
+                  --max-concurrency=0 \
+                  --rpc-login piclusterfarm:PiclusterFarmbitconnect44
                   
               done
           volumeMounts:

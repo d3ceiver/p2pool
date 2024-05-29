@@ -24,7 +24,7 @@ spec:
         - name: p2pool-container
           image: busybox  # Use any base image since we'll use a custom script
           ports:
-            - containerPort: 8000   
+            - containerPort: 3333   
           command: ["sh"]
           args:
             - "-c"

@@ -28,7 +28,7 @@ spec:
       containers:
         - name: p2pool-container
           image: busybox
-          command: ["sh", "-c", "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --no-randomx"]
+          command: ["sh", "-c", "/root/p2pool/p2pool --host 74.56.241.2 --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini "]
           volumeMounts:
             - name: p2pool-data
               mountPath: /root/p2pool

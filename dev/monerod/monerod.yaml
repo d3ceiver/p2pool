@@ -24,7 +24,10 @@ spec:
         - name: monerod-container
           image: busybox  # Use any base image since we'll use a custom script
           ports:
-            - containerPort: 18081
+             - containerPort: 9333   # P2P port
+            - containerPort: 18081  # RPC port
+            - containerPort: 18083  # ZMQ port
+            - containerPort: 3333   # Stratum port
           command: ["sh"]
           args:
             - "-c"

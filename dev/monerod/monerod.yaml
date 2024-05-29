@@ -42,7 +42,6 @@ spec:
                   --hide-my-port \
                   --enforce-dns-checkpointing \
                   --bg-mining-miner-target 0 \
-                  --db-sync-mode=safe \
                   --max-concurrency=0 \
                   --db-salvage
                   

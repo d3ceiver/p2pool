@@ -43,6 +43,10 @@ spec:
                   --no-igd \
                   --hide-my-port \
                   --enforce-dns-checkpointing \
+                  --db-sync-mode=safe \
+                  --prep-blocks-threads=2\
+                  --max-concurrency=8 \
+                  --no-zmq=1
                   --rpc-login piclusterfarm:PiclusterFarmbitconnect44
                   
               done

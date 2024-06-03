@@ -47,7 +47,6 @@ spec:
                   --prep-blocks-threads=2 \
                   --max-concurrency=8 \
                   --log-level 0 \
-                  --no-zmq=1 \
                   --rpc-login piclusterfarm:PiclusterFarmbitconnect44
                   
               done

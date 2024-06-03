@@ -44,7 +44,7 @@ spec:
                   --hide-my-port \
                   --enforce-dns-checkpointing \
                   --db-sync-mode=safe \
-                  --prep-blocks-threads=2\
+                  --prep-blocks-threads=2 \
                   --max-concurrency=8 \
                   --log-level 0 \
                   --rpc-login piclusterfarm:PiclusterFarmbitconnect44

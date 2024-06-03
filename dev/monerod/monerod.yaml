@@ -46,7 +46,6 @@ spec:
                   --db-sync-mode=safe \
                   --prep-blocks-threads=2\
                   --max-concurrency=8 \
-                  --no-zmq=1 \
                   --log-level 0 \
                   --rpc-login piclusterfarm:PiclusterFarmbitconnect44
                   

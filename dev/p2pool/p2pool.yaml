@@ -19,7 +19,7 @@ spec:
     spec:
       hostNetwork: true  # Use the host network for the container
       nodeSelector:
-        kubernetes.io/hostname: slave3
+        kubernetes.io/hostname: master
       containers:
         - name: p2pool-container
           image: busybox  # Use any base image since we'll use a custom script 
@@ -28,15 +28,15 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/worker3/p2pool/p2pool --host node.hacknoob.win --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --rpc-login piclusterfarm:PiclusterFarmbitconnect44
+                /home/manager/p2pool/p2pool --host node.hacknoob.win --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --rpc-login piclusterfarm:PiclusterFarmbitconnect44
               done
           volumeMounts:
             - name: p2p-volume
-              mountPath: /home/worker3/p2pool
+              mountPath: /home/manager/p2pool
       volumes:
         - name: p2p-volume
           hostPath:
-            path: /home/worker3/p2pool
+            path: /home/manager/p2pool
             type: DirectoryOrCreate
   automountServiceAccountToken: false
 

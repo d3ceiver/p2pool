@@ -21,7 +21,7 @@ spec:
     - "-c"
     - |
       while true; do
-       /home/manager/xmrig-proxy/build/xmrig-proxy --rpc-login piclusterfarm:PiclusterFarmbitconnect44
+       /home/manager/xmrig-proxy/xmrig-proxy --rpc-login piclusterfarm:PiclusterFarmbitconnect44
       done
     volumeMounts:
     - name: xmrig-volume-worker3p

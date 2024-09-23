@@ -11,7 +11,7 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-            - slave3
+            - master
   hostNetwork: true          
   containers:
   - name: xmrigproxy-container
@@ -21,7 +21,7 @@ spec:
     - "-c"
     - |
       while true; do
-       /home/worker3/xmrig-proxy/build/xmrig-proxy --rpc-login piclusterfarm:PiclusterFarmbitconnect44
+       /home/manager/xmrig-proxy/build/xmrig-proxy --rpc-login piclusterfarm:PiclusterFarmbitconnect44
       done
     volumeMounts:
     - name: xmrig-volume-worker3p

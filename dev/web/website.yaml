@@ -18,4 +18,4 @@ spec:
       - name: nginx
         image: nginx:latest  # Use the official Nginx image
         ports:
-        - containerPort: 30399  # Nginx listens on port 80
+        - containerPort: 80  # Nginx listens on port 80

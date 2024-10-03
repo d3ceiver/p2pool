@@ -33,9 +33,10 @@ data:
 
             location ~ \.php$ {
                 include snippets/fastcgi-php.conf;  # Ensure this file is correct
-                fastcgi_pass unix:/run/php/php7.4-fpm.sock;  # Check if this path is correct
+                # Only one fastcgi_pass directive should be here
+                fastcgi_pass unix:/run/php/php7.4-fpm.sock;  # Ensure this path is correct
                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                include fastcgi_params;
+                include fastcgi_params;  # Ensure this is included just once
             }
 
             location ~ /\.ht {

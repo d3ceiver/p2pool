@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 2  # Number of Nginx replicas
+  replicas: 2              # Number of Nginx replicas
   selector:
     matchLabels:
       app: nginx
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:latest  # Use the official Nginx image
+        image: nginx:latest # Use the official Nginx image
         ports:
-        - containerPort: 80  # Nginx listens on port 80
+        - containerPort: 80 # Nginx listens on port 80 inside the container

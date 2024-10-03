@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:8.0  # ARM-compatible MySQL 8.0 image
+        image: arm64v8/mysql  # ARM-compatible MySQL, default version
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: "rootpassword"

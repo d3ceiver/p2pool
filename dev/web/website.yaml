@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 1             # Number of Nginx replicas
+  replicas: 2  # Number of Nginx replicas
   selector:
     matchLabels:
       app: nginx
@@ -16,6 +16,14 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:latest # Use the official Nginx image
+        image: nginx:latest  # Use the official Nginx image
         ports:
-        - containerPort: 80 # Nginx listens on port 80 inside the container
+        - containerPort: 80  # Nginx listens on port 80
+        volumeMounts:
+        - name: website-content
+          mountPath: /usr/share/nginx/html  # Nginx serves static files from this directory in the container
+      volumes:
+      - name: website-content
+        hostPath:
+          path: /home/worker2/www  # Path on the host where your website files are stored
+          type: Directory

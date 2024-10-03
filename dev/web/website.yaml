@@ -25,6 +25,9 @@ spec:
         - name: nginx-config
           mountPath: /etc/nginx/nginx.conf  # Nginx config
           subPath: nginx.conf
+        - name: fastcgi-snippet
+          mountPath: /etc/nginx/snippets/fastcgi-php.conf  # Mount the fastcgi snippet
+          subPath: fastcgi-php.conf
         env:
         - name: MYSQL_HOST
           value: "mysql-service"  # MySQL service name for the PHP connection
@@ -42,6 +45,9 @@ spec:
       - name: nginx-config
         configMap:
           name: nginx-config  # Reference to the ConfigMap for Nginx config
+      - name: fastcgi-snippet
+        configMap:
+          name: nginx-snippets-config  # Reference to ConfigMap for fastcgi-php.conf
       nodeSelector:
         kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
 ---

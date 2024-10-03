@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: website-deployment
+  name: nginx-deployment
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: website
+      app: nginx
   template:
     metadata:
       labels:
-        app: website
+        app: nginx
     spec:
       nodeSelector:
         kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
       containers:
-      - name: website
+      - name: nginx
         image: nginx:alpine  # Using Nginx as the web server
         ports:
         - containerPort: 80
@@ -31,13 +31,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: website-service
+  name: nginx-service
 spec:
   selector:
-    app: website
+    app: nginx
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
-  type: ClusterIP  # Changed to ClusterIP for internal access only
-
+    - protocol: TCP
+      port: 80            # Port used by the service
+      targetPort: 80      # Nginx's container port
+      nodePort: 30399     # NodePort exposed externally (can be any available port)
+  type: NodePort           # Exposes the service on a NodePort

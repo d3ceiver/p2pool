@@ -14,6 +14,8 @@ spec:
       labels:
         app: nginx
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
       containers:
       - name: nginx
         image: nginx:latest  # Use the official Nginx image

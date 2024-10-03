@@ -22,9 +22,15 @@ spec:
         ports:
         - containerPort: 80  # Nginx listens on port 80
         volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf  # Mount the custom Nginx config
+          subPath: nginx.conf                 # Ensure the correct file is mounted
         - name: website-content
-          mountPath: /usr/share/nginx/html  # Nginx serves static files from this directory in the container
+          mountPath: /usr/share/nginx/html   # Nginx serves static files from this directory in the container
       volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config  # Reference to the ConfigMap you created
       - name: website-content
         hostPath:
           path: /home/worker2/www  # Path on the host where your website files are stored

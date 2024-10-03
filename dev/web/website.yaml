@@ -1,66 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-php-deployment
-  labels:
-    app: nginx-php
+  name: website-deployment
+  namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx-php
+      app: website
   template:
     metadata:
       labels:
-        app: nginx-php
+        app: website
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
       containers:
-      - name: nginx
-        image: richarvey/nginx-php-fpm  # Nginx with PHP-FPM support
+      - name: website
+        image: nginx:alpine  # Using Nginx as the web server
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: website-content
-          mountPath: /var/www/html  # Mount website files inside the container
-        - name: nginx-config
-          mountPath: /etc/nginx/nginx.conf  # Nginx config
-          subPath: nginx.conf
-        - name: fastcgi-snippet
-          mountPath: /etc/nginx/snippets/fastcgi-php.conf  # Mount the fastcgi snippet
-          subPath: fastcgi-php.conf
-        env:
-        - name: MYSQL_HOST
-          value: "mysql-service"  # MySQL service name for the PHP connection
-        - name: MYSQL_USER
-          value: "your_username"
-        - name: MYSQL_PASSWORD
-          value: "your_password"
-        - name: MYSQL_DATABASE
-          value: "your_database"
+        - name: website-volume
+          mountPath: /usr/share/nginx/html  # Nginx's default directory for HTML
       volumes:
-      - name: website-content
+      - name: website-volume
         hostPath:
-          path: /home/worker2/www/html  # Path to your website files on the host
-          type: Directory
-      - name: nginx-config
-        configMap:
-          name: nginx-config  # Reference to the ConfigMap for Nginx config
-      - name: fastcgi-snippet
-        configMap:
-          name: nginx-snippets-config  # Reference to ConfigMap for fastcgi-php.conf
-      nodeSelector:
-        kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
+          path: /home/worker2/www/html  # Path on the host machine
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-php-service
+  name: website-service
 spec:
   selector:
-    app: nginx-php
+    app: website
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: NodePort
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP  # Changed to ClusterIP for internal access only
 

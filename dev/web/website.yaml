@@ -1,31 +1,60 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx-php-deployment
   labels:
-    app: nginx
+    app: nginx-php
 spec:
-  replicas: 2  # Number of Nginx replicas
+  replicas: 2
   selector:
     matchLabels:
-      app: nginx
+      app: nginx-php
   template:
     metadata:
       labels:
-        app: nginx
+        app: nginx-php
     spec:
       containers:
       - name: nginx
-        image: nginx:latest  # Use the official Nginx image
+        image: richarvey/nginx-php-fpm  # Nginx with PHP-FPM support
         ports:
-        - containerPort: 80  # Nginx listens on port 80
+        - containerPort: 80
         volumeMounts:
         - name: website-content
-          mountPath: /usr/share/nginx/html  # Mount the host directory to the default Nginx directory
+          mountPath: /var/www/html  # Mount website files inside the container
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf  # Nginx config
+          subPath: nginx.conf
+        env:
+        - name: MYSQL_HOST
+          value: "mysql-service"  # MySQL service name for the PHP connection
+        - name: MYSQL_USER
+          value: "your_username"
+        - name: MYSQL_PASSWORD
+          value: "your_password"
+        - name: MYSQL_DATABASE
+          value: "your_database"
       volumes:
       - name: website-content
         hostPath:
-          path: /home/worker2/www/html  # Mount the host's html directory
+          path: /home/worker2/www/html  # Path to your website files on the host
           type: Directory
+      - name: nginx-config
+        configMap:
+          name: nginx-config  # Reference to the ConfigMap for Nginx config
       nodeSelector:
         kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-php-service
+spec:
+  selector:
+    app: nginx-php
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+

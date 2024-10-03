@@ -7,6 +7,6 @@ spec:
     app: nginx
   ports:
     - protocol: TCP
-      port: 80  # Port exposed by the service
+      port: 30399  # Port exposed by the service
       targetPort: 80  # Target port on the container
   type: NodePort  # This exposes the service externally

@@ -14,24 +14,18 @@ spec:
       labels:
         app: nginx
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
       containers:
       - name: nginx
         image: nginx:latest  # Use the official Nginx image
         ports:
         - containerPort: 80  # Nginx listens on port 80
         volumeMounts:
-        - name: nginx-config
-          mountPath: /etc/nginx/nginx.conf  # Mount the custom Nginx config
-          subPath: nginx.conf                 # Ensure the correct file is mounted
         - name: website-content
-          mountPath: /usr/share/nginx/html   # Nginx serves static files from this directory in the container
+          mountPath: /usr/share/nginx/html  # Mount the host directory to the default Nginx directory
       volumes:
-      - name: nginx-config
-        configMap:
-          name: nginx-config  # Reference to the ConfigMap you created
       - name: website-content
         hostPath:
-          path: /home/worker2/www  # Path on the host where your website files are stored
+          path: /home/worker2/www/html  # Mount the host's html directory
           type: Directory
+      nodeSelector:
+        kubernetes.io/hostname: slave2  # Ensure it runs only on slave2

@@ -9,4 +9,4 @@ spec:
     - protocol: TCP
       port: 1080  # Port exposed by the service
       targetPort: 1080  # Target port on the container
-  type: LoadBalancer  # This exposes the service externally
+  type: NodePort  # This exposes the service externally

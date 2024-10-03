@@ -2,9 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: default
+  labels:
+    app: nginx
 spec:
-  replicas: 1
+  replicas: 2  # Number of Nginx replicas
   selector:
     matchLabels:
       app: nginx
@@ -13,18 +14,16 @@ spec:
       labels:
         app: nginx
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: slave2  # Ensure it runs only on slave2
       containers:
       - name: nginx
-        image: nginx:alpine  # Using Nginx as the web server
+        image: nginx:latest  # Use the official Nginx image
         ports:
-        - containerPort: 80
+        - containerPort: 80  # Nginx listens on port 80
         volumeMounts:
-        - name: website-volume
-          mountPath: /usr/share/nginx/html  # Nginx's default directory for HTML
+        - name: website-content
+          mountPath: /usr/share/nginx/html  # Nginx serves static files from this directory in the container
       volumes:
-      - name: website-volume
+      - name: website-content
         hostPath:
-          path: /home/worker2/www/html  # Path on the host machine
-
+          path: /home/worker2/www  # Path on the host where your website files are stored
+          type: Directory

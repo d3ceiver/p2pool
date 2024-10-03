@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:5.7
+        image: arm64v8/mysql:5.7  # ARM-compatible image
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: "rootpassword"
@@ -29,15 +29,3 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-service
-spec:
-  selector:
-    app: mysql
-  ports:
-  - protocol: TCP
-    port: 3306
-    targetPort: 3306

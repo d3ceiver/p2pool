@@ -41,7 +41,7 @@ metadata:
   labels:
     app: php-fpm
 spec:
-  replicas: 2  # Number of PHP-FPM replicas
+  replicas: 1  # Number of PHP-FPM replicas
   selector:
     matchLabels:
       app: php-fpm

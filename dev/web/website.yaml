@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 1  # Number of Nginx replicas
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -15,90 +15,16 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest  # Use the official Nginx image
-        ports:
-        - containerPort: 80  # Nginx listens on port 80
-        volumeMounts:
-        - name: website-content
-          mountPath: /usr/share/nginx/html  # Nginx serves static files from this directory in the container
-        - name: nginx-config
-          mountPath: /etc/nginx/conf.d  # Mount the Nginx config
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: website-content
+              mountPath: /usr/share/nginx/html
       volumes:
-      - name: website-content
-        hostPath:
-          path: /home/worker2/www  # Path on the host where your website files are stored
-          type: Directory
-      - name: nginx-config
-        configMap:
-          name: nginx-config  # This ConfigMap will contain the Nginx configuration
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: php-fpm-deployment
-  labels:
-    app: php-fpm
-spec:
-  replicas: 1  # Number of PHP-FPM replicas
-  selector:
-    matchLabels:
-      app: php-fpm
-  template:
-    metadata:
-      labels:
-        app: php-fpm
-    spec:
-      containers:
-      - name: php-fpm
-        image: php:7.4-fpm  # Use the official PHP-FPM image
-        ports:
-        - containerPort: 9019  # New port for PHP-FPM
-        volumeMounts:
         - name: website-content
-          mountPath: /usr/share/nginx/html  # Mount the same directory for PHP-FPM
-      volumes:
-      - name: website-content
-        hostPath:
-          path: /home/worker2/www  # Path on the host where your website files are stored
-          type: Directory
+          hostPath:
+            path: /home/worker2/www  # Path on the host where your website files are stored
+            type: Directory
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: php-fpm-service
-spec:
-  selector:
-    app: php-fpm
-  ports:
-  - protocol: TCP
-    port: 9019  # Port for PHP-FPM service
-    targetPort: 9019  # Forwarding to PHP-FPM container port
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nginx-config
-data:
-  default.conf: |
-    server {
-        listen 80;
-        server_name localhost;
-
-        root /usr/share/nginx/html;
-        index index.php index.html index.htm;
-
-        location / {
-            try_files $uri $uri/ /index.php?$query_string;
-        }
-
-        location ~ \.php$ {
-            include fastcgi_params;
-            fastcgi_pass php-fpm-service:9019;  # Use the service name and new port for PHP-FPM
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        }
-    }

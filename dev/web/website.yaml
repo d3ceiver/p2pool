@@ -19,14 +19,14 @@ spec:
         kubernetes.io/hostname: slave2
       containers:
         - name: apache
-          image: httpd:2.4
+          image: php:7.4-apache
           ports:
             - containerPort: 80
           volumeMounts:
             - name: website-content
-              mountPath: /usr/local/apache2/htdocs
+              mountPath: /var/www/html
       volumes:
         - name: website-content
           hostPath:
-            path: /home/worker2/www/html
+            path: /home/worker2/www
             type: Directory

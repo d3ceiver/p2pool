@@ -8,6 +8,6 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 30880
   type: LoadBalancer
   loadBalancerIP: 74.56.241.2  # Desired external IP

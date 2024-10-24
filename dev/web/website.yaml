@@ -25,6 +25,6 @@ spec:
       volumes:
         - name: website-content
           hostPath:
-            path: /home/worker2/www
+            path: /home/worker2/www/html
             type: Directory
 

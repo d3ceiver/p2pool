@@ -31,10 +31,10 @@ spec:
               apt-get update && \
               apt install nano -y && \
               apt install systemctl -y && \
-              sudo a2enmod proxy
-              sudo a2enmod proxy_http
-              sudo a2enmod proxy_balancer
-              sudo a2enmod lbmethod_byrequests
+              a2enmod proxy && \
+              a2enmod proxy_http && \
+              a2enmod proxy_balancer && \
+              a2enmod lbmethod_byrequests && \
               apt-get install -y sqlite3 libsqlite3-dev curl && \
               # Download jQuery and Framework7
               curl -o /var/www/html/jquery.min.js https://code.jquery.com/jquery-3.6.0.min.js && \

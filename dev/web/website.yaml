@@ -29,7 +29,13 @@ spec:
           args:
             - |
               apt-get update && \
-              apt-get install -y sqlite3 libsqlite3-dev && \
+              apt-get install -y sqlite3 libsqlite3-dev curl && \
+              # Download jQuery and Framework7
+              curl -o /var/www/html/jquery.min.js https://code.jquery.com/jquery-3.6.0.min.js && \
+              curl -o /var/www/html/framework7.bundle.min.js https://cdn.framework7.io/framework7.bundle.min.js && \
+              # Create basic HTML to include these files
+              echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>My Website</title>' > /var/www/html/index.html && \
+              echo '<script src="jquery.min.js"></script><script src="framework7.bundle.min.js"></script></head><body><h1>Welcome to My Website</h1><script>$(document).ready(function(){console.log("jQuery and Framework7 are loaded!");});</script></body></html>' >> /var/www/html/index.html && \
               apache2-foreground
       volumes:
         - name: website-content

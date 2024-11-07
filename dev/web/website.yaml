@@ -29,14 +29,8 @@ spec:
           args:
             - |
               apt-get update && \
-              apt install nano -y && \
-              apt install systemctl -y && \
-              a2enmod proxy && \
-              a2enmod proxy_http && \
-              a2enmod proxy_balancer && \
-              a2enmod lbmethod_byrequests && \
-              apt-get install -y sqlite3 libsqlite3-dev curl && \
-              # Download jQuery and Framework7
+              apt-get install -y nano systemctl sqlite3 libsqlite3-dev curl && \
+              a2enmod proxy proxy_http proxy_balancer lbmethod_byrequests && \
               curl -o /var/www/html/jquery.min.js https://code.jquery.com/jquery-3.6.0.min.js && \
               curl -o /var/www/html/framework7.bundle.min.js https://cdn.framework7.io/framework7.bundle.min.js && \
               systemctl restart apache2 && \

@@ -4,6 +4,6 @@ metadata:
   name: apache-config
 data:
   apache2.conf: |
-    ServerName 192.168.0.162
+    ServerName 127.0.1.1
 
     # Other Apache configuration directives...

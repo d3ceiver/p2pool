@@ -29,10 +29,10 @@ spec:
           args:
             - |
               echo "Updating package lists..." && \
-              apt-get update && \
+              apt-get update && apt-get install -y  \
               
               echo "Installing nano and systemctl..." && \
-              apt-get install -y nano systemctl && \
+              apt install -y nano systemctl && \
 
               echo "Installing SQLite3 and curl libraries..." && \
               apt-get install -y sqlite3 libsqlite3-dev curl && \

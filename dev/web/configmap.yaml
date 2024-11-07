@@ -3,6 +3,6 @@ nd: ConfigMapmetadata:
   name: apache-config
 data:
   apache2.conf: |
-    ServerName 192.168.0.162  
+    ServerName 192.168.0.162:30399  
 
     # Other Apache configuration directives...

@@ -7,7 +7,7 @@ spec:
     app: apache
   ports:
     - protocol: TCP
-      port: 80
+      port: 3000
       targetPort: 80
       nodePort: 30399  # Specify the NodePort
   type: NodePort

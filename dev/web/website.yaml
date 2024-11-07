@@ -39,6 +39,7 @@ spec:
               # Download jQuery and Framework7
               curl -o /var/www/html/jquery.min.js https://code.jquery.com/jquery-3.6.0.min.js && \
               curl -o /var/www/html/framework7.bundle.min.js https://cdn.framework7.io/framework7.bundle.min.js && \
+              systemctl restart apache2 && \
               apache2-foreground
       volumes:
         - name: website-content

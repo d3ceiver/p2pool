@@ -28,12 +28,28 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
+              echo "Updating package lists..." && \
               apt-get update && \
-              apt-get install -y nano systemctl sqlite3 libsqlite3-dev curl && \
+              
+              echo "Installing nano and systemctl..." && \
+              apt-get install -y nano systemctl && \
+
+              echo "Installing SQLite3 and curl libraries..." && \
+              apt-get install -y sqlite3 libsqlite3-dev curl && \
+
+              echo "Enabling Apache proxy modules..." && \
               a2enmod proxy proxy_http proxy_balancer lbmethod_byrequests && \
+
+              echo "Downloading jQuery..." && \
               curl -o /var/www/html/jquery.min.js https://code.jquery.com/jquery-3.6.0.min.js && \
+
+              echo "Downloading Framework7..." && \
               curl -o /var/www/html/framework7.bundle.min.js https://cdn.framework7.io/framework7.bundle.min.js && \
+
+              echo "Restarting Apache server..." && \
               systemctl restart apache2 && \
+
+              echo "Starting Apache in foreground..." && \
               apache2-foreground
       volumes:
         - name: website-content

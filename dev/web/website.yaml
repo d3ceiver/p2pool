@@ -14,7 +14,7 @@ spec:
       labels:
         app: apache
     spec:
-      hostNetwork: false
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: slave2
       containers:

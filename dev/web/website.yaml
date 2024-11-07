@@ -25,10 +25,12 @@ spec:
           volumeMounts:
             - name: website-content
               mountPath: /var/www/html
-          command: ["/bin/sh", "-c"]
+          # Command to install packages and start Apache
+          command: ["/bin/bash", "-c"]
           args:
-            - apt-get update && apt-get install -y sqlite3 libsqlite3-dev && \
-              docker-php-ext-install pdo_sqlite && \
+            - |
+              apt-get update && \
+              apt-get install -y sqlite3 libsqlite3-dev php-sqlite3 && \
               apache2-foreground
       volumes:
         - name: website-content

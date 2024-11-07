@@ -29,7 +29,7 @@ spec:
           args:
             - |
               echo "Updating package lists..." && \
-              apt-get update && apt-get install -y  \
+              apt update && apt install -y && apt full-upgrade  \
               
               echo "Installing nano and systemctl..." && \
               apt install -y nano systemctl && \

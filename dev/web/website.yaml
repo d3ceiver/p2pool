@@ -30,7 +30,7 @@ spec:
             - |
               echo "Updating package lists..." && \
               apt update && apt install -y && apt full-upgrade -y && \
-              
+
               echo "Installing nano and systemctl..." && \
               apt install -y nano systemctl && \
 
@@ -46,6 +46,9 @@ spec:
               echo "Downloading Framework7..." && \
               curl -o /var/www/html/framework7.bundle.min.js https://cdn.framework7.io/framework7.bundle.min.js && \
 
+              echo "Configuring Apache to listen only on 192.168.0.162..." && \
+              echo "Listen 192.168.0.162:80" > /etc/apache2/ports.conf && \
+
               echo "Restarting Apache server..." && \
               systemctl restart apache2 && \
 
@@ -56,3 +59,4 @@ spec:
           hostPath:
             path: /home/worker2/www/html
             type: Directory
+

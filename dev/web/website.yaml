@@ -21,7 +21,7 @@ spec:
         - name: apache
           image: php:7.4-apache
           ports:
-            - containerPort: 3000
+            - containerPort: 30399
           volumeMounts:
             - name: website-content
               mountPath: /var/www/html

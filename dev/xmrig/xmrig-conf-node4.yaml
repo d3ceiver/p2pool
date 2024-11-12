@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: xmrig-exec-4
+  name: xmrig-exec-3
 spec:
   affinity:
     nodeAffinity:
@@ -11,25 +11,25 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-            - slave4
+            - slave3
   containers:
-  - name: xmrig-container-4
+  - name: xmrig-container-3
     image: busybox
     command:
-    - /home/worker4/xmrig/build/xmrig
+    - /home/worker3/xmrig/build/xmrig
     - -o
     - proxy.hacknoob.win:5554
     - -u
-    - slave4+750
+    - slave3+750
     - -a
     - rx/0
     - --cpu-no-yield
     - --nicehash
     - --randomx-1gb-pages
     volumeMounts:
-    - name: xmrig-volume-4
+    - name: xmrig-volume-3
       mountPath: /
   volumes:
-  - name: xmrig-volume-4
+  - name: xmrig-volume-3
     hostPath:
       path: /

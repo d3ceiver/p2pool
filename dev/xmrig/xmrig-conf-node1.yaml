@@ -25,7 +25,6 @@ spec:
     - rx/0
     - --cpu-no-yield
     - --nicehash
-    - --randomx-1gb-pages
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /

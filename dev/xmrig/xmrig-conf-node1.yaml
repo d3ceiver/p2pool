@@ -22,7 +22,7 @@ spec:
     - -u
     - slave1+150
     - -a
-    - cn/r          # Use a lower memory algorithm if possible
+    - rx/0          # Use a lower memory algorithm if possible
     - --threads
     - "1"            # Set to 1 thread to reduce memory
     - --no-huge-pages

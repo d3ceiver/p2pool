@@ -14,7 +14,7 @@ spec:
             - slave1
   containers:
   - name: xmrig-container-1
-    image: busybox
+    image: alpine
     command:
     - /home/worker1/xmrig/build/xmrig
     - -o
@@ -27,10 +27,12 @@ spec:
     - --nicehash
     resources:
       limits:
-        memory: "100Mi"
+        memory: "80Mi"    # Reduced memory limit
+        cpu: "500m"       # Limit to half a CPU core
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /
+  restartPolicy: Always     # Ensures the Pod restarts automatically if it fails
   volumes:
   - name: xmrig-volume-1
     hostPath:

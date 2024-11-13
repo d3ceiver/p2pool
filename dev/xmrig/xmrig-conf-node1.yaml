@@ -25,6 +25,9 @@ spec:
     - rx/0
     - --cpu-no-yield
     - --nicehash
+    resources:
+      limits:
+        memory: "100Mi"
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /

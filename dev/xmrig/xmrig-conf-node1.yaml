@@ -14,13 +14,14 @@ spec:
             - slave1
   containers:
   - name: xmrig-container-1
-    image: alpine
+    image: ubuntu:latest  # Use Ubuntu or Debian-based image for apt
     command:
-    - /bin/sh
+    - /bin/bash
     - -c
     - |
-      # Install necessary packages
-      apk add --no-cache util-linux zram-tools && \
+      # Update package list and install necessary tools
+      apt-get update && \
+      apt-get install -y util-linux zram-tools && \
       # Load zram module
       modprobe zram && \
       # Configure zram swap device

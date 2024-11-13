@@ -22,18 +22,23 @@ spec:
     - -u
     - slave1+150
     - -a
-    - rx/0
-    - --cpu-no-yield
-    - --nicehash
+    - cn/r           # Use a lower memory algorithm if possible
+    - --threads
+    - "1"            # Set to 1 thread to reduce memory
+    - --no-huge-pages
+    - --cpu-priority
+    - "5"            # Lower CPU priority
+    - --donate-level
+    - "0"            # Set donate level to zero to save resources
     resources:
       limits:
-        memory: "80Mi"    # Reduced memory limit
-        cpu: "500m"       # Limit to half a CPU core
+        memory: "80Mi"   # Set a limit under 100Mi
+        cpu: "500m"      # Limit to half a CPU core
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /
-  restartPolicy: Always     # Ensures the Pod restarts automatically if it fails
+  restartPolicy: Always   # Automatically restart if the Pod fails
   volumes:
   - name: xmrig-volume-1
     hostPath:
-      path: /
+      path: /home/worker1  # Adjust to correct path as needed

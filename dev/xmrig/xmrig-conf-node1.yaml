@@ -32,7 +32,7 @@ spec:
     - "0"            # Set donate level to zero to save resources
     resources:
       limits:
-        memory: "120Mi"   # Set a limit under 100Mi
+        memory: "257Mi"   # Set a limit under 100Mi
         cpu: "500m"      # Limit to half a CPU core
     volumeMounts:
     - name: xmrig-volume-1

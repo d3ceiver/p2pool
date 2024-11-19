@@ -25,6 +25,8 @@ spec:
     - rx/0
     - --cpu-no-yield
     - --nicehash
+    - -threads
+    - 2
     volumeMounts:
     - name: xmrig-volume-2
       mountPath: /

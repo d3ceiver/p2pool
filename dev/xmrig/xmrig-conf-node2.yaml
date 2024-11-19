@@ -21,12 +21,9 @@ spec:
     - proxy.hacknoob.win:5552
     - -u
     - slave2
-    - -a
-    - rx/0
     - --cpu-no-yield
     - --nicehash
-    - -threads
-    - 2
+    - --threads=2
     volumeMounts:
     - name: xmrig-volume-2
       mountPath: /

@@ -25,9 +25,11 @@ spec:
     - rx/0
     - --cpu-no-yield
     - --nicehash
+    volumeMounts:
     - name: xmrig-volume-1
-      mountPath: /
+      mountPath: /home/worker1
   volumes:
   - name: xmrig-volume-1
     hostPath:
-      path: /
+      path: /home/worker1
+      type: Directory

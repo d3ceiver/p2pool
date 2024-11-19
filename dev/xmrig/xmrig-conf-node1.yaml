@@ -27,9 +27,8 @@ spec:
     - --nicehash
     volumeMounts:
     - name: xmrig-volume-1
-      mountPath: /home/worker1
+      mountPath: /
   volumes:
   - name: xmrig-volume-1
     hostPath:
-      path: /home/worker1
-      type: Directory
+      path: /

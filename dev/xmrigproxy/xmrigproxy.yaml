@@ -21,7 +21,7 @@ spec:
     - "-c"
     - |
       while true; do
-       /home/manager/xmrig-proxy/build/xmrig-proxy --daemon --verbose  --donate-level=0 --custom-diff-stats --syslog
+       /home/manager/xmrig-proxy/build/xmrig-proxy --verbose  --donate-level=0 --custom-diff-stats 
         done
     volumeMounts:
     - name: xmrig-volume-worker3p

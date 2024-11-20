@@ -21,8 +21,7 @@ spec:
     - "-c"
     - |
       while true; do
-       /home/manager/xmrig-proxy/build/xmrig-proxy --daemon --verbose  --donate-level=0 --userpass=piclusterfarm:PiclusterFarmbitconnect4446DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn 
-      done
+       /home/manager/xmrig-proxy/build/xmrig-proxy --daemon --verbose  --donate-level=0 
     volumeMounts:
     - name: xmrig-volume-worker3p
       mountPath: /

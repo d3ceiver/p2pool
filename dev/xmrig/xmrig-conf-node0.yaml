@@ -23,7 +23,7 @@ spec:
     - master
     - --cpu-no-yield
     - --nicehash
-    - --threads=1
+    - --threads=2
     volumeMounts:
     - name: xmrig-volume-0
       mountPath: /

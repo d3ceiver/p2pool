@@ -47,6 +47,7 @@ spec:
                   --prep-blocks-threads=2 \
                   --max-concurrency=8 \
                   --log-level 0 \
+                  --start-mining \
                   
                   
               done

@@ -21,7 +21,7 @@ spec:
     - "-c"
     - |
       while true; do
-       /home/manager/xmrig-proxy/build/xmrig-proxy --donate-level=0 
+       /home/manager/xmrig-proxy/build/xmrig-proxy --donate-level=0 --verbose 4
     volumeMounts:
     - name: xmrig-volume-worker3p
       mountPath: /

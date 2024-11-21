@@ -28,7 +28,7 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/manager/p2pool/p2pool --host node.hacknoob.win --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --light-mode --loglevel 6 --no-cache --no-color --no-randomx 
+                /home/manager/p2pool/p2pool --host node.hacknoob.win --wallet 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn --mini --light-mode --loglevel 6 --no-cache --no-color --no-randomx --data-api  
               done
           volumeMounts:
             - name: p2p-volume

@@ -47,6 +47,7 @@ spec:
                   --prep-blocks-threads=2 \
                   --max-concurrency=8 \
                   --log-level 1 \
+                  --rpc-login piclusterfarm:PiclusterFarmbitconnect4446DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
                   --start-mining 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn \
                   
                   

@@ -46,7 +46,7 @@ spec:
                   --db-sync-mode=safe \
                   --prep-blocks-threads=2 \
                   --max-concurrency=8 \
-                  --log-level 0 \
+                  --log-level 1 \
                   --start-mining 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn \
                   
                   

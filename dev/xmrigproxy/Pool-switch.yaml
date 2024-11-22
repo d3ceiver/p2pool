@@ -30,7 +30,7 @@ spec:
         - "-c"
         - |
           while true; do
-            for file in Hacknoob.txt HashVault.txt MoneroHash.txt MoneroOcean.txt NanoPool.txt P2pool.txt; do
+            for file in MoneroOcean.txt Hacknoob.txt MoneroOcean.txt P2pool.txt HashVault.txt MoneroOcean.txt P2pool.txt NanoPool.txt MoneroOcean.txt P2pool.txt; do
               algo_name=$(basename $file .txt)
               echo "Switching algorithm to $algo_name"
               echo "Switching algorithm to $algo_name" >> /logs/switch.log

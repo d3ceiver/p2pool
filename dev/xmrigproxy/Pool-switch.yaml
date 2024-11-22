@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-rotator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-rotator
+  template:
+    metadata:
+      labels:
+        app: profile-rotator
+    spec:
+      containers:
+      - name: profile-rotator-container
+        image: busybox
+        command:
+        - /bin/sh
+        args:
+        - "-c"
+        - |
+          while true; do
+            for file in /profiles/Hacknoob.txt \
+                        /profiles/HashVault.txt \
+                        /profiles/MoneroHash.txt \
+                        /profiles/MoneroOcean.txt \
+                        /profiles/NanoPool.txt \
+                        /profiles/P2pool.txt; do
+              echo "Copying $file to /config/config.json"
+              cp $file /config/config.json
+              sleep 30
+            done
+          done
+        volumeMounts:
+        - name: profiles
+          mountPath: /profiles
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: profiles
+        hostPath:
+          path: /home/manager/xmrig-proxy/build/profile
+      - name: config
+        hostPath:
+          path: /home/manager/xmrig-proxy/build

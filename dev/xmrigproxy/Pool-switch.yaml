@@ -35,7 +35,7 @@ spec:
               echo "Switching algorithm to $algo_name"
               echo "Switching algorithm to $algo_name" >> /logs/switch.log
               cp /profiles/$file /config/config.json
-              sleep 120
+              sleep 5120
             done
           done
         volumeMounts:

@@ -12,6 +12,15 @@ spec:
       labels:
         app: profile-rotator
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - master # Ensure the Pod runs only on the master node
       containers:
       - name: profile-rotator-container
         image: busybox
@@ -21,14 +30,11 @@ spec:
         - "-c"
         - |
           while true; do
-            for file in /profiles/Hacknoob.txt \
-                        /profiles/HashVault.txt \
-                        /profiles/MoneroHash.txt \
-                        /profiles/MoneroOcean.txt \
-                        /profiles/NanoPool.txt \
-                        /profiles/P2pool.txt; do
-              echo "Copying $file to /config/config.json"
-              cp $file /config/config.json
+            for file in Hacknoob.txt HashVault.txt MoneroHash.txt MoneroOcean.txt NanoPool.txt P2pool.txt; do
+              algo_name=$(basename $file .txt)
+              echo "Switching algorithm to $algo_name"
+              echo "Switching algorithm to $algo_name" >> /logs/switch.log
+              cp /profiles/$file /config/config.json
               sleep 30
             done
           done
@@ -37,6 +43,8 @@ spec:
           mountPath: /profiles
         - name: config
           mountPath: /config
+        - name: logs
+          mountPath: /logs
       volumes:
       - name: profiles
         hostPath:
@@ -44,3 +52,6 @@ spec:
       - name: config
         hostPath:
           path: /home/manager/xmrig-proxy/build
+      - name: logs
+        hostPath:
+          path: /home/manager/xmrig-proxy/logs

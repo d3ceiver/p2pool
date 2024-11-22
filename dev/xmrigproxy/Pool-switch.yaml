@@ -48,7 +48,7 @@ spec:
       volumes:
       - name: profiles
         hostPath:
-          path: /home/manager/xmrig-proxy/build/profile
+          path: /home/manager/xmrig-proxy/build/profiles
       - name: config
         hostPath:
           path: /home/manager/xmrig-proxy/build

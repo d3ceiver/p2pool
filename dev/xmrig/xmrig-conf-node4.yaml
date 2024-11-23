@@ -23,7 +23,6 @@ spec:
     - slave4
     - --cpu-no-yield
     - --nicehash
-    - --randomx-1gb-pages
     - --threads=2
     volumeMounts:
     - name: xmrig-volume-4

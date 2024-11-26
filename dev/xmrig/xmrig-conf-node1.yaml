@@ -21,7 +21,7 @@ spec:
     - gulf.moneroocean.stream:80
     - -u
     - 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-    - -x
+    - -p
     - slave1
     - --cpu-no-yield
     - --nicehash

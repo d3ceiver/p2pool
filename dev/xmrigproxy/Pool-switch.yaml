@@ -20,7 +20,7 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - master # Ensure the Pod runs only on the master node
+                - master10 # Ensure the Pod runs only on the master node
       containers:
       - name: profile-rotator-container
         image: busybox

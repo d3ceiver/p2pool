@@ -11,7 +11,7 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-            - slave3
+            - slave30
   containers:
   - name: xmrig-container-3
     image: busybox

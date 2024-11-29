@@ -11,7 +11,7 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-            - master10
+            - master
   hostNetwork: true          
   containers:
   - name: xmrigproxy-container

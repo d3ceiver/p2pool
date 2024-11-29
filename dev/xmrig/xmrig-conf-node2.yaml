@@ -24,6 +24,8 @@ spec:
     - -p
     - slave2
     - --cpu-no-yield
+    - --algo
+    - RandomX
     - --nicehash
     - --threads=2
     volumeMounts:

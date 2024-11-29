@@ -28,6 +28,7 @@ spec:
     - RandomX
     - --nicehash
     - --threads=2
+    - --deamon
     volumeMounts:
     - name: xmrig-volume-2
       mountPath: /

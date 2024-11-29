@@ -16,7 +16,7 @@ spec:
   - name: xmrig-container-1
     image: busybox
     command:
-    - ./home/worker1/xmrig/build/xmrig
+    - /home/worker1/xmrig/build/xmrig
     volumeMounts:
     - name: xmrig-volume-1
       mountPath: /

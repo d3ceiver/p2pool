@@ -30,7 +30,7 @@ spec:
             - "-c"
             - |
               while true; do
-                /home/manager/monero/monerod --data-dir /home/manager/.bitmonero --rpc-bind-ip 192.168.0.16 \
+                /home/manager/monero/monerod --data-dir /home/manager/.bitmonero --rpc-bind-ip 192.168.0.16 --rpc-login piclusterfarm:PiclusterFarmbitconnect4446DWjxWviwCVHbYHaMxjusjGKm55LJmG6f3YTCJDmTf2RxCLfQRx22fSRELvwq36kY6iSGD5tiUsSQ4AsE8UFnWFBDd1Lzn \
                   --confirm-external-bind \
                   --zmq-pub tcp://192.168.0.16:18083 \
                   --out-peers 3 \

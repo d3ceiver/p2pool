@@ -1,26 +1,35 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
-  name: xmrig-exec-master
+  name: xmrig-exec-replicaset
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-            - master
-  containers:
-  - name: xmrig-container-master
-    image: busybox
-    command:
-    - /home/manager/xmrig/build/xmrig
-    volumeMounts:
-    - name: xmrig-volume-m
-      mountPath: /
-  volumes:
-  - name: xmrig-volume-m
-    hostPath:
-      path: /
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig-exec
+  template:
+    metadata:
+      labels:
+        app: xmrig-exec
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - master
+      containers:
+      - name: xmrig-container-master
+        image: busybox
+        command:
+        - /home/manager/xmrig/build/xmrig
+        volumeMounts:
+        - name: xmrig-volume-m
+          mountPath: /
+      volumes:
+      - name: xmrig-volume-m
+        hostPath:
+          path: /

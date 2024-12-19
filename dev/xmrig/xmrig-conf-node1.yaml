@@ -4,8 +4,9 @@ metadata:
   name: xmrig-exec-slave1
   namespace: miners
   annotations:
+    deployment.kubernetes.io/revision: "1"
     kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-slave1","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-slave1"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-slave1"}},"spec":{"containers":[{"name":"xmrig-container","image":"busybox","command":["/home/worker1/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume-1","mountPath":"/"}]}],"volumes":[{"name":"xmrig-volume-1","hostPath":{"path":"/"}}]}}}}
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-slave1","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-slave1"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-slave1"}},"spec":{"containers":[{"image":"busybox","command":["/home/worker1/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume-1","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume-1","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["slave1"]}]}]}}}}}}}
 spec:
   replicas: 1
   selector:

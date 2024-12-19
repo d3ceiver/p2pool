@@ -1,26 +1,41 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: xmrig-exec-3
+  name: xmrig-exec-slave3
+  namespace: miners
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-slave3","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-slave3"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-slave3"}},"spec":{"containers":[{"image":"busybox","command":["/home/worker3/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume-3","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume-3","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["slave3"]}]}]}}}}}}}
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-            - slave3
-  containers:
-  - name: xmrig-container-3
-    image: busybox
-    command:
-    - /home/worker3/xmrig/build/xmrig
-    volumeMounts:
-    - name: xmrig-volume-3
-      mountPath: /
-  volumes:
-  - name: xmrig-volume-3
-    hostPath:
-      path: /
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig-exec-slave3
+  template:
+    metadata:
+      labels:
+        app: xmrig-exec-slave3
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - slave3
+      containers:
+        - name: xmrig-container
+          image: busybox
+          imagePullPolicy: Always
+          command:
+            - /home/worker3/xmrig/build/xmrig
+          volumeMounts:
+            - name: xmrig-volume-3
+              mountPath: /
+      volumes:
+        - name: xmrig-volume-3
+          hostPath:
+            path: /

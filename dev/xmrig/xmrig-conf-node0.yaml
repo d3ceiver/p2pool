@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xmrig-exec
+  name: xmrig-exec-master
   namespace: miners
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec"}},"template":{"metadata":{"labels":{"app":"xmrig-exec"}},"spec":{"containers":[{"name":"xmrig-container","image":"busybox","command":["/home/manager/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume","mountPath":"/"}]}],"volumes":[{"name":"xmrig-volume","hostPath":{"path":"/"}}]}}}}
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-master","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-master"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-master"}},"spec":{"containers":[{"name":"xmrig-container","image":"busybox","command":["/home/manager/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume","mountPath":"/"}]}],"volumes":[{"name":"xmrig-volume","hostPath":{"path":"/"}}]}}}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrig-exec
+      app: xmrig-exec-master
   template:
     metadata:
       labels:
-        app: xmrig-exec
+        app: xmrig-exec-master
     spec:
       affinity:
         nodeAffinity:

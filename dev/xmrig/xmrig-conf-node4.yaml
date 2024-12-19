@@ -26,6 +26,7 @@ spec:
                 operator: In
                 values:
                 - slave4
+      hostNetwork: true
       containers:
         - name: xmrig-container
           image: busybox

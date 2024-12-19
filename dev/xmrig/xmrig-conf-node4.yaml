@@ -1,33 +1,41 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: xmrig-exec-4
+  name: xmrig-exec-slave4
+  namespace: miners
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-slave4","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-slave4"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-slave4"}},"spec":{"containers":[{"image":"busybox","command":["/home/worker4/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume-4","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume-4","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["slave4"]}]}]}}}}}}}
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-            - slave5
-  containers:
-  - name: xmrig-container-4
-    image: busybox
-    command:
-    - /home/worker4/xmrig/build/xmrig
-    - -o
-    - node.hacknoob.win:18081
-    - -u
-    - slave4
-    - --cpu-no-yield
-    - --nicehash
-    - --threads=2
-    volumeMounts:
-    - name: xmrig-volume-4
-      mountPath: /
-  volumes:
-  - name: xmrig-volume-4
-    hostPath:
-      path: /
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xmrig-exec-slave4
+  template:
+    metadata:
+      labels:
+        app: xmrig-exec-slave4
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - slave4
+      containers:
+        - name: xmrig-container
+          image: busybox
+          imagePullPolicy: Always
+          command:
+            - /home/worker4/xmrig/build/xmrig
+          volumeMounts:
+            - name: xmrig-volume-4
+              mountPath: /
+      volumes:
+        - name: xmrig-volume-4
+          hostPath:
+            path: /

@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xmrigproxy-exec
+  name: xmrig-proxy-exec
   namespace: proxy
   annotations:
     deployment.kubernetes.io/revision: "1"
     kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrigproxy-exec","namespace":"proxy"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrigproxy-exec"}},"template":{"metadata":{"labels":{"app":"xmrigproxy-exec"}},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["master"]}]}]}}},"hostNetwork":true,"containers":[{"name":"xmrigproxy-container","image":"busybox","command":["sh"],"args":["-c","while true; do\n /home/manager/xmrig-proxy/build/xmrig-proxy --donate-level=0 \ndone"],"volumeMounts":[{"name":"xmrig-volume-worker3p","mountPath":"/"}]}],"volumes":[{"name":"xmrig-volume-worker3p","hostPath":{"path":"/"}}]}}}}
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-proxy-exec","namespace":"proxy"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-proxy-exec"}},"template":{"metadata":{"labels":{"app":"xmrig-proxy-exec"}},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["master"]}]}]}}},"hostNetwork":true,"containers":[{"name":"xmrig-proxy-container","image":"busybox","command":["sh"],"args":["-c","while true; do\n /home/manager/xmrig-proxy/build/xmrig-proxy --donate-level=0 \ndone"],"volumeMounts":[{"name":"xmrig-volume-worker3p","mountPath":"/"}]}],"volumes":[{"name":"xmrig-volume-worker3p","hostPath":{"path":"/"}}]}}}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrigproxy-exec
+      app: xmrig-proxy-exec
   template:
     metadata:
       labels:
-        app: xmrigproxy-exec
+        app: xmrig-proxy-exec
     spec:
       affinity:
         nodeAffinity:
@@ -28,7 +28,7 @@ spec:
                 - master
       hostNetwork: true
       containers:
-        - name: xmrigproxy-container
+        - name: xmrig-proxy-container
           image: busybox
           command: ["sh"]
           args:

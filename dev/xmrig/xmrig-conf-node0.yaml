@@ -24,7 +24,7 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - master
+                - master1
       hostNetwork: true          
       containers:
         - name: xmrig-container

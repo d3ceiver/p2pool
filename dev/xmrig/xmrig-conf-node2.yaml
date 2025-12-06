@@ -45,7 +45,7 @@ data:
     }
 ---
 # ---------------------------
-# DaemonSet (run on all ARM64 nodes)
+# DaemonSet (runs on all ARM64 nodes)
 # ---------------------------
 apiVersion: apps/v1
 kind: DaemonSet
@@ -63,7 +63,6 @@ spec:
       labels:
         app: xmrig
     spec:
-      # only run on arm64 nodes (RPi)
       nodeSelector:
         kubernetes.io/arch: arm64
 
@@ -76,8 +75,7 @@ spec:
       containers:
       - name: xmrig
         image: xmrig-arm64:latest
-        imagePullPolicy: IfNotPresent
-
+        imagePullPolicy: Never   # <-- IMPORTANT FIX
         volumeMounts:
         - name: config
           mountPath: /etc/xmrig

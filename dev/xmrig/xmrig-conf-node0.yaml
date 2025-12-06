@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xmrig-exec-master
+  name: xmrig-exec-miners
   namespace: miners
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: xmrig-exec-master
+      app: xmrig-exec-miners
   template:
     metadata:
       labels:
-        app: xmrig-exec-master
+        app: xmrig-exec-miners
     spec:
       hostNetwork: true
       affinity:
@@ -22,27 +22,27 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - master
+                  - master
+                  - slave1
+                  - slave2
       containers:
         - name: xmrig
           image: ubuntu:22.04
           securityContext:
             privileged: true
           command:
-            - /host/home/manager/xmrig/build/xmrig
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              echo "Installing required libraries..."
+              apt update && \
+              apt install -y libssl3 libhwloc15 libuv1 libmicrohttpd12 && \
+              echo "Starting XMRig..."
+              /host/home/manager/xmrig/build/xmrig
           volumeMounts:
             - name: xmrig-root
               mountPath: /host
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - bash
-                  - -c
-                  - |
-                    apt update && \
-                    apt install -y libssl3 libhwloc15 && \
-                    echo "Libraries installed."
       volumes:
         - name: xmrig-root
           hostPath:

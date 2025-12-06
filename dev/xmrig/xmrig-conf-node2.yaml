@@ -1,50 +1,91 @@
-apiVersion: apps/v1
-kind: Deployment
+# ---------------------------
+# Namespace
+# ---------------------------
+apiVersion: v1
+kind: Namespace
 metadata:
-  name: xmrig-exec-slave2
+  name: miners
+---
+# ---------------------------
+# ConfigMap (config.json)
+# ---------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: xmrig-config
   namespace: miners
+data:
+  config.json: |
+    {
+      "autosave": true,
+      "cpu": {
+        "enabled": true,
+        "huge-pages": true,
+        "priority": null,
+        "memory-pool": false
+      },
+      "pools": [
+        {
+          "url": "YOUR_POOL_URL",
+          "user": "YOUR_XMR_WALLET",
+          "pass": "rpi",
+          "keepalive": true,
+          "nicehash": false
+        }
+      ],
+      "api": {
+        "id": null,
+        "worker-id": null,
+        "access-token": null,
+        "http": true,
+        "port": 0,
+        "restricted": true
+      },
+      "donate-level": 1
+    }
+---
+# ---------------------------
+# DaemonSet (run on all ARM64 nodes)
+# ---------------------------
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: xmrig-daemon
+  namespace: miners
+  labels:
+    app: xmrig
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: xmrig-exec-slave2
+      app: xmrig
   template:
     metadata:
       labels:
-        app: xmrig-exec-slave2
+        app: xmrig
     spec:
+      # only run on arm64 nodes (RPi)
+      nodeSelector:
+        kubernetes.io/arch: arm64
+
       hostNetwork: true
       restartPolicy: Always
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                  - slave2
+
+      tolerations:
+      - operator: "Exists"
+
       containers:
-      - name: xmrig-container
-        image: ubuntu:22.04
-        securityContext:
-          privileged: true
-        command:
-          - /bin/bash
-          - "-c"
-          - |
-            apt update &&
-            apt install -y libhwloc-dev libssl-dev libuv1-dev &&
-            chmod +x /xmrig/xmrig &&
-            echo "Starting XMRig..." &&
-            /xmrig/xmrig --config=/xmrig/config.json
+      - name: xmrig
+        image: xmrig-arm64:latest
+        imagePullPolicy: IfNotPresent
+
         volumeMounts:
-        - name: xmrig-volume
-          mountPath: /xmrig
-        tty: true
-        stdin: true
+        - name: config
+          mountPath: /etc/xmrig
+
       volumes:
-      - name: xmrig-volume
-        hostPath:
-          path: /home/worker2/xmrig/build
-          type: Directory
+      - name: config
+        configMap:
+          name: xmrig-config
+          items:
+            - key: config.json
+              path: config.json

@@ -25,7 +25,7 @@ spec:
                 - master
       containers:
         - name: xmrig
-          image: busybox
+          image: ubuntu:22.04
           securityContext:
             privileged: true
           command:
@@ -33,6 +33,16 @@ spec:
           volumeMounts:
             - name: xmrig-root
               mountPath: /host
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - bash
+                  - -c
+                  - |
+                    apt update && \
+                    apt install -y libssl3 libhwloc15 && \
+                    echo "Libraries installed."
       volumes:
         - name: xmrig-root
           hostPath:

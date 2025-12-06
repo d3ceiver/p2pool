@@ -28,7 +28,7 @@ spec:
             export DEBIAN_FRONTEND=noninteractive
             apt-get update -q
             apt-get install -y --no-install-recommends libhwloc-dev libssl-dev libuv1-dev ca-certificates
-            chmod +x /xmrig/xmrig || true
+            chmod +x /xmrig || true
             echo "Starting XMRig on node master"
             exec /xmrig 
         volumeMounts:

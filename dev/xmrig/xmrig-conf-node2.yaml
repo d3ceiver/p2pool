@@ -14,6 +14,7 @@ spec:
         app: xmrig-exec-slave2
     spec:
       hostNetwork: true
+      restartPolicy: Always
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -24,18 +25,26 @@ spec:
                 values:
                   - slave2
       containers:
-        - name: xmrig-container
-          image: ubuntu:22.04
-          securityContext:
-            privileged: true
-          command: ["/xmrig/xmrig"]
-          volumeMounts:
-            - name: xmrig-volume
-              mountPath: /xmrig
-          tty: true
-          stdin: true
-      volumes:
+      - name: xmrig-container
+        image: ubuntu:22.04
+        securityContext:
+          privileged: true
+        command:
+          - /bin/bash
+          - "-c"
+          - |
+            apt update &&
+            apt install -y libhwloc-dev libssl-dev libuv1-dev &&
+            chmod +x /xmrig/xmrig &&
+            echo "Starting XMRig..." &&
+            /xmrig/xmrig --config=/xmrig/config.json
+        volumeMounts:
         - name: xmrig-volume
-          hostPath:
-            path: /home/worker2/xmrig/build
-            type: Directory
+          mountPath: /xmrig
+        tty: true
+        stdin: true
+      volumes:
+      - name: xmrig-volume
+        hostPath:
+          path: /home/worker2/xmrig/build
+          type: Directory

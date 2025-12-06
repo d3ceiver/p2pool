@@ -1,43 +1,65 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xmrig-exec-master
+  name: xmrig-runner
   namespace: miners
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-    kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-master","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-master"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-master"}},"spec":{"containers":[{"image":"busybox","command":["/home/manager/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["master"]}]}]}}}}}}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrig-exec-master
+      app: xmrig-runner
   template:
     metadata:
       labels:
-        app: xmrig-exec-master
+        app: xmrig-runner
     spec:
-      hostNetwork: true
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                  - master
+      # Uncomment and edit nodeSelector to run on a specific node that has /home/manager/xmrig/build
+      # nodeSelector:
+      #   kubernetes.io/hostname: slave2
+
+      # Or use nodeAffinity for more complex selection (example commented)
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: kubernetes.io/hostname
+      #           operator: In
+      #           values: ["slave2","slave3"]
+
       containers:
-        - name: xmrig-container
-          image: busybox
-          imagePullPolicy: Always
-          command:
-            - /home/manager/xmrig/build/xmrig
-          volumeMounts:
-            - name: xmrig-volume
-              mountPath: /
+      - name: xmrig-runner
+        image: ubuntu:22.04
+        imagePullPolicy: IfNotPresent
+        # The container will:
+        # 1) install runtime libs needed by XMRig
+        # 2) make the host binary executable
+        # 3) start xmrig using the config.json from the host mount
+        command:
+          - /bin/bash
+          - -c
+          - |
+            set -euo pipefail
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get update -q
+            apt-get install -y --no-install-recommends libhwloc-dev libssl-dev libuv1-dev ca-certificates iproute2 procps || exit 1
+            chmod +x /xmrig/xmrig || true
+            echo "Starting XMRig from /xmrig/xmrig (pid $$)"
+            exec /xmrig/xmrig --config=/xmrig/config.json
+        volumeMounts:
+        - name: xmrig-host
+          mountPath: /xmrig
+          readOnly: false
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits:
+            cpu: "1500m"
+            memory: "512Mi"
+      restartPolicy: Always
       volumes:
-        - name: xmrig-volume
-          hostPath:
-            path: /
-            type: Directory
+      - name: xmrig-host
+        hostPath:
+          path: /home/manager/xmrig/build
+          type: Directory

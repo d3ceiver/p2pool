@@ -3,6 +3,10 @@ kind: Deployment
 metadata:
   name: xmrig-exec-miners
   namespace: miners
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-miners","namespace":"miners"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"xmrig-exec-miners"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-miners"}},"spec":{"containers":[{"image":"busybox","command":["/home/worker2/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["master","slave1","slave2"]}]}]}}}}}}}
 spec:
   replicas: 3
   selector:
@@ -26,25 +30,16 @@ spec:
                   - slave1
                   - slave2
       containers:
-        - name: xmrig
-          image: ubuntu:22.04
-          securityContext:
-            privileged: true
+        - name: xmrig-container
+          image: busybox
+          imagePullPolicy: Always
           command:
-            - /bin/bash
-            - -c
-            - |
-              set -e
-              echo "Installing required libraries..."
-              apt update && \
-              apt install -y libssl3 libhwloc15 libuv1 libmicrohttpd12 && \
-              echo "Starting XMRig..."
-              /host/home/manager/xmrig/build/xmrig
+            - /home/worker2/xmrig/build/xmrig
           volumeMounts:
-            - name: xmrig-root
-              mountPath: /host
+            - name: xmrig-volume
+              mountPath: /
       volumes:
-        - name: xmrig-root
+        - name: xmrig-volume
           hostPath:
             path: /
             type: Directory

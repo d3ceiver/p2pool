@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xmrig-exec-miners
+  name: xmrig-exec-master
   namespace: miners
   annotations:
     deployment.kubernetes.io/revision: "1"
     kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-miners","namespace":"miners"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"xmrig-exec-miners"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-miners"}},"spec":{"containers":[{"image":"busybox","command":["/home/worker2/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["master","slave1","slave2"]}]}]}}}}}}}
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-master","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-master"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-master"}},"spec":{"containers":[{"image":"busybox","command":["/home/manager/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["master"]}]}]}}}}}}}
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: xmrig-exec-miners
+      app: xmrig-exec-master
   template:
     metadata:
       labels:
-        app: xmrig-exec-miners
+        app: xmrig-exec-master
     spec:
       hostNetwork: true
       affinity:
@@ -27,14 +27,12 @@ spec:
                 operator: In
                 values:
                   - master
-                  - slave1
-                  - slave2
       containers:
         - name: xmrig-container
           image: busybox
           imagePullPolicy: Always
           command:
-            - /home/worker2/xmrig/build/xmrig
+            - /home/manager/xmrig/build/xmrig
           volumeMounts:
             - name: xmrig-volume
               mountPath: /

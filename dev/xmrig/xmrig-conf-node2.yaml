@@ -3,10 +3,6 @@ kind: Deployment
 metadata:
   name: xmrig-exec-slave2
   namespace: miners
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-    kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"xmrig-exec-slave2","namespace":"miners"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"xmrig-exec-slave2"}},"template":{"metadata":{"labels":{"app":"xmrig-exec-slave2"}},"spec":{"containers":[{"image":"busybox","command":["/home/worker2/xmrig/build/xmrig"],"volumeMounts":[{"name":"xmrig-volume-2","mountPath":"/"}],"imagePullPolicy":"Always"}],"volumes":[{"name":"xmrig-volume-2","hostPath":{"path":"/"}}],"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["slave2"]}]}]}}}}}}}
 spec:
   replicas: 1
   selector:
@@ -17,6 +13,7 @@ spec:
       labels:
         app: xmrig-exec-slave2
     spec:
+      hostNetwork: true
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -26,17 +23,18 @@ spec:
                 operator: In
                 values:
                 - slave2
-      hostNetwork: true
       containers:
-        - name: xmrig-container
+        - name: xmrig
           image: busybox
-          imagePullPolicy: Always
+          securityContext:
+            privileged: true
           command:
-            - /home/worker2/xmrig/build/xmrig
+            - /host/home/worker2/xmrig/build/xmrig
           volumeMounts:
-            - name: xmrig-volume-2
-              mountPath: /
+            - name: xmrig-root
+              mountPath: /host
       volumes:
-        - name: xmrig-volume-2
+        - name: xmrig-root
           hostPath:
             path: /
+            type: Directory

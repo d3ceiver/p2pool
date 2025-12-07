@@ -1,23 +1,22 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: xmrig-slave2        # <-- CHANGE THIS
+  name: xmrig-slave2
   namespace: miners
 spec:
   selector:
     matchLabels:
-      app: xmrig-slave2     # <-- CHANGE THIS
+      app: xmrig-slave2
   template:
     metadata:
       labels:
-        app: xmrig-slave2  # <-- CHANGE THIS
+        app: xmrig-slave2
     spec:
       hostNetwork: true
       automountServiceAccountToken: false
 
-      # Bind this miner to a specific server
       nodeSelector:
-        kubernetes.io/hostname: slave2   # <-- CHANGE THIS
+        kubernetes.io/hostname: slave2
 
       tolerations:
       - operator: Exists
@@ -38,36 +37,39 @@ spec:
           - "87T57vEfgmKevdUuXwsjZGYpZ8FUR5LuuZA8BGG9sQ91hUbaqRh7HywdxhKQcqvqbsaPuZktbBzPy5cwPpXtJh275TpS7U5"
 
         volumeMounts:
+          - name: xmrig-bin
+            mountPath: /xmrig
+          - name: host-lib
+            mountPath: /lib
+          - name: host-lib64
+            mountPath: /lib64
+          - name: host-usr-lib
+            mountPath: /usr/lib
+          - name: host-usrlocal-lib
+            mountPath: /usr/local/lib
+
+      volumes:
         - name: xmrig-bin
-          mountPath: /xmrig
-          readOnly: false
+          hostPath:
+            path: /home/worker2/xmrig/build
+            type: Directory
 
-      volumes:
-      - name: xmrig-bin
-        hostPath:
-          path: /home/worker2/xmrig/build/ # <-- CHANGE THIS
-          type: Directory
-          
-      volumeMounts:
-      - name: xmrig-bin
-        mountPath: /xmrig
-      - name: host-lib
-        mountPath: /lib
-      - name: host-lib64
-        mountPath: /lib64
-      - name: host-usr-lib
-        mountPath: /usr/lib
+        - name: host-lib
+          hostPath:
+            path: /lib
+            type: Directory
 
-      volumes:
-      - name: xmrig-bin
-        hostPath:
-          path: /home/worker2/xmrig/build
-      - name: host-lib
-        hostPath:
-          path: /lib
-      - name: host-lib64
-        hostPath:
-          path: /lib64
-      - name: host-usr-lib
-        hostPath:
-          path: /usr/lib
+        - name: host-lib64
+          hostPath:
+            path: /lib64
+            type: Directory
+
+        - name: host-usr-lib
+          hostPath:
+            path: /usr/lib
+            type: Directory
+
+        - name: host-usrlocal-lib
+          hostPath:
+            path: /usr/local/lib
+            type: Directory

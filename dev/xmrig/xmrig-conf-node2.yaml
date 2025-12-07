@@ -41,6 +41,6 @@ spec:
       volumes:
       - name: xmrig-bin
         hostPath:
-          path: /xmrig/build    # <-- host path
+          path: /home/worker2/xmrig/build    # <-- host path
           type: Directory
 

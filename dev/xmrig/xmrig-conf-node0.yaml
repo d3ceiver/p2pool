@@ -33,7 +33,7 @@ spec:
             exec /xmrig 
         volumeMounts:
         - name: xmrig-bin
-          mountPath: /home/manager/
+          mountPath: /home/manager/xmrig/build/
 
       volumes:
       - name: xmrig-bin

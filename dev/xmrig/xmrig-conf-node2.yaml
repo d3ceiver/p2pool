@@ -1,19 +1,23 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: xmrig-daemon
+  name: xmrig-slave2        # <-- CHANGE THIS
   namespace: miners
 spec:
   selector:
     matchLabels:
-      app: xmrig
+      app: xmrig-slave2     # <-- CHANGE THIS
   template:
     metadata:
       labels:
-        app: xmrig
+        app: xmrig-slave2  # <-- CHANGE THIS
     spec:
       hostNetwork: true
       automountServiceAccountToken: false
+
+      # Bind this miner to a specific server
+      nodeSelector:
+        kubernetes.io/hostname: slave2   # <-- CHANGE THIS
 
       tolerations:
       - operator: Exists
@@ -25,7 +29,7 @@ spec:
         securityContext:
           privileged: true
 
-        workingDir: /xmrig
+        workingDir: /build
         command: ["./xmrig"]
         args:
           - "-o"
@@ -41,6 +45,5 @@ spec:
       volumes:
       - name: xmrig-bin
         hostPath:
-          path: /home/worker2/xmrig/build    # <-- host path
+          path: /home/worker2/xmrig/ # <-- CHANGE THIS
           type: Directory
-

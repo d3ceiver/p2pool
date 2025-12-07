@@ -29,7 +29,7 @@ spec:
                   - slave1
       containers:
         - name: xmrig-container
-          image: busybox
+          image: ubuntu:22.04
           imagePullPolicy: Always
           command:
             - /home/worker1/xmrig/build/xmrig

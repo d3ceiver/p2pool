@@ -1,42 +1,125 @@
-apiVersion: apps/v1
-kind: Deployment
+# xmrig-daemon-compile.yaml
+---
+apiVersion: v1
+kind: Namespace
 metadata:
-  name: xmrig-runner-master
+  name: miners
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: xmrig-config
   namespace: miners
+data:
+  config.json: |
+    {
+      "autosave": true,
+      "cpu": {
+        "enabled": true,
+        "huge-pages": true,
+        "memory-pool": false
+      },
+      "pools": [
+        {
+          "url": "YOUR_POOL_URL",
+          "user": "YOUR_XMR_WALLET",
+          "pass": "rpi",
+          "keepalive": true,
+          "nicehash": false
+        }
+      ],
+      "api": {
+        "http": true,
+        "port": 0,
+        "restricted": true
+      },
+      "donate-level": 1
+    }
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: xmrig-compile-daemon
+  namespace: miners
+  labels:
+    app: xmrig-compile
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: xmrig-runner-master
+      app: xmrig-compile
   template:
     metadata:
       labels:
-        app: xmrig-runner-master
+        app: xmrig-compile
     spec:
+      # run only on arm64 nodes (RPi)
       nodeSelector:
-        kubernetes.io/hostname: master
+        kubernetes.io/arch: arm64
+
+      # optional: if you want host networking, uncomment next line
+      # hostNetwork: true
+
+      restartPolicy: Always
+      tolerations:
+        - operator: Exists
 
       containers:
-      - name: xmrig
+      - name: xmrig-builder-runner
         image: ubuntu:22.04
         imagePullPolicy: IfNotPresent
+        securityContext:
+          # remove privileged unless you need it; keep minimal privileges
+          allowPrivilegeEscalation: false
+
+        # Mount the config from ConfigMap
+        volumeMounts:
+          - name: xmrig-config
+            mountPath: /etc/xmrig/config.json
+            subPath: config.json
+
+        # Script: install build deps, clone (if not present), build, run
         command:
           - /bin/bash
           - -c
           - |
-            set -e
+            set -euo pipefail
             export DEBIAN_FRONTEND=noninteractive
+            echo "[xmrig] Installing build dependencies..."
             apt-get update -q
-            apt-get install -y --no-install-recommends libhwloc-dev libssl-dev libuv1-dev ca-certificates
-            chmod +x /home/manager/xmrig || true
-            echo "Starting XMRig on node master"
-            exec /home/manager/xmrig/build/xmrig 
-        volumeMounts:
-        - name: xmrig-bin
-          mountPath: /
+            apt-get install -y --no-install-recommends \
+              git build-essential cmake automake libtool autoconf pkg-config \
+              libhwloc-dev libuv1-dev libssl-dev ca-certificates wget \
+              gnupg dirmngr ca-certificates
+            # Where to build
+            BUILD_DIR=/xmrig-src
+            if [ ! -d "$BUILD_DIR" ]; then
+              echo "[xmrig] Cloning xmrig..."
+              git clone --depth 1 https://github.com/xmrig/xmrig.git "$BUILD_DIR"
+            else
+              echo "[xmrig] xmrig source already present, pulling latest..."
+              (cd "$BUILD_DIR" && git pull --ff-only) || true
+            fi
+            mkdir -p "$BUILD_DIR/build"
+            cd "$BUILD_DIR/build"
+            echo "[xmrig] Running cmake & make (this may take a few minutes)..."
+            cmake .. -DCMAKE_BUILD_TYPE=Release
+            make -j$(nproc)
+            echo "[xmrig] Build complete. Starting xmrig with /etc/xmrig/config.json"
+            # exec so xmrig becomes PID 1 inside container
+            exec ./xmrig --config=/etc/xmrig/config.json
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "1500m"
+            memory: "1Gi"
 
       volumes:
-      - name: xmrig-bin
-        hostPath:
-          path: /
-          type: Directory
+        - name: xmrig-config
+          configMap:
+            name: xmrig-config
+            items:
+              - key: config.json
+                path: config.json

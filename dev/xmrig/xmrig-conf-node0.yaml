@@ -30,7 +30,7 @@ spec:
             apt-get install -y --no-install-recommends libhwloc-dev libssl-dev libuv1-dev ca-certificates
             chmod +x /home/manager/xmrig || true
             echo "Starting XMRig on node master"
-            exec ./xmrig 
+            exec /home/manager/xmrig/build/xmrig 
         volumeMounts:
         - name: xmrig-bin
           mountPath: /home/manager/xmrig/build/

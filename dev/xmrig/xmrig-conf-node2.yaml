@@ -47,3 +47,27 @@ spec:
         hostPath:
           path: /home/worker2/xmrig/build/ # <-- CHANGE THIS
           type: Directory
+          
+      volumeMounts:
+      - name: xmrig-bin
+        mountPath: /xmrig
+      - name: host-lib
+        mountPath: /lib
+      - name: host-lib64
+        mountPath: /lib64
+      - name: host-usr-lib
+        mountPath: /usr/lib
+
+      volumes:
+      - name: xmrig-bin
+        hostPath:
+          path: /home/worker2/xmrig/build
+      - name: host-lib
+        hostPath:
+          path: /lib
+      - name: host-lib64
+        hostPath:
+          path: /lib64
+      - name: host-usr-lib
+        hostPath:
+          path: /usr/lib

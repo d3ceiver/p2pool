@@ -1,1 +1,51 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: xmrig-daemon
+  namespace: miners
+spec:
+  selector:
+    matchLabels:
+      app: xmrig
+  template:
+    metadata:
+      labels:
+        app: xmrig
+    spec:
+      hostNetwork: true
+      automountServiceAccountToken: false
+
+      tolerations:
+      - operator: "Exists"
+
+      # Optional: limit to specific nodes
+      # nodeSelector:
+      #   kubernetes.io/hostname: slave1
+
+      containers:
+      - name: xmrig
+        image: ubuntu:22.04
+        imagePullPolicy: Never
+        securityContext:
+          privileged: true
+
+        workingDir: /xmrig/build
+        command: ["./xmrig"]
+        args:
+          - "-o"
+          - "POOL_URL_HERE"
+          - "-u"
+          - "YOUR_WALLET_HERE"
+          - "--cpu-priority=5"
+
+        volumeMounts:
+        - name: root
+          mountPath: /
+          readOnly: false
+
+      volumes:
+      - name: root
+        hostPath:
+          path: /
+          type: Directory
 

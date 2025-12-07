@@ -16,11 +16,7 @@ spec:
       automountServiceAccountToken: false
 
       tolerations:
-      - operator: "Exists"
-
-      # Optional: limit to specific nodes
-      # nodeSelector:
-      #   kubernetes.io/hostname: slave1
+      - operator: Exists
 
       containers:
       - name: xmrig
@@ -29,23 +25,22 @@ spec:
         securityContext:
           privileged: true
 
-        workingDir: /xmrig/build
+        workingDir: /xmrig
         command: ["./xmrig"]
         args:
           - "-o"
           - "POOL_URL_HERE"
           - "-u"
           - "YOUR_WALLET_HERE"
-          - "--cpu-priority=5"
 
         volumeMounts:
-        - name: root
-          mountPath: /
+        - name: xmrig-bin
+          mountPath: /xmrig
           readOnly: false
 
       volumes:
-      - name: root
+      - name: xmrig-bin
         hostPath:
-          path: /
+          path: /xmrig/build    # <-- host path
           type: Directory
 

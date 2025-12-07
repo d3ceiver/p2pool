@@ -29,7 +29,7 @@ spec:
         securityContext:
           privileged: true
 
-        workingDir: /build
+        workingDir: /xmrig
         command: ["./xmrig"]
         args:
           - "-o"
@@ -45,5 +45,5 @@ spec:
       volumes:
       - name: xmrig-bin
         hostPath:
-          path: /home/worker2/xmrig/ # <-- CHANGE THIS
+          path: /home/worker2/xmrig/build/ # <-- CHANGE THIS
           type: Directory
